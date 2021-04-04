@@ -130,3 +130,12 @@ dmypy.json
 
 # node modules
 /node_modules
+
+# VSCode stuff
+.vscode
+
+# Firebase secrets
+admin-sdk.json
+
+# Development database file
+*.db
