@@ -6,18 +6,23 @@ from onehacks.server import app
 from onehacks.utils import render_page
 from onehacks.forms import LoginForm, SignInForm
 
-bp = Blueprint("user")
+user = Blueprint("user", url_prefix="/user")
 
 
-@bp.route("/login", methods=["POST"])
+@user.route("/login", methods=["POST"])
 async def login(request: Request) -> HTTPResponse:
     form = LoginForm(request)
+    # TODO: change rendered page, do firebase login logic here
     output = await render_page(app.ctx.env, file="index.html", form=form)
-    return htmp(output)
+    return html(output)
 
 
-@bp.route("/new", methods=["POST"])
+@user.route("/new", methods=["POST"])
 async def new(request: Request) -> HTTPResponse:
     form = SignInForm(request)
+    # TODO: change rendered page, do firebase sign up logic here
     output = await render_page(app.ctx.env, file="index.html", form=form)
-    return htmp(output)
+    return html(output)
+
+
+app.blueprint(user)
