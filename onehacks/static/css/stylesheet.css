@@ -795,14 +795,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-primary.is-light {
-      background-color: #ffebef;
+      background-color: #FFC2CF;
       color: #db0030; }
       .button.is-primary.is-light:hover, .button.is-primary.is-light.is-hovered {
-        background-color: #ffdee5;
+        background-color: #ffb5c5;
         border-color: transparent;
         color: #db0030; }
       .button.is-primary.is-light:active, .button.is-primary.is-light.is-active {
-        background-color: #ffd1db;
+        background-color: #ffa9bb;
         border-color: transparent;
         color: #db0030; }
   .button.is-link {
@@ -1614,7 +1614,7 @@ div.icon-text {
     background-color: #FF3864;
     color: #fff; }
     .notification.is-primary.is-light {
-      background-color: #ffebef;
+      background-color: #FFC2CF;
       color: #db0030; }
   .notification.is-link {
     background-color: #DE5246;
@@ -1977,7 +1977,7 @@ div.icon-text {
     background-color: #FF3864;
     color: #fff; }
     .tag:not(body).is-primary.is-light {
-      background-color: #ffebef;
+      background-color: #FFC2CF;
       color: #db0030; }
   .tag:not(body).is-link {
     background-color: #DE5246;
@@ -3347,7 +3347,7 @@ button.dropdown-item {
     .message.is-dark .message-body {
       border-color: #363636; }
   .message.is-primary {
-    background-color: #ffebef; }
+    background-color: #FFC2CF; }
     .message.is-primary .message-header {
       background-color: #FF3864;
       color: #fff; }
@@ -5917,13 +5917,13 @@ a.has-text-primary:hover, a.has-text-primary:focus {
   background-color: #FF3864 !important; }
 
 .has-text-primary-light {
-  color: #ffebef !important; }
+  color: #FFC2CF !important; }
 
 a.has-text-primary-light:hover, a.has-text-primary-light:focus {
-  color: #ffb8c7 !important; }
+  color: #ff8fa7 !important; }
 
 .has-background-primary-light {
-  background-color: #ffebef !important; }
+  background-color: #FFC2CF !important; }
 
 .has-text-primary-dark {
   color: #db0030 !important; }
