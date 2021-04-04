@@ -4,11 +4,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/stylesheet.css">
+    <link rel="stylesheet" href="../static/css/style-log.css">
     <script src="https://kit.fontawesome.com/91cb2ec1de.js" crossorigin="anonymous"></script>
     <title>OneHacks</title>
 </head>
 <body>
 
+<div id="login" style="display: none;">
+    <div class="" id="login-form">
+        <div id="card-login">
+            <strong>Log In!</strong>
+            <form>
+                <div class="field">
+                    <label class="label ">Email:</label>
+                    <div class="control">
+                        <input type="email" class="input" placeholder="name@domain.com">
+                    </div>
+                    <label class="label ">Password:</label>
+                    <div class="control">
+                        <input type="password" class="input" placeholder="Password">
+                    </div>
+                    <div id="sign">
+                        <a onclick="logToSign()">Don't have an account? Sign Up!</a>
+                    </div>
+                    <div id="submit">
+                        <button id="log" class="is-success">
+                            Log In
+                        </button>
+                        <button id="close">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="index" style="filter: none;">
     <header class="columns">
         <div class="hero is-medium is-primary column is-8">
             <div class="hero-body">
@@ -20,12 +54,12 @@
             <div class="hero-body">
                 <div class="mx-6 is-size-2">
                     <div class="">Log in with</div>
-                    <button class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-envelope"></span></span><span></span>Email</button>
+                    <button onclick="blurred()" class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-envelope"></span></span><span></span>Email</button>
                     <a class="box button is-info is-size-3 has-text-weight-semibold" href="discord">
                         <div class="image flex"><img src="../static/images/Discord-Logo+Wordmark-White1.png"></div>
                     </a>
                     <div class="">Or ...</div>
-                    <a class="box button is-size-3 has-text-weight-semibold is-primary px-6" href="/accounts/new"><span class="icon"><span class="fas fa-mail-bulk"></span></span><span></span>Sign Up</a>
+                    <a class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-mail-bulk"></span></span><span></span>Sign Up</a>
                 </div>
             </div>
         </div>
@@ -65,6 +99,44 @@
             This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
         </div>
     </footer>
+</div>
+
+<script>
+    var outerLogin = document.getElementById("login");
+    
+    function blurred(){
+        var x = document.getElementById("index");
+        var y = document.getElementById("login");
+        if (x.style.filter == "none") {
+            x.style.filter = "blur(3px)";
+            y.style.removeProperty("display")
+        }
+    }
+    function unblurred(){
+        var x = document.getElementById("index")
+        var y = document.getElementById("login");
+        if (x.style.filter == "blur(3px)") {
+            x.style.filter = "none";
+            y.style.display = "none"
+        }
+    }
+    function logToSign(){
+        var cardSign = document.getElementById("card-signup");
+        var cardLog = document.getElementById("card-login");
+        if (cardSign){
+            cardSign.id = "card-login";
+        } else {
+            cardLog.id = "card-signup";
+        }
+    }
+    outerLogin.addEventListener("click", function(e){
+        if(e.target === outerLogin){
+            unblurred();
+            console.log("outer was clicked")
+        }
+    })
+
+</script>
 
 </body>
 </html>
