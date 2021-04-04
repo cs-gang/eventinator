@@ -8,6 +8,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from sanic import Sanic
 
 from onehacks.database import Database
+from onehacks.utils import IDGenerator
 
 
 load_dotenv(find_dotenv())
@@ -19,7 +20,7 @@ app.ctx.db = Database(app)
 
 # initializing firebase app
 cred = credentials.Certificate("admin-sdk.json")
-firebase = firebase_admin.initialize_app(cred)
+app.ctx.firebase = firebase_admin.initialize_app(cred)
 
 # initializing jinja2 templates
 app.ctx.env = Environment(
@@ -27,6 +28,9 @@ app.ctx.env = Environment(
     autoescape=select_autoescape(["html"]),
     enable_async=True,
 )
+
+# make snowflake generator instance
+app.ctx.snowflake = IDGenerator()
 
 app.static("/static", "./onehacks/static")
 
