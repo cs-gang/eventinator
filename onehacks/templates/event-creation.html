@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" class="has-navbar-fixed-top has-background-success-light">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,117 @@
     <title>Document</title>
 </head>
 <body>
+    <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+          </a>
+
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item">
+              Home
+            </a>
+
+            <a class="navbar-item">
+              Documentation
+            </a>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                More
+              </a>
+
+              <div class="navbar-dropdown">
+                <a class="navbar-item">
+                  About
+                </a>
+                <a class="navbar-item">
+                  Jobs
+                </a>
+                <a class="navbar-item">
+                  Contact
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                  Report an issue
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary">
+                  <strong>Sign up</strong>
+                </a>
+                <a class="button is-light">
+                  Log in
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </nav>
+
+    <main class="box has-background-success-light mx-6 my-6">
+        <div class="title is-1">Enter your Event details</div>
+
+        <form>
+            <div class="field">
+                <label class="label">Name of the Event</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Event Name">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Start Time</label>
+                <div class="control">
+                  <input type="datetime-local">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">End Time</label>
+                <div class="control">
+                  <input type="datetime-local">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Short description</label>
+                <div class="control">
+                    <textarea class="textarea" placeholder="Hovered textarea">
+                    </textarea>
+                </div>
+                <p class="help">This description will be visible to the public</p>
+            </div>
+            <div class="field">
+                <label class="label">Long description</label>
+                <div class="control">
+                    <textarea class="textarea" placeholder="Hovered textarea">
+                    </textarea>
+                </div>
+                <p class="help">This description will only be visible to the entered members</p>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                  <button type="submit" class="button is-success">Submit</button>
+                </div>
+                <div class="control">
+                  <button type="reset" class="button is-primary">Reset</button>
+                </div>
+              </div>
+        </form>
+    </main>
+
+
     <footer class="footer has-background-success">
         <div class="has-text-centered has-text-link-light">
             This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
