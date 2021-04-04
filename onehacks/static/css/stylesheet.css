@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Roboto&display=swap");
 /*! bulma.io v0.9.2 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .button, .input, .textarea, .select select, .file-cta,
@@ -295,7 +296,7 @@ code,
 pre {
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: auto;
-  font-family: "Inknut Antiqua", monospace; }
+  font-family: "Roboto", sans-serif; }
 
 body {
   color: #4a4a4a;
@@ -6955,7 +6956,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   font-family: "Inknut Antiqua", monospace !important; }
 
 .is-family-code {
-  font-family: "Inknut Antiqua", monospace !important; }
+  font-family: "Roboto", sans-serif !important; }
 
 .is-block {
   display: block !important; }
