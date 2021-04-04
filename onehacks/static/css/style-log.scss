@@ -44,22 +44,22 @@ $primary-light: $pink;
         0 41.8px 33.4px rgba(0, 0, 0, 0.086),
         0 100px 80px rgba(0, 0, 0, 0.12);
     }
-    
-    #card-login{
+
+    #card{
         width: 45%;
         padding: 5vh 50px 0 50px;
-        background: linear-gradient(to top, $primary, $darkpurple);
         height: 100%;
-        transition: float 1s;
+        background: linear-gradient(to top, $primary, $darkpurple);
     }
 
-    #card-signup{
-        width: 45%;
-        padding: 5vh 50px 0 50px;
-        background: linear-gradient(to top, $primary, $darkpurple);
-        height: 100%;
-        float: right;
-        transition: float 1s;
+    .login{
+        margin-left: 0%;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .signup{
+        margin-left: 55%;
+        transition: all 0.5s ease-in-out;
     }
     
     #submit{

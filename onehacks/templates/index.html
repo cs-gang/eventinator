@@ -12,10 +12,35 @@
 
 <div id="login" style="display: none;">
     <div class="" id="login-form">
-        <div id="card-login">
+        <div id="card" class="login">
             <strong>Log In!</strong>
             <form>
-                <div class="field">
+                <div class="field" id="logged" style="visibility: visible;">
+                    <label class="label ">Email:</label>
+                    <div class="control">
+                        <input type="email" class="input" placeholder="name@domain.com">
+                    </div>
+                    <label class="label ">Password:</label>
+                    <div class="control">
+                        <input type="password" class="input" placeholder="Password">
+                    </div>
+                    <div id="sign">
+                        <a onclick="logToSign()">Don't have an account? Sign Up!</a>
+                    </div>
+                    <div id="submit">
+                        <button id="log" class="is-success">
+                            Log In
+                        </button>
+                        <button id="close">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+                <div class="field" id="signed" style="visibility: hidden;">
+                    <label class="label ">Username:</label>
+                    <div class="control">
+                        <input type="email" class="input" placeholder="Username">
+                    </div>
                     <label class="label ">Email:</label>
                     <div class="control">
                         <input type="email" class="input" placeholder="name@domain.com">
@@ -37,6 +62,9 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="doesthiswork">
+            hi does this show up at all pls tell me lol
         </div>
     </div>
 </div>
@@ -120,19 +148,36 @@
             y.style.display = "none"
         }
     }
+    // function logToSign(){
+    //     var cardSign = document.getElementById("card-signup");
+    //     var cardLog = document.getElementById("card-login");
+    //     if (cardSign){
+    //         cardSign.id = "card-login";
+    //     } else {
+    //         cardLog.id = "card-signup";
+    //     }
+    // }
     function logToSign(){
-        var cardSign = document.getElementById("card-signup");
-        var cardLog = document.getElementById("card-login");
-        if (cardSign){
-            cardSign.id = "card-login";
+        var card = document.getElementById("card");
+        if (card.classList.contains("login")){
+            card.classList.remove("login");
+            card.classList.add("signup");
+            document.getElementById("logged").style.visibility = "hidden";
+            document.getElementById("logged").style.height = "0%";
+            document.getElementById("logged").style.margin = "0";
+            document.getElementById("signed").style.visibility = "visible";
         } else {
-            cardLog.id = "card-signup";
+            card.classList.remove("signup");
+            card.classList.add("login");
+            document.getElementById("signed").style.visibility = "hidden";
+            document.getElementById("logged").style.height = "100%";
+            document.getElementById("logged").style.margin = "10vh 0 0 0";
+            document.getElementById("logged").style.visibility = "visible";
         }
     }
     outerLogin.addEventListener("click", function(e){
         if(e.target === outerLogin){
             unblurred();
-            console.log("outer was clicked")
         }
     })
 
