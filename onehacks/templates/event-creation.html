@@ -73,46 +73,78 @@
         <div class="title is-1">Enter your Event details</div>
 
         <form>
-            <div class="field">
-                <label class="label">Name of the Event</label>
-                <div class="control">
-                  <input class="input" type="text" placeholder="Event Name">
+            <div class="columns">
+                <div class="column is-6 box has-background-success-light mx-3 mt-4">
+                    <div class="field">
+                        <label class="label is-size-3">Name of the Event</label>
+                        <div class="control">
+                          <input class="input" type="text" placeholder="Event Name">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3">Pass Code</label>
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Pass Code">
+                              </div>
+                              <div class="control">
+                                  <button class="button is-link"type="button">Enable</button>
+                              </div>
+                        </div>
+                        <p class="help">Enter a passcode if you only want to let certain people join</p>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3">Start Time</label>
+                        <div class="control">
+                          <input type="datetime-local">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3">End Time</label>
+                        <div class="control">
+                          <input type="datetime-local">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3">Time zone</label>
+                        <div class="control">
+                            <div class="select">
+                              <select>
+                                <option>Select Timezone</option>
+                                <option>With options</option>
+                              </select>
+                            </div>
+                        </div>
+                        <p class="help">Select your timezone</p>
+                    </div>
+                </div>
+
+                <div class="column box has-background-success-light mx-3 mt-4">
+                    <div class="field">
+                        <label class="label is-size-3">Short description</label>
+                        <div class="control">
+                            <textarea class="textarea" rows="5">
+                            </textarea>
+                        </div>
+                        <p class="help">This description will be visible to the public</p>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3">Long description</label>
+                        <div class="control">
+                            <textarea class="textarea" rows="7">
+                            </textarea>
+                        </div>
+                        <p class="help">This description will only be visible to the entered members</p>
+                    </div>
                 </div>
             </div>
-            <div class="field">
-                <label class="label">Start Time</label>
-                <div class="control">
-                  <input type="datetime-local">
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">End Time</label>
-                <div class="control">
-                  <input type="datetime-local">
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">Short description</label>
-                <div class="control">
-                    <textarea class="textarea" placeholder="Hovered textarea">
-                    </textarea>
-                </div>
-                <p class="help">This description will be visible to the public</p>
-            </div>
-            <div class="field">
-                <label class="label">Long description</label>
-                <div class="control">
-                    <textarea class="textarea" placeholder="Hovered textarea">
-                    </textarea>
-                </div>
-                <p class="help">This description will only be visible to the entered members</p>
-            </div>
+
             <div class="field is-grouped">
                 <div class="control">
-                  <button type="submit" class="button is-success">Submit</button>
+                  <button type="submit" class="button is-success is-large">Submit</button>
                 </div>
                 <div class="control">
-                  <button type="reset" class="button is-primary">Reset</button>
+                  <button type="reset" class="button is-primary is-large">Reset</button>
                 </div>
               </div>
         </form>
