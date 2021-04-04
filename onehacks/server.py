@@ -15,12 +15,14 @@ load_dotenv(find_dotenv())
 
 
 app = Sanic("onehacks")
+
 app.config.DB_URI = os.environ.get("DB_URI", "sqlite:///data.db")
 app.ctx.db = Database(app)
 
 # initializing firebase app
 cred = credentials.Certificate("admin-sdk.json")
 app.ctx.firebase = firebase_admin.initialize_app(cred)
+app.config.FIREBASE_API_KEY = os.environ.get("FIREBASE_WEB_API_KEY")
 
 # initializing jinja2 templates
 app.ctx.env = Environment(

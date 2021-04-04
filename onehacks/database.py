@@ -78,7 +78,8 @@ class Database:
         users = """CREATE TABLE IF NOT EXISTS users(
             uid BIGINT PRIMARY KEY,
             email TEXT UNIQUE,
-            username VARCHAR(25) NOT NULL
+            username VARCHAR(25) NOT NULL,
+            tz VARCHAR(50)
         )"""
         events = """CREATE TABLE IF NOT EXISTS events(
             event_id BIGINT PRIMARY KEY,
