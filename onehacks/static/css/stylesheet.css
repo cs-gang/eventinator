@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap");
 /*! bulma.io v0.9.2 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .button, .input, .textarea, .select select, .file-cta,
@@ -294,7 +295,7 @@ code,
 pre {
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: auto;
-  font-family: monospace; }
+  font-family: "Inknut Antiqua", monospace; }
 
 body {
   color: #4a4a4a;
@@ -6951,10 +6952,10 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   font-family: "Playfair Display", sans-serif !important; }
 
 .is-family-monospace {
-  font-family: monospace !important; }
+  font-family: "Inknut Antiqua", monospace !important; }
 
 .is-family-code {
-  font-family: monospace !important; }
+  font-family: "Inknut Antiqua", monospace !important; }
 
 .is-block {
   display: block !important; }
