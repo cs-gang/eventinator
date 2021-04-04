@@ -1,0 +1,116 @@
+//colors
+$darkpurple: #261447;
+$magenta: #FF3864;
+$lightorange: #F5B48E;
+$cream: #EBF5EE;
+$lightblue: #AF8CE3;
+$googlered: #DE5246;
+$discordblue: #738ADB;
+$lavender: #E8DEF7;
+$pink: #FFC2CF;
+
+//color
+$primary: $magenta;
+$success: $darkpurple;
+$warning: $cream;
+$link: $googlered;
+$info: $discordblue;
+$link-light: $lightorange;
+$info-light: $lightblue;
+$success-light: $lavender;
+$primary-light: $pink;
+
+#login{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    #login-form{
+        z-index: 10000;
+        width: 70%;
+        height: 90%;
+        margin: auto;
+        margin-top: 6vh;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        padding: 0;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+        0 12.5px 10px rgba(0, 0, 0, 0.06),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+        0 100px 80px rgba(0, 0, 0, 0.12);
+    }
+    
+    #card{
+        width: 45%;
+        padding: 5vh 50px 0 50px;
+        background: linear-gradient(to top, $primary, $darkpurple);
+        height: 100%;
+        float: right;
+    }
+    
+    #submit{
+        margin-top: 5vh;
+        bottom: 0;
+    }
+    
+    .field{
+        margin-top: 10vh;
+    }
+
+    label{
+        margin: 9px 0 9px 0;
+        font-size: 2vw;
+        color: $cream;
+    }
+
+    strong{
+        padding: 0;
+        color: $cream;
+    }
+
+    button{
+        border: 0;
+        font-size: 2vw;
+        padding: 10px;
+        border-radius: 10px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: $darkpurple;
+        color: $cream;
+        font-weight: 700;
+    }
+    
+    input{
+        font-size: 1.3vw;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    a{
+        font-size: 1.25vw;
+        padding-top: 1vh;
+        color: $cream;
+    }
+    a:hover{
+        color: rgb(0, 89, 190);
+    }
+}
+
+footer{
+    font-size: 1rem;
+}
+.control{
+    margin: 0;
+    padding: 0;
+}
+
+#index{
+    width: 100%;
+}
+
+body{
+    font-size: 4vw;
+}
