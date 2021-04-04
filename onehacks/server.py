@@ -4,9 +4,14 @@ import os
 from dotenv import find_dotenv, load_dotenv
 import firebase_admin
 from firebase_admin import credentials
+from jinja2 import Environment, PackageLoader, select_autoescape
 from sanic import Sanic
+from sanic.request import Request
+from sanic.response import html, HTTPResponse
 
 from onehacks.database import Database
+from onehacks.utils import render_page
+
 
 load_dotenv(find_dotenv())
 
@@ -18,8 +23,17 @@ app.ctx.db = Database(app)
 cred = credentials.Certificate("admin-sdk.json")
 firebase = firebase_admin.initialize_app(cred)
 
+# initializing jinja2 templates
+app.ctx.env = Environment(
+    loader=PackageLoader("onehacks", "templates"),
+    autoescape=select_autoescape(["html"]),
+    enable_async=True,
+)
+
+app.static("/static", "./onehacks/static")
+
 
 @app.before_server_start
 async def connect_db(app: Sanic, loop: asyncio.AbstractEventLoop) -> None:
     await app.ctx.db.connect()
-    await app.ctx.db.initialize_tables()
+    # await app.ctx.db.initialize_tables()
