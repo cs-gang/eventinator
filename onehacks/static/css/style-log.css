@@ -1,0 +1,106 @@
+#login {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#login #login-form {
+  z-index: 10000;
+  width: 70%;
+  height: 90%;
+  margin: auto;
+  margin-top: 6vh;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 0;
+  -webkit-box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+#login #card-login {
+  width: 45%;
+  padding: 5vh 50px 0 50px;
+  background: -webkit-gradient(linear, left bottom, left top, from(#FF3864), to(#261447));
+  background: linear-gradient(to top, #FF3864, #261447);
+  height: 100%;
+  -webkit-transition: float 1s;
+  transition: float 1s;
+}
+
+#login #card-signup {
+  width: 45%;
+  padding: 5vh 50px 0 50px;
+  background: -webkit-gradient(linear, left bottom, left top, from(#FF3864), to(#261447));
+  background: linear-gradient(to top, #FF3864, #261447);
+  height: 100%;
+  float: right;
+  -webkit-transition: float 1s;
+  transition: float 1s;
+}
+
+#login #submit {
+  margin-top: 5vh;
+  bottom: 0;
+}
+
+#login .field {
+  margin-top: 10vh;
+}
+
+#login label {
+  margin: 9px 0 9px 0;
+  font-size: 2vw;
+  color: #EBF5EE;
+}
+
+#login strong {
+  padding: 0;
+  color: #EBF5EE;
+}
+
+#login button {
+  border: 0;
+  font-size: 2vw;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #261447;
+  color: #EBF5EE;
+  font-weight: 700;
+}
+
+#login input {
+  font-size: 1.3vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#login a {
+  font-size: 1.25vw;
+  padding-top: 1vh;
+  color: #EBF5EE;
+}
+
+#login a:hover {
+  color: #0059be;
+}
+
+footer {
+  font-size: 1rem;
+}
+
+.control {
+  margin: 0;
+  padding: 0;
+}
+
+#index {
+  width: 100%;
+}
+
+body {
+  font-size: 4vw;
+}
+/*# sourceMappingURL=style-log.css.map */
