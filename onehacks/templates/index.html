@@ -13,58 +13,60 @@
 <div id="login" style="display: none;">
     <div class="" id="login-form">
         <div id="card" class="login">
-            <strong>Log In!</strong>
-            <form>
-                <div class="field" id="logged" style="visibility: visible;">
-                    <label class="label ">Email:</label>
+            <div class="field" id="logged" style="visibility: visible;">
+                <strong>Log In!</strong>
+                <form method="POST" action="/users/login">
+                {{ form.csrf_token }}
+                    <label for="email" class="label">Email:</label>
                     <div class="control">
-                        <input type="email" class="input" placeholder="name@domain.com">
+                        <input id="email" name="email" type="email" class="input" placeholder="name@domain.com">
                     </div>
-                    <label class="label ">Password:</label>
+                    <label for="password" class="label">Password:</label>
                     <div class="control">
-                        <input type="password" class="input" placeholder="Password">
+                        <input id="password" name="password" type="password" class="input" placeholder="Password">
                     </div>
                     <div id="sign">
                         <a onclick="logToSign()">Don't have an account? Sign Up!</a>
                     </div>
                     <div id="submit">
-                        <button id="log" class="is-success">
+                        <button type="submit" id="loggedin">
                             Log In
                         </button>
-                        <button id="close">
+                        <button type="button" id="close">
                             Cancel
                         </button>
                     </div>
-                </div>
-                <div class="field" id="signed" style="visibility: hidden;">
-                    <label class="label ">Username:</label>
+                </form>
+            </div>
+            <div class="field" id="signed" style="visibility: hidden;">
+                <strong>Sign Up!</strong>
+                <form method="POST" action="/users/new">
+                {{ form.csrf_token }}
+                    <label for="username" class="label ">Username:</label>
                     <div class="control">
-                        <input type="email" class="input" placeholder="Username">
+                        <input type="text" id="username" name="username" class="input" placeholder="Username">
                     </div>
-                    <label class="label ">Email:</label>
+                    <label for="email" class="label ">Email:</label>
                     <div class="control">
-                        <input type="email" class="input" placeholder="name@domain.com">
+                        <input type="email" id="email" name="email" class="input" placeholder="name@domain.com">
                     </div>
-                    <label class="label ">Password:</label>
+                    <label class="label" for="password">Password:</label>
                     <div class="control">
-                        <input type="password" class="input" placeholder="Password">
+                        <input type="password" id="password" name="password" class="input" placeholder="Password">
                     </div>
                     <div id="sign">
-                        <a onclick="logToSign()">Don't have an account? Sign Up!</a>
+                        <a onclick="logToSign()">Already have an account? Log In!</a>
                     </div>
                     <div id="submit">
-                        <button id="log" class="is-success">
-                            Log In
+                        <button type="submit" id="signedup">
+                            Sign Up
                         </button>
-                        <button id="close">
+                        <button type="button" id="close">
                             Cancel
                         </button>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="doesthiswork">
-            hi does this show up at all pls tell me lol
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -171,7 +173,7 @@
             card.classList.add("login");
             document.getElementById("signed").style.visibility = "hidden";
             document.getElementById("logged").style.height = "100%";
-            document.getElementById("logged").style.margin = "10vh 0 0 0";
+            document.getElementById("logged").style.margin = "9vh 0 0 0";
             document.getElementById("logged").style.visibility = "visible";
         }
     }

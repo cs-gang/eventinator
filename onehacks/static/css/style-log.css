@@ -30,14 +30,14 @@
 
 #login .login {
   margin-left: 0%;
-  -webkit-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 #login .signup {
   margin-left: 55%;
-  -webkit-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 #login #submit {
@@ -45,8 +45,15 @@
   bottom: 0;
 }
 
-#login .field {
-  margin-top: 10vh;
+#login #logged {
+  margin-top: 9vh;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+#login #signed {
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 #login label {

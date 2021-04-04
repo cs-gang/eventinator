@@ -54,12 +54,12 @@ $primary-light: $pink;
 
     .login{
         margin-left: 0%;
-        transition: all 0.5s ease-in-out;
+        transition: all 0.25s ease-in-out;
     }
 
     .signup{
         margin-left: 55%;
-        transition: all 0.5s ease-in-out;
+        transition: all 0.25s ease-in-out;
     }
     
     #submit{
@@ -67,8 +67,13 @@ $primary-light: $pink;
         bottom: 0;
     }
     
-    .field{
-        margin-top: 10vh;
+    #logged{
+        margin-top: 9vh;
+        transition: all 0.25s ease-in-out;
+    }
+
+    #signed{
+        transition: all 0.25s ease-in-out;
     }
 
     label{
