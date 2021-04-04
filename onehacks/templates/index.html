@@ -16,7 +16,7 @@
             <div class="field" id="logged" style="visibility: visible;">
                 <strong>Log In!</strong>
                 <form method="POST" action="/users/login">
-                {{ form.csrf_token }}
+                <!-- {{ form.csrf_token }} -->
                     <label for="email" class="label">Email:</label>
                     <div class="control">
                         <input id="email" name="email" type="email" class="input" placeholder="name@domain.com">
@@ -26,13 +26,13 @@
                         <input id="password" name="password" type="password" class="input" placeholder="Password">
                     </div>
                     <div id="sign">
-                        <a onclick="logToSign()">Don't have an account? Sign Up!</a>
+                        <a onclick="switchcase()">Don't have an account? Sign Up!</a>
                     </div>
                     <div id="submit">
                         <button type="submit" id="loggedin">
                             Log In
                         </button>
-                        <button type="button" id="close">
+                        <button onclick="unblurred()" type="button" id="close">
                             Cancel
                         </button>
                     </div>
@@ -41,7 +41,7 @@
             <div class="field" id="signed" style="visibility: hidden;">
                 <strong>Sign Up!</strong>
                 <form method="POST" action="/users/new">
-                {{ form.csrf_token }}
+                <!-- {{ form.csrf_token }} -->
                     <label for="username" class="label ">Username:</label>
                     <div class="control">
                         <input type="text" id="username" name="username" class="input" placeholder="Username">
@@ -55,13 +55,13 @@
                         <input type="password" id="password" name="password" class="input" placeholder="Password">
                     </div>
                     <div id="sign">
-                        <a onclick="logToSign()">Already have an account? Log In!</a>
+                        <a onclick="switchcase()">Already have an account? Log In!</a>
                     </div>
                     <div id="submit">
                         <button type="submit" id="signedup">
                             Sign Up
                         </button>
-                        <button type="button" id="close">
+                        <button onclick="unblurred()" type="button" id="close">
                             Cancel
                         </button>
                     </div>
@@ -84,12 +84,12 @@
             <div class="hero-body">
                 <div class="mx-6 is-size-2">
                     <div class="">Log in with</div>
-                    <button onclick="blurred()" class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-envelope"></span></span><span></span>Email</button>
+                    <button onclick="blurred('login')" class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-envelope"></span></span><span></span>Email</button>
                     <a class="box button is-info is-size-3 has-text-weight-semibold" href="discord">
                         <div class="image flex"><img src="../static/images/Discord-Logo+Wordmark-White1.png"></div>
                     </a>
                     <div class="">Or ...</div>
-                    <a class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-mail-bulk"></span></span><span></span>Sign Up</a>
+                    <a onclick="blurred('signup')" class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-mail-bulk"></span></span><span></span>Sign Up</a>
                 </div>
             </div>
         </div>
@@ -134,32 +134,33 @@
 <script>
     var outerLogin = document.getElementById("login");
     
-    function blurred(){
+    function blurred(z){
         var x = document.getElementById("index");
         var y = document.getElementById("login");
+        var logged = document.getElementById("logged").style.visibility;
         if (x.style.filter == "none") {
-            x.style.filter = "blur(3px)";
+            if (z === "signup"){
+                if (logged === "visible"){
+                    switchcase();
+                }
+            } else {
+                if (logged === "hidden"){
+                    switchcase();
+                }
+            }
+            x.style.filter = "blur(4px)";
             y.style.removeProperty("display")
         }
     }
     function unblurred(){
         var x = document.getElementById("index")
         var y = document.getElementById("login");
-        if (x.style.filter == "blur(3px)") {
+        if (x.style.filter == "blur(4px)") {
             x.style.filter = "none";
             y.style.display = "none"
         }
     }
-    // function logToSign(){
-    //     var cardSign = document.getElementById("card-signup");
-    //     var cardLog = document.getElementById("card-login");
-    //     if (cardSign){
-    //         cardSign.id = "card-login";
-    //     } else {
-    //         cardLog.id = "card-signup";
-    //     }
-    // }
-    function logToSign(){
+    function switchcase(){
         var card = document.getElementById("card");
         if (card.classList.contains("login")){
             card.classList.remove("login");
@@ -177,6 +178,26 @@
             document.getElementById("logged").style.visibility = "visible";
         }
     }
+
+    function signToLog(){
+        var card = document.getElementById("card");
+        if (card.classList.contains("login")){
+            card.classList.remove("login");
+            card.classList.add("signup");
+            document.getElementById("logged").style.visibility = "hidden";
+            document.getElementById("logged").style.height = "0%";
+            document.getElementById("logged").style.margin = "0";
+            document.getElementById("signed").style.visibility = "visible";
+        } else {
+            card.classList.remove("signup");
+            card.classList.add("login");
+            document.getElementById("signed").style.visibility = "hidden";
+            document.getElementById("logged").style.height = "100%";
+            document.getElementById("logged").style.margin = "9vh 0 0 0";
+            document.getElementById("logged").style.visibility = "visible";
+        }
+    }
+
     outerLogin.addEventListener("click", function(e){
         if(e.target === outerLogin){
             unblurred();
