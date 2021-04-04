@@ -1032,14 +1032,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-success.is-light {
-      background-color: #f3effb;
+      background-color: #D0BDEF;
       color: #7c50ce; }
       .button.is-success.is-light:hover, .button.is-success.is-light.is-hovered {
-        background-color: #ece5f8;
+        background-color: #c9b3ed;
         border-color: transparent;
         color: #7c50ce; }
       .button.is-success.is-light:active, .button.is-success.is-light.is-active {
-        background-color: #e4dbf5;
+        background-color: #c1a8ea;
         border-color: transparent;
         color: #7c50ce; }
   .button.is-warning {
@@ -1632,7 +1632,7 @@ div.icon-text {
     background-color: #261447;
     color: #fff; }
     .notification.is-success.is-light {
-      background-color: #f3effb;
+      background-color: #D0BDEF;
       color: #7c50ce; }
   .notification.is-warning {
     background-color: #EBF5EE;
@@ -1995,7 +1995,7 @@ div.icon-text {
     background-color: #261447;
     color: #fff; }
     .tag:not(body).is-success.is-light {
-      background-color: #f3effb;
+      background-color: #D0BDEF;
       color: #7c50ce; }
   .tag:not(body).is-warning {
     background-color: #EBF5EE;
@@ -3371,7 +3371,7 @@ button.dropdown-item {
       border-color: #738ADB;
       color: #2a44a2; }
   .message.is-success {
-    background-color: #f3effb; }
+    background-color: #D0BDEF; }
     .message.is-success .message-header {
       background-color: #261447;
       color: #fff; }
@@ -5998,13 +5998,13 @@ a.has-text-success:hover, a.has-text-success:focus {
   background-color: #261447 !important; }
 
 .has-text-success-light {
-  color: #f3effb !important; }
+  color: #D0BDEF !important; }
 
 a.has-text-success-light:hover, a.has-text-success-light:focus {
-  color: #d5c7ef !important; }
+  color: #b394e5 !important; }
 
 .has-background-success-light {
-  background-color: #f3effb !important; }
+  background-color: #D0BDEF !important; }
 
 .has-text-success-dark {
   color: #7c50ce !important; }
