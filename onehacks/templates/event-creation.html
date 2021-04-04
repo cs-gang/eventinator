@@ -8,67 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-          </a>
-
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item">
-              Home
-            </a>
-
-            <a class="navbar-item">
-              Documentation
-            </a>
-
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
-                More
-              </a>
-
-              <div class="navbar-dropdown">
-                <a class="navbar-item">
-                  About
-                </a>
-                <a class="navbar-item">
-                  Jobs
-                </a>
-                <a class="navbar-item">
-                  Contact
-                </a>
-                <hr class="navbar-divider">
-                <a class="navbar-item">
-                  Report an issue
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a class="button is-light">
-                  Log in
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-    </nav>
-
     <main class="box has-background-success-light mx-6 my-6">
         <div class="title is-1">Enter your Event details</div>
 
@@ -76,44 +15,53 @@
             <div class="columns">
                 <div class="column is-6 box has-background-success-light mx-3 mt-4">
                     <div class="field">
-                        <label class="label is-size-3">Name of the Event</label>
-                        <div class="control">
-                          <input class="input" type="text" placeholder="Event Name">
+                        <label class="label is-size-3" for="eventname">Name of the Event</label>
+                        <div class="control has-icons-left">
+                          <input class="input" type="text" placeholder="Event Name" maxlength="80" id="eventname" name="eventname">
+                          <span class="icon is-small is-left">
+                            <span class="fas fa-pen"></span>
+                        </span>
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label is-size-3">Pass Code</label>
+                        <label class="label is-size-3" for="passcode">Pass Code</label>
                         <div class="field has-addons">
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Pass Code" maxlength="10" id="passcode" name="passcode">
+                                <span class="icon is-small is-left">
+                                    <span class="fas fa-lock"></span>
+                                </span>
+                            </div>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Pass Code">
-                              </div>
-                              <div class="control">
-                                  <button class="button is-link"type="button">Enable</button>
-                              </div>
+                                  <button class="button is-link" type="button" id="passcodeenable">Enable</button>
+                            </div>
                         </div>
                         <p class="help">Enter a passcode if you only want to let certain people join</p>
                     </div>
                     <div class="field">
-                        <label class="label is-size-3">Start Time</label>
+                        <label class="label is-size-3" for="starttime">Start Time</label>
                         <div class="control">
-                          <input type="datetime-local">
+                          <input type="datetime-local" id="starttime" name="starttime">
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label is-size-3">End Time</label>
+                        <label class="label is-size-3" for="endtime">End Time</label>
                         <div class="control">
-                          <input type="datetime-local">
+                          <input type="datetime-local" id="endtime" name="endtime">
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label is-size-3">Time zone</label>
-                        <div class="control">
+                        <label class="label is-size-3" for="timezone">Time zone</label>
+                        <div class="control has-icons-left">
                             <div class="select">
-                              <select>
+                              <select id="timezone" name="timezone">
                                 <option>Select Timezone</option>
                                 <option>With options</option>
                               </select>
                             </div>
+                            <span class="icon is-small is-left">
+                                <span class="fas fa-user-clock"></span>
+                            </span>
                         </div>
                         <p class="help">Select your timezone</p>
                     </div>
@@ -121,17 +69,17 @@
 
                 <div class="column box has-background-success-light mx-3 mt-4">
                     <div class="field">
-                        <label class="label is-size-3">Short description</label>
+                        <label class="label is-size-3" for="shortdescription">Short description</label>
                         <div class="control">
-                            <textarea class="textarea" rows="5">
+                            <textarea class="textarea" rows="5" maxlength="1500" id="shortdescription" name="shortdescription">
                             </textarea>
                         </div>
                         <p class="help">This description will be visible to the public</p>
                     </div>
                     <div class="field">
-                        <label class="label is-size-3">Long description</label>
+                        <label class="label is-size-3" for="longdescription">Long description</label>
                         <div class="control">
-                            <textarea class="textarea" rows="7">
+                            <textarea class="textarea" rows="7" maxlength="5000" id="longdescription" name="longdescription">
                             </textarea>
                         </div>
                         <p class="help">This description will only be visible to the entered members</p>
