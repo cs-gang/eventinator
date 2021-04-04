@@ -1,0 +1,25 @@
+{
+  "name": "onehacks-project",
+  "version": "1.0.0",
+  "description": "Our submission for OneHacks hackathon",
+  "main": "onehacks/static/css/stylesheet.sass",
+  "scripts": {
+    "css-build": "node-sass --omit-source-map-url onehacks/static/css/stylesheet.sass onehacks/static/css/stylesheet.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "npm run css-watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cs-gang/onehacks-project.git"
+  },
+  "author": "cs-gang",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/cs-gang/onehacks-project/issues"
+  },
+  "homepage": "https://github.com/cs-gang/onehacks-project#readme",
+  "devDependencies": {
+    "bulma": "^0.9.2",
+    "node-sass": "^5.0.0"
+  }
+}
