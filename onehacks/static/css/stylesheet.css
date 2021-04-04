@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Roboto&display=swap");
 /*! bulma.io v0.9.2 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .button, .input, .textarea, .select select, .file-cta,
@@ -287,13 +290,13 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif; }
+  font-family: "Playfair Display", sans-serif; }
 
 code,
 pre {
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: auto;
-  font-family: monospace; }
+  font-family: "Roboto", sans-serif; }
 
 body {
   color: #4a4a4a;
@@ -795,14 +798,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-primary.is-light {
-      background-color: #ffebef;
+      background-color: #FFC2CF;
       color: #db0030; }
       .button.is-primary.is-light:hover, .button.is-primary.is-light.is-hovered {
-        background-color: #ffdee5;
+        background-color: #ffb5c5;
         border-color: transparent;
         color: #db0030; }
       .button.is-primary.is-light:active, .button.is-primary.is-light.is-active {
-        background-color: #ffd1db;
+        background-color: #ffa9bb;
         border-color: transparent;
         color: #db0030; }
   .button.is-link {
@@ -874,14 +877,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-link.is-light {
-      background-color: #F18E55;
+      background-color: #F5B48E;
       color: #ba2d21; }
       .button.is-link.is-light:hover, .button.is-link.is-light.is-hovered {
-        background-color: #f08649;
+        background-color: #f4ac82;
         border-color: transparent;
         color: #ba2d21; }
       .button.is-link.is-light:active, .button.is-link.is-light.is-active {
-        background-color: #ef7e3d;
+        background-color: #f3a477;
         border-color: transparent;
         color: #ba2d21; }
   .button.is-info {
@@ -953,14 +956,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-info.is-light {
-      background-color: #78A1BB;
+      background-color: #AF8CE3;
       color: #2a44a2; }
       .button.is-info.is-light:hover, .button.is-info.is-light.is-hovered {
-        background-color: #709bb7;
+        background-color: #a882e1;
         border-color: transparent;
         color: #2a44a2; }
       .button.is-info.is-light:active, .button.is-info.is-light.is-active {
-        background-color: #6795b2;
+        background-color: #a177de;
         border-color: transparent;
         color: #2a44a2; }
   .button.is-success {
@@ -1032,14 +1035,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-success.is-light {
-      background-color: #D0BDEF;
+      background-color: #E8DEF7;
       color: #7c50ce; }
       .button.is-success.is-light:hover, .button.is-success.is-light.is-hovered {
-        background-color: #c9b3ed;
+        background-color: #e1d4f5;
         border-color: transparent;
         color: #7c50ce; }
       .button.is-success.is-light:active, .button.is-success.is-light.is-active {
-        background-color: #c1a8ea;
+        background-color: #dac9f2;
         border-color: transparent;
         color: #7c50ce; }
   .button.is-warning {
@@ -1614,25 +1617,25 @@ div.icon-text {
     background-color: #FF3864;
     color: #fff; }
     .notification.is-primary.is-light {
-      background-color: #ffebef;
+      background-color: #FFC2CF;
       color: #db0030; }
   .notification.is-link {
     background-color: #DE5246;
     color: #fff; }
     .notification.is-link.is-light {
-      background-color: #F18E55;
+      background-color: #F5B48E;
       color: #ba2d21; }
   .notification.is-info {
     background-color: #738ADB;
     color: #fff; }
     .notification.is-info.is-light {
-      background-color: #78A1BB;
+      background-color: #AF8CE3;
       color: #2a44a2; }
   .notification.is-success {
     background-color: #261447;
     color: #fff; }
     .notification.is-success.is-light {
-      background-color: #D0BDEF;
+      background-color: #E8DEF7;
       color: #7c50ce; }
   .notification.is-warning {
     background-color: #EBF5EE;
@@ -1977,25 +1980,25 @@ div.icon-text {
     background-color: #FF3864;
     color: #fff; }
     .tag:not(body).is-primary.is-light {
-      background-color: #ffebef;
+      background-color: #FFC2CF;
       color: #db0030; }
   .tag:not(body).is-link {
     background-color: #DE5246;
     color: #fff; }
     .tag:not(body).is-link.is-light {
-      background-color: #F18E55;
+      background-color: #F5B48E;
       color: #ba2d21; }
   .tag:not(body).is-info {
     background-color: #738ADB;
     color: #fff; }
     .tag:not(body).is-info.is-light {
-      background-color: #78A1BB;
+      background-color: #AF8CE3;
       color: #2a44a2; }
   .tag:not(body).is-success {
     background-color: #261447;
     color: #fff; }
     .tag:not(body).is-success.is-light {
-      background-color: #D0BDEF;
+      background-color: #E8DEF7;
       color: #7c50ce; }
   .tag:not(body).is-warning {
     background-color: #EBF5EE;
@@ -2085,7 +2088,7 @@ a.tag:hover {
   .title:not(.is-spaced) + .subtitle {
     margin-top: -1.25rem; }
   .title.is-1 {
-    font-size: 3rem; }
+    font-size: 5rem; }
   .title.is-2 {
     font-size: 2.5rem; }
   .title.is-3 {
@@ -2110,7 +2113,7 @@ a.tag:hover {
   .subtitle:not(.is-spaced) + .title {
     margin-top: -1.25rem; }
   .subtitle.is-1 {
-    font-size: 3rem; }
+    font-size: 5rem; }
   .subtitle.is-2 {
     font-size: 2.5rem; }
   .subtitle.is-3 {
@@ -3347,7 +3350,7 @@ button.dropdown-item {
     .message.is-dark .message-body {
       border-color: #363636; }
   .message.is-primary {
-    background-color: #ffebef; }
+    background-color: #FFC2CF; }
     .message.is-primary .message-header {
       background-color: #FF3864;
       color: #fff; }
@@ -3355,7 +3358,7 @@ button.dropdown-item {
       border-color: #FF3864;
       color: #db0030; }
   .message.is-link {
-    background-color: #F18E55; }
+    background-color: #F5B48E; }
     .message.is-link .message-header {
       background-color: #DE5246;
       color: #fff; }
@@ -3363,7 +3366,7 @@ button.dropdown-item {
       border-color: #DE5246;
       color: #ba2d21; }
   .message.is-info {
-    background-color: #78A1BB; }
+    background-color: #AF8CE3; }
     .message.is-info .message-header {
       background-color: #738ADB;
       color: #fff; }
@@ -3371,7 +3374,7 @@ button.dropdown-item {
       border-color: #738ADB;
       color: #2a44a2; }
   .message.is-success {
-    background-color: #D0BDEF; }
+    background-color: #E8DEF7; }
     .message.is-success .message-header {
       background-color: #261447;
       color: #fff; }
@@ -5917,13 +5920,13 @@ a.has-text-primary:hover, a.has-text-primary:focus {
   background-color: #FF3864 !important; }
 
 .has-text-primary-light {
-  color: #ffebef !important; }
+  color: #FFC2CF !important; }
 
 a.has-text-primary-light:hover, a.has-text-primary-light:focus {
-  color: #ffb8c7 !important; }
+  color: #ff8fa7 !important; }
 
 .has-background-primary-light {
-  background-color: #ffebef !important; }
+  background-color: #FFC2CF !important; }
 
 .has-text-primary-dark {
   color: #db0030 !important; }
@@ -5944,13 +5947,13 @@ a.has-text-link:hover, a.has-text-link:focus {
   background-color: #DE5246 !important; }
 
 .has-text-link-light {
-  color: #F18E55 !important; }
+  color: #F5B48E !important; }
 
 a.has-text-link-light:hover, a.has-text-link-light:focus {
-  color: #ed6f26 !important; }
+  color: #f1955f !important; }
 
 .has-background-link-light {
-  background-color: #F18E55 !important; }
+  background-color: #F5B48E !important; }
 
 .has-text-link-dark {
   color: #ba2d21 !important; }
@@ -5971,13 +5974,13 @@ a.has-text-info:hover, a.has-text-info:focus {
   background-color: #738ADB !important; }
 
 .has-text-info-light {
-  color: #78A1BB !important; }
+  color: #AF8CE3 !important; }
 
 a.has-text-info-light:hover, a.has-text-info-light:focus {
-  color: #5689aa !important; }
+  color: #9263d9 !important; }
 
 .has-background-info-light {
-  background-color: #78A1BB !important; }
+  background-color: #AF8CE3 !important; }
 
 .has-text-info-dark {
   color: #2a44a2 !important; }
@@ -5998,13 +6001,13 @@ a.has-text-success:hover, a.has-text-success:focus {
   background-color: #261447 !important; }
 
 .has-text-success-light {
-  color: #D0BDEF !important; }
+  color: #E8DEF7 !important; }
 
 a.has-text-success-light:hover, a.has-text-success-light:focus {
-  color: #b394e5 !important; }
+  color: #cbb5ed !important; }
 
 .has-background-success-light {
-  background-color: #D0BDEF !important; }
+  background-color: #E8DEF7 !important; }
 
 .has-text-success-dark {
   color: #7c50ce !important; }
@@ -6641,7 +6644,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   padding-bottom: 3rem !important; }
 
 .is-size-1 {
-  font-size: 3rem !important; }
+  font-size: 5rem !important; }
 
 .is-size-2 {
   font-size: 2.5rem !important; }
@@ -6663,7 +6666,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (max-width: 768px) {
   .is-size-1-mobile {
-    font-size: 3rem !important; }
+    font-size: 5rem !important; }
   .is-size-2-mobile {
     font-size: 2.5rem !important; }
   .is-size-3-mobile {
@@ -6679,7 +6682,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 769px), print {
   .is-size-1-tablet {
-    font-size: 3rem !important; }
+    font-size: 5rem !important; }
   .is-size-2-tablet {
     font-size: 2.5rem !important; }
   .is-size-3-tablet {
@@ -6695,7 +6698,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (max-width: 1023px) {
   .is-size-1-touch {
-    font-size: 3rem !important; }
+    font-size: 5rem !important; }
   .is-size-2-touch {
     font-size: 2.5rem !important; }
   .is-size-3-touch {
@@ -6711,7 +6714,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 1024px) {
   .is-size-1-desktop {
-    font-size: 3rem !important; }
+    font-size: 5rem !important; }
   .is-size-2-desktop {
     font-size: 2.5rem !important; }
   .is-size-3-desktop {
@@ -6727,7 +6730,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 1216px) {
   .is-size-1-widescreen {
-    font-size: 3rem !important; }
+    font-size: 5rem !important; }
   .is-size-2-widescreen {
     font-size: 2.5rem !important; }
   .is-size-3-widescreen {
@@ -6743,7 +6746,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 1408px) {
   .is-size-1-fullhd {
-    font-size: 3rem !important; }
+    font-size: 5rem !important; }
   .is-size-2-fullhd {
     font-size: 2.5rem !important; }
   .is-size-3-fullhd {
@@ -6941,19 +6944,19 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   font-weight: 700 !important; }
 
 .is-family-primary {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important; }
+  font-family: "Playfair Display", sans-serif !important; }
 
 .is-family-secondary {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important; }
+  font-family: "Playfair Display", sans-serif !important; }
 
 .is-family-sans-serif {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important; }
+  font-family: "Playfair Display", sans-serif !important; }
 
 .is-family-monospace {
-  font-family: monospace !important; }
+  font-family: "Inknut Antiqua", monospace !important; }
 
 .is-family-code {
-  font-family: monospace !important; }
+  font-family: "Roboto", sans-serif !important; }
 
 .is-block {
   display: block !important; }
