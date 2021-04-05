@@ -56,7 +56,7 @@
 #login #signed {
   -webkit-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
-
+}
 #login label {
   margin: 9px 0 9px 0;
   font-size: 2vw;
