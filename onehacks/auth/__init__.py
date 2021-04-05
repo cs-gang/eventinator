@@ -136,6 +136,13 @@ class User:
             uid=self.uid,
         )
 
+    async def set_tz(self, app: Sanic, tz: str) -> None:
+        """Sets the user's timezone."""
+        self.tz = tz
+        await app.ctx.db.execute(
+            "UPDATE users SET tz = :tz WHERE uid = :uid", tz=tz, uid=self.uid
+        )
+
 
 def authorized():
     def decorator(func: Awaitable) -> Awaitable:

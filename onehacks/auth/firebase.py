@@ -2,7 +2,6 @@
 from datetime import datetime, timedelta
 from functools import partial
 import json
-from onehacks.auth import UnauthenticatedError
 from typing import Optional
 
 from firebase_admin import auth, exceptions
