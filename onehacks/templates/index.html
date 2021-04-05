@@ -11,194 +11,201 @@
 </head>
 
 <body>
-	<div id="login" style="display: none;">
-    	<div class="" id="login-form">
-        	<div id="card" class="login">
-            	<div class="field" id="logged" style="visibility: visible;">
-                	<strong>Log In!</strong>
-                	<form method="POST" action="/users/login">
-                	{{ login_form.csrf_token }}
-                    	<label for="email" class="label">Email:</label>
-                    	<div class="control">
-                        	<input id="email" name="email" type="email" class="input" placeholder="name@domain.com">
-                    	</div>
-                    	<label for="password" class="label">Password:</label>
-                    	<div class="control">
-                        	<input id="password" name="password" type="password" class="input" 	placeholder="Password">
-                    	</div>
-                    	<div id="sign">
-                        	<a onclick="switchcase()">Don't have an account? Sign Up!</a>
-                    	</div>
-                    	<div id="submit">
-                        	<button type="submit" id="loggedin">
-                            	Log In
-                        	</button>
-                        	<button onclick="unblurred()" type="button" id="close">
-                            	Cancel
-                        	</button>
-                    	</div>
-                	</form>
-            	</div>
-            	<div class="field" id="signed" style="visibility: hidden;">
-                <strong>Sign Up!</strong>
-                <form method="POST" action="/users/new">
-                {{ signup_form.csrf_token }}
-                    <label for="username" class="label ">Username:</label>
-                    <div class="control">
-                        <input type="text" id="username" name="username" class="input" placeholder="Username">
-                    </div>
-                    <label for="email" class="label ">Email:</label>
-                    <div class="control">
-                        <input type="email" id="email" name="email" class="input" placeholder="name@domain.com">
-                    </div>
-                    <label class="label" for="password">Password:</label>
-                    <div class="control">
-                        <input type="password" id="password" name="password" class="input" placeholder="Password">
-                    </div>
-                    <div id="sign">
-                        <a onclick="switchcase()">Already have an account? Log In!</a>
-                    </div>
-                    <div id="submit">
-                        <button type="submit" id="signedup">
-                            Sign Up
-                        </button>
-                        <button onclick="unblurred()" type="button" id="close">
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="index" style="filter: none;">
-        <header class="columns">
-            <div class="hero is-medium is-primary column is-8">
-                <div class="hero-body">
-                    <h1 class="title is-1 is-family-monospace">Meetinator</h1>
-                    <h2 class="subtitle is-3 is-italic">Manage all your events and meetings effectively</h2>
+    <div id="login" style="display: none;">
+        <div class="" id="login-form">
+            <div id="card" class="login">
+                <div class="field" id="logged" style="visibility: visible;">
+                    <strong>Log In!</strong>
+                    <form method="POST" action="/users/login">
+                        {{ login_form.csrf_token }}
+                        <label for="email" class="label">Email:</label>
+                        <div class="control">
+                            <input id="email" name="email" type="email" class="input" placeholder="name@domain.com">
+                        </div>
+                        <label for="password" class="label">Password:</label>
+                        <div class="control">
+                            <input id="password" name="password" type="password" class="input" placeholder="Password">
+                        </div>
+                        <div id="sign">
+                            <a onclick="switchcase()">Don't have an account? Sign Up!</a>
+                        </div>
+                        <div id="submit">
+                            <button type="submit" id="loggedin">
+                                Log In
+                            </button>
+                            <button onclick="unblurred()" type="button" id="close">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="field" id="signed" style="visibility: hidden;">
+                    <strong>Sign Up!</strong>
+                    <form method="POST" action="/users/new">
+                        {{ signup_form.csrf_token }}
+                        <label for="username" class="label ">Username:</label>
+                        <div class="control">
+                            <input type="text" id="username" name="username" class="input" placeholder="Username">
+                        </div>
+                        <label for="email" class="label ">Email:</label>
+                        <div class="control">
+                            <input type="email" id="email" name="email" class="input" placeholder="name@domain.com">
+                        </div>
+                        <label class="label" for="password">Password:</label>
+                        <div class="control">
+                            <input type="password" id="password" name="password" class="input" placeholder="Password">
+                        </div>
+                        <div id="sign">
+                            <a onclick="switchcase()">Already have an account? Log In!</a>
+                        </div>
+                        <div id="submit">
+                            <button type="submit" id="signedup">
+                                Sign Up
+                            </button>
+                            <button onclick="unblurred()" type="button" id="close">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+
+
+        <div id="index" style="filter: none;">
+            <header class="columns">
+                <div class="hero is-medium is-primary column is-8">
+                    <div class="hero-body">
+                        <h1 class="title is-1 is-family-monospace">Meetinator</h1>
+                        <h2 class="subtitle is-3 is-italic">Manage all your events and meetings effectively</h2>
+                    </div>
+                </div>
 
         </div>
         <div class="hero is-halfheight is-success column is-4">
             <div class="hero-body">
                 <div class="mx-6 is-size-2">
                     <div class="">Log in with</div>
-                    <button onclick="blurred('login')" class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-envelope"></span></span><span></span>Email</button>
+                    <button onclick="blurred('login')"
+                        class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span
+                                class="fas fa-envelope"></span></span><span></span>Email</button>
                     <a class="box button is-info is-size-3 has-text-weight-semibold" href="discord">
                         <div class="image flex"><img src="../static/images/Discord-Logo+Wordmark-White1.png"></div>
                     </a>
                     <div class="">Or ...</div>
-                    <a onclick="blurred('signup')" class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span class="fas fa-mail-bulk"></span></span><span></span>Sign Up</a>
+                    <a onclick="blurred('signup')"
+                        class="box button is-size-3 has-text-weight-semibold is-primary px-6"><span class="icon"><span
+                                class="fas fa-mail-bulk"></span></span><span></span>Sign Up</a>
 
                 </div>
             </div>
-        </header>
+            </header>
 
-        <main>
-            <div class="box columns mx-6 my-6 py-6 has-background-success-light">
-                <div class="column is-6">
-                    <div class="image is-5by3 mt-4">
-                        <img src="https://bulma.io/images/placeholders/800x480.png">
+            <main>
+                <div class="box columns mx-6 my-6 py-6 has-background-success-light">
+                    <div class="column is-6">
+                        <div class="image is-5by3 mt-4">
+                            <img src="https://bulma.io/images/placeholders/800x480.png">
+                        </div>
+                    </div>
+                    <div class="has-text-centered has-text-weight-light column is-6 is-size-5 ml-5 px-6">
+                        <div class="my-4">With the help of the meetinator, you can join Meetings created by other hosts
+                            with
+                            the click of a button</div>
+                        <div class="my-4">Meetings help the host and the members to coordinate effectively, ensuring
+                            that
+                            the meeting is a success</div>
+                        <div class="my-4">Manage multiple meetings effectively with the help of our system</div>
+                        <div class="my-4">Lead a stress free and productive professional life!</div>
                     </div>
                 </div>
-                <div class="has-text-centered has-text-weight-light column is-6 is-size-5 ml-5 px-6">
-                    <div class="my-4">With the help of the meetinator, you can join Meetings created by other hosts with
-                        the click of a button</div>
-                    <div class="my-4">Meetings help the host and the members to coordinate effectively, ensuring that
-                        the meeting is a success</div>
-                    <div class="my-4">Manage multiple meetings effectively with the help of our system</div>
-                    <div class="my-4">Lead a stress free and productive professional life!</div>
-                </div>
-            </div>
-            <div class="box columns mx-6 my-6 py-6 has-background-success-light">
-                <div class="column is-6">
-                    <div class="image is-5by3 mt-4">
-                        <img src="https://bulma.io/images/placeholders/800x480.png">
+                <div class="box columns mx-6 my-6 py-6 has-background-success-light">
+                    <div class="column is-6">
+                        <div class="image is-5by3 mt-4">
+                            <img src="https://bulma.io/images/placeholders/800x480.png">
+                        </div>
+                    </div>
+                    <div class="has-text-centered has-text-weight-light column is-6 is-size-5 ml-5 px-6">
+                        <div class="my-5">As the host of a meeting, you can share a [link/code] with the members which
+                            allows them to join it on this platform</div>
+                        <div class="my-5">The host can ask the members to provide information on entering which can help
+                            with arranging the meeting</div>
+                        <div class="my-5">Only the members can see details about the meeting. The host has complete
+                            freedom
+                            to decide which details to display</div>
                     </div>
                 </div>
-                <div class="has-text-centered has-text-weight-light column is-6 is-size-5 ml-5 px-6">
-                    <div class="my-5">As the host of a meeting, you can share a [link/code] with the members which
-                        allows them to join it on this platform</div>
-                    <div class="my-5">The host can ask the members to provide information on entering which can help
-                        with arranging the meeting</div>
-                    <div class="my-5">Only the members can see details about the meeting. The host has complete freedom
-                        to decide which details to display</div>
+            </main>
+
+
+            <footer class="footer has-background-success">
+                <div class="has-text-centered has-text-link-light">
+                    This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
                 </div>
-            </div>
-        </main>
+            </footer>
+        </div>
 
-
-        <footer class="footer has-background-success">
-            <div class="has-text-centered has-text-link-light">
-                This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
-            </div>
-        </footer>
-    </div>
-		
-<script>
-    var outerLogin = document.getElementById("login");
-    function blurred(z){
-        var x = document.getElementById("index");
-        var y = document.getElementById("login");
-        var logged = document.getElementById("logged").style.visibility;
-        if (x.style.filter == "none") {
-            if (z === "signup"){
-                if (logged === "visible"){
-                    switchcase();
-                }
-            } else {
-                if (logged === "hidden"){
-                    switchcase();
+        <script>
+            var outerLogin = document.getElementById("login");
+            function blurred(z) {
+                var x = document.getElementById("index");
+                var y = document.getElementById("login");
+                var logged = document.getElementById("logged").style.visibility;
+                if (x.style.filter == "none") {
+                    if (z === "signup") {
+                        if (logged === "visible") {
+                            switchcase();
+                        }
+                    } else {
+                        if (logged === "hidden") {
+                            switchcase();
+                        }
+                    }
+                    x.style.filter = "blur(4px)";
+                    y.style.removeProperty("display")
                 }
             }
-            x.style.filter = "blur(4px)";
-            y.style.removeProperty("display")
-        }
-    }
-    function unblurred(){
-        var x = document.getElementById("index")
-        var y = document.getElementById("login");
-        if (x.style.filter == "blur(4px)") {
-            x.style.filter = "none";
-            y.style.display = "none"
-        }
-    }
-	
-    function switchcase(){
-        var card = document.getElementById("card");
-        if (card.classList.contains("login")){
-            card.classList.remove("login");
-            card.classList.add("signup");
-            document.getElementById("logged").style.visibility = "hidden";
-            document.getElementById("logged").style.height = "0%";
-            document.getElementById("logged").style.margin = "0";
-            document.getElementById("signed").style.visibility = "visible";
-        } else {
-            card.classList.remove("signup");
-            card.classList.add("login");
-            document.getElementById("signed").style.visibility = "hidden";
-            document.getElementById("logged").style.height = "100%";
-            document.getElementById("logged").style.margin = "9vh 0 0 0";
-            document.getElementById("logged").style.visibility = "visible";
-        }
-    }
-
-    outerLogin.addEventListener("click", function(e){
-        if(e.target === outerLogin){
-            unblurred();
-
-        }
-        outerLogin.addEventListener("click", function (e) {
-            if (e.target === outerLogin) {
-                unblurred();
-                console.log("outer was clicked")
+            function unblurred() {
+                var x = document.getElementById("index")
+                var y = document.getElementById("login");
+                if (x.style.filter == "blur(4px)") {
+                    x.style.filter = "none";
+                    y.style.display = "none"
+                }
             }
-        })
 
-    </script>
+            function switchcase() {
+                var card = document.getElementById("card");
+                if (card.classList.contains("login")) {
+                    card.classList.remove("login");
+                    card.classList.add("signup");
+                    document.getElementById("logged").style.visibility = "hidden";
+                    document.getElementById("logged").style.height = "0%";
+                    document.getElementById("logged").style.margin = "0";
+                    document.getElementById("signed").style.visibility = "visible";
+                } else {
+                    card.classList.remove("signup");
+                    card.classList.add("login");
+                    document.getElementById("signed").style.visibility = "hidden";
+                    document.getElementById("logged").style.height = "100%";
+                    document.getElementById("logged").style.margin = "9vh 0 0 0";
+                    document.getElementById("logged").style.visibility = "visible";
+                }
+            }
+
+            outerLogin.addEventListener("click", function (e) {
+                if (e.target === outerLogin) {
+                    unblurred();
+                }
+            })
+            outerLogin.addEventListener("click", function (e) {
+                if (e.target === outerLogin) {
+                    unblurred();
+                    console.log("outer was clicked")
+                }
+            })
+
+        </script>
 
 </body>
 
