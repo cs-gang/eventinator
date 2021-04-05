@@ -43,10 +43,10 @@
             <span class="title is-1">Events</span>
             <a href="" class="button is-success is-large is-pulled-right my-4">Create Event</a>
         </div>
-        <div class="columns box has-background-success-light my-3 mx-3">
+        <div id="events" class="columns box has-background-success-light my-3 mx-3">
             <div class="column is-4">
-                <div class="card">
-                    <div class="card-header">
+                <a class="card">
+                    <div class="card-header mt-5">
                         <p class="card-header-title is-size-5 has-background-success has-text-warning">
                             Event-Bro-Event
                         </p>
@@ -66,55 +66,57 @@
                             2pm Gst+4
                         </p>
                     </div>
-                </div>
+                </a>
+                <a class="card">
+                    <div class="card-header mt-5">
+                        <p class="card-header-title is-size-5 has-background-success has-text-warning">
+                            Event-Bro-Event
+                        </p>
+                    </div>
+                    <div class="card-content has-background-info-light">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est quisquam, inventore ex
+                        voluptatem
+                        at, odio fugiat sunt exercitationem ab doloremque harum nobis maiores? Non expedita iste
+                        voluptas incidunt maxime. Aliquid!
+                        Beatae quia ullam ea ratione veritatis et repudiandae illum temporibus optio, vitae veniam
+                        saepe
+                        neque dolorem sint nemo eum hic esse harum at vero impedit reiciendis aliquam nesciunt.
+                        Asperiores, aperiam.
+                    </div>
+                    <div class="card-footer has-background-success has-text-warning">
+                        <p class="is-size-5 px-5 py-2">
+                            2pm Gst+4
+                        </p>
+                    </div>
+                </a>
+                <a class="card">
+                    <div class="card-header mt-5">
+                        <p class="card-header-title is-size-5 has-background-success has-text-warning">
+                            Event-Bro-Event
+                        </p>
+                    </div>
+                    <div class="card-content has-background-info-light">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est quisquam, inventore ex
+                        voluptatem
+                        at, odio fugiat sunt exercitationem ab doloremque harum nobis maiores? Non expedita iste
+                        voluptas incidunt maxime. Aliquid!
+                        Beatae quia ullam ea ratione veritatis et repudiandae illum temporibus optio, vitae veniam
+                        saepe
+                        neque dolorem sint nemo eum hic esse harum at vero impedit reiciendis aliquam nesciunt.
+                        Asperiores, aperiam.
+                    </div>
+                    <div class="card-footer has-background-success has-text-warning">
+                        <p class="is-size-5 px-5 py-2">
+                            2pm Gst+4
+                        </p>
+                    </div>
+                </a>
             </div>
             <div class=" column is-4">
-                <div class="card">
-                    <div class="card-header">
-                        <p class="card-header-title is-size-5 has-background-success has-text-warning">
-                            Event-Bro-Event
-                        </p>
-                    </div>
-                    <div class="card-content has-background-info-light">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est quisquam, inventore ex
-                        voluptatem
-                        at, odio fugiat sunt exercitationem ab doloremque harum nobis maiores? Non expedita iste
-                        voluptas incidunt maxime. Aliquid!
-                        Beatae quia ullam ea ratione veritatis et repudiandae illum temporibus optio, vitae veniam
-                        saepe
-                        neque dolorem sint nemo eum hic esse harum at vero impedit reiciendis aliquam nesciunt.
-                        Asperiores, aperiam.
-                    </div>
-                    <div class="card-footer has-background-success has-text-warning">
-                        <p class="is-size-5 px-5 py-2">
-                            2pm Gst+4
-                        </p>
-                    </div>
-                </div>
+
             </div>
             <div class="column is-4">
-                <div class="card">
-                    <div class="card-header">
-                        <p class="card-header-title is-size-5 has-background-success has-text-warning">
-                            Event-Bro-Event
-                        </p>
-                    </div>
-                    <div class="card-content has-background-info-light">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est quisquam, inventore ex
-                        voluptatem
-                        at, odio fugiat sunt exercitationem ab doloremque harum nobis maiores? Non expedita iste
-                        voluptas incidunt maxime. Aliquid!
-                        Beatae quia ullam ea ratione veritatis et repudiandae illum temporibus optio, vitae veniam
-                        saepe
-                        neque dolorem sint nemo eum hic esse harum at vero impedit reiciendis aliquam nesciunt.
-                        Asperiores, aperiam.
-                    </div>
-                    <div class="card-footer has-background-success has-text-warning">
-                        <p class="is-size-5 px-5 py-2">
-                            2pm Gst+4
-                        </p>
-                    </div>
-                </div>
+
             </div>
     </main>
 
@@ -124,6 +126,42 @@
         </div>
     </footer>
 
+
+    <script>
+        function generate_event_card() {
+            //Make components of event card
+            var event_card = document.createElement('a');
+            var event_header = document.createElement('div');
+            var event_body = document.createElement('div');
+            var event_footer = document.createElement('div');
+            var event_header_text = document.createElement('p');
+            var event_footer_text = document.createElement('p');
+            //Add classes to the componenets
+            event_card.classList.add("card");
+            event_header.classList.add("card-header", "mt-5");
+            event_body.classList.add("card-content", "has-background-info-light");
+            event_footer.classList.add("card-footer", "has-background-success", "has-text-warning");
+            event_header_text.classList.add("card-header-title", "is-size-5", "has-background-success", "has-text-warning");
+            event_footer_text.classList.add("is-size-5", "px-5", "py-2");
+            //Add the components as children
+            event_card.appendChild(event_header);
+            event_card.appendChild(event_body);
+            event_card.appendChild(event_footer);
+            event_header.appendChild(event_header_text);
+            event_footer.appendChild(event_footer_text);
+            //add the text to the card
+            event_header_text.textContent = "OogaBooga";
+            event_body.textContent = "OogaBooga";
+            event_footer_text.textContent = "OogaBooga";
+
+            return event_card
+        }
+
+        var event_holder = document.getElementById("events")
+        event_holder.childNodes[3].appendChild(generate_event_card())
+
+
+    </script>
 </body>
 
 </html>
