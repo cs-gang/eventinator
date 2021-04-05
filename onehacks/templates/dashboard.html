@@ -42,11 +42,15 @@
     <div id="personaldetailpopup" class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
-            <form class="box has-background-success-light">
+            <form id="check-detail-form" action="" class="box has-background-success-light">
+                {{ form.csrf.token }}
                 <div class="field">
                     <label class="label is-size-3" for="usernamecheck">Username</label>
-                    <div class="control">
+                    <div class="control has-icons-left">
                         <input class="input" type="text" id="usernamecheck" name="usernamecheck">
+                        <span class="icon is-small is-left">
+                            <span class="fas fa-user-check"></span>
+                        </span>
                     </div>
                     <p class="help">This name will be visible to the host of the meeting</p>
                 </div>
@@ -87,7 +91,7 @@
                                 </option>
                                 <option value='+03:00,0'>(+03:00) Kuwait, Riyadh, Nairobi, Tbilisi</option>
                                 <option value='+03:30,0'>(+03:30) Tehran</option>
-                                <option value='+04:00,0'>(+04:00) Abu Dhadi, Muscat</option>
+                                <option value='+04:00,0'>(+04:00) Abu Dhabi, Muscat</option>
                                 <option value='+04:00,1'>(+04:00) Baku, Yerevan</option>
                                 <option value='+04:30,0'>(+04:30) Kabul</option>
                                 <option value='+05:00,1'>(+05:00) Ekaterinburg</option>
@@ -159,6 +163,8 @@
 
         function closepopup() {
             var popup = document.getElementById("personaldetailpopup")
+            var check_form = document.getElementById("check-detail-form")
+            check_form.submit()
             popup.classList.remove("is-active")
         }
 
