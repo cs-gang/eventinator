@@ -1,6 +1,6 @@
 import os
 from functools import partial
-from typing import Callable
+from typing import Callable, Union
 
 from async_oauthlib import OAuth2Session
 from dotenv import find_dotenv, load_dotenv
@@ -28,7 +28,7 @@ def make_session(
         token=token,
         state=state,
         redirect_uri=REDIRECT_URI,
-        scope=["identify", "email"],
+        scope=["identify"],
         auto_refresh_kwargs={"client_id": CLIENT_ID, "client_secret": CLIENT_SECRET},
         token_updater=token_updater,
         auto_refresh_url=TOKEN_URL,
@@ -60,7 +60,7 @@ async def handle_callback(request: Request) -> bool:
     Returns boolean depending on whether the authentication was succesful.
     Arguments ::
         request: Request
-    Note that this will modify the request object and add the oauth2_token to it's session.
+    Note that this will modify the request object and add the oauth2_token to it's session if the authentication was succesful.
     """
     if request.args.get("error"):
         return False
@@ -74,3 +74,12 @@ async def handle_callback(request: Request) -> bool:
     )
     request.ctx.session["discord_oauth2_token"] = token
     return True
+
+
+def check_logged_in(request: Request) -> Union[dict, bool]:
+    """Returns the user's token if they finished authentication with discord, else return False."""
+    token = request.ctx.session.get("discord_oauth2_token")
+    if token:
+        return True
+    else:
+        return False

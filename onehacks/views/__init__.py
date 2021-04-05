@@ -4,3 +4,4 @@
 # and only importing those files will be done here
 import onehacks.views.index
 import onehacks.views.user
+import onehacks.views.discord
