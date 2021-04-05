@@ -1,0 +1,10 @@
+python==3.8
+sanic==20.12.3
+python-dotenv==0.17.0
+Jinja2==2.11.3
+databases==0.4.3
+Sanic-WTF==0.6.0
+asyncpg==0.22.0
+firebase-admin==4.5.3
+Async-OAuthlib==0.0.9
+sanic-session==0.7.3

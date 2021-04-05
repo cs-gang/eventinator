@@ -4,7 +4,7 @@
   "description": "Our submission for OneHacks hackathon",
   "main": "onehacks/static/css/stylesheet.sass",
   "scripts": {
-    "css-build": "node-sass --omit-source-map-url onehacks/static/css/stylesheet.sass onehacks/static/css/stylesheet.css",
+    "css-build": "node-sass --omit-source-map-url onehacks/static/css/stylesheet.scss onehacks/static/css/stylesheet.css",
     "css-watch": "npm run css-build -- --watch",
     "start": "npm run css-watch"
   },

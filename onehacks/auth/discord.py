@@ -79,7 +79,4 @@ async def handle_callback(request: Request) -> bool:
 def check_logged_in(request: Request) -> Union[dict, bool]:
     """Returns the user's token if they finished authentication with discord, else return False."""
     token = request.ctx.session.get("discord_oauth2_token")
-    if token:
-        return True
-    else:
-        return False
+    return token if token else False

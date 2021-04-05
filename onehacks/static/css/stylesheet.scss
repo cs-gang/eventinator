@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+//google font
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+//colors
+$darkpurple: #261447;
+$magenta: #FF3864;
+$lightorange: #F5B48E;
+$cream: #EBF5EE;
+$lightblue: #D1BDEF;
+$googlered: #DE5246;
+$discordblue: #738ADB;
+$lavender: #E8DEF7;
+$pink: #FF859F;
+
+//overriding global variables
+
+//color
+$primary: $magenta;
+$success: $darkpurple;
+$warning: $cream;
+$link: $googlered;
+$info: $discordblue;
+$link-light: $lightorange;
+$info-light: $lightblue;
+$success-light: $lavender;
+$primary-light: $pink;
+//font
+$family-sans-serif: "Roboto Slab", sans-serif;
+$family-monospace: "Roboto Slab", monospace;
+$size-1: 4.5rem;
+
+
+
+@import "../../../node_modules/bulma/bulma.sass";

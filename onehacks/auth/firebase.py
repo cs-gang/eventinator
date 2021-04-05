@@ -1,12 +1,15 @@
 """Handles the authentication process with Firebase for the Login with Email function."""
+from datetime import datetime, timedelta
 from functools import partial
 import json
 from typing import Optional
 
-from firebase_admin import auth
+from firebase_admin import auth, exceptions
 from firebase_admin.auth import UserRecord
 import requests
 from sanic import Sanic
+from sanic.request import Request
+from sanic.exceptions import ServerError
 
 from onehacks.server import app
 
@@ -55,6 +58,7 @@ async def authenticate_user(app: Sanic, email: str, password: str) -> Optional[d
     Returns ::
         None, if the user failed authentication
         Raw response dictionary from the API if the user passed authentication.
+        This dictionary will be added to the user's `session` (request.ctx.session) to retrieve user ID later.
     """
     payload = json.dumps(
         {"email": email, "password": password, "returnSecureToken": True}
@@ -73,6 +77,86 @@ async def authenticate_user(app: Sanic, email: str, password: str) -> Optional[d
         return
     else:
         return response_data
+
+
+async def get_user(app: Sanic, uid: str) -> UserRecord:
+    get = partial(auth.get_user, app=app)
+    return await app.loop.run_in_executor(None, get, uid)
+
+
+async def refresh_token(app: Sanic):
+    # TODO: make refresh token function, make it a task for each user
+    pass
+
+
+async def create_session_cookie(app: Sanic, request: Request, data: dict) -> dict:
+    """
+    Creates a session cookie for a user with the given `idToken`.
+
+    Arguments ::
+        app: Sanic -> The running Sanic instance
+        request: Request
+        data: dict -> The raw response dictionary sent by the Firebase API on a succesful login.
+        This will be returned by the `authenticate_user` function.
+
+    Returns ::
+        ON SUCCESS =>
+        Dictionary with 2 keys:
+            session_cookie: bytes
+            expires: datetime.datetime (UTC)
+        NOTE: Don't forget to set the session_cookie on the HTTPResponse!
+        ON FAILURE =>
+        boolean False
+    """
+    id_token = data.get("idToken")
+    expires_in = timedelta(days=5)
+    try:
+        create_session_cookie = partial(
+            auth.create_session_cookie,
+            id_token=id_token,
+            expires_in=expires_in,
+            app=app.ctx.firebase,
+        )
+        session_cookie = await app.loop.run_in_executor(None, create_session_cookie)
+        expires = datetime.utcnow() + expires_in
+        return {"session_cookie": session_cookie, "expires": expires}
+    except exceptions.FirebaseError:
+        return False
+
+
+async def delete_session_cookie(app: Sanic, request: Request) -> None:
+    """Clears the session cookie. Meant to be used on sign out.
+    Arguments ::
+        app: Sanic -> The running Sanic instance
+        request: Request
+    """
+    session_cookie = request.cookies.get("session")
+    try:
+        verify_session_cookie = partial(
+            auth.verify_session_cookie, session_cookie, check_revoked=True
+        )
+        decoded_claims = await app.loop.run_in_executor(None, verify_session_cookie)
+        revoke = partial(auth.revoke_refresh_tokens, decoded_claims["sub"])
+        await app.loop.run_in_executor(None, revoke)
+    except auth.InvalidSessionCookieError:
+        raise ServerError("Tried to revoke an invalid session cookie", quiet=True)
+
+
+async def check_logged_in(request: Request) -> bool:
+    """Checks whether a user is signed in (on Firebase, with email and password)
+    NOTE: This function is a coroutine, unlike `onehacks.auth.discord.check_logged_in`"""
+    session_cookie = request.cookies.get("session")
+    if not session_cookie:
+        return False
+
+    try:
+        verify_session_cookie = partial(
+            auth.verify_session_cookie, session_cookie, check_revoked=True
+        )
+        await app.loop.run_in_executor(None, verify_session_cookie)
+        return True
+    except auth.InvalidSessionCookieError:
+        return False
 
 
 # TODO: make delete, update user functions
