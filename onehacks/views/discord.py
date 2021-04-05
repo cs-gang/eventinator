@@ -22,7 +22,7 @@ async def discord_callback(request: Request) -> HTTPResponse:
     if not response:
         raise UnauthenticatedError("Authentication failed.", status_code=401)
     else:
-        url = app.url_for("index")
+        url = app.url_for("user.user_dashboard")
         return redirect(url)
 
 

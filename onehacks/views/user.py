@@ -106,7 +106,7 @@ async def user_dashboard(request: Request, platform: str) -> HTTPResponse:
     if from_discord:
         user = await User.from_discord(app, request)
     else:
-        uid = request.ctx.session.get("firebase_auth_data").get("localId")
+        uid = request.cookies
         user = await User.from_db(app, uid)
 
     events = await user.get_events(app)

@@ -41,7 +41,7 @@
         <div class="title is-1">Enter your Event details</div>
 
         <form action="/event/new" method="POST">
-            {{ form.csrf.token }}
+            {{ form.csrf_token }}
             <div class="columns">
                 <div class="column is-6 box has-background-success-light mx-3 mt-4">
                     <div class="field">

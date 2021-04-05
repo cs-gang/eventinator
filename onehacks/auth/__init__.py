@@ -48,7 +48,7 @@ class User:
 
         _id = str(data.get("id"))
         username = data.get("username")
-        record = await cls.from_db(_id, discord=True)
+        record = await cls.from_db(app, _id, discord=True)
 
         if not record:
             # query returned None, user doesn't exist in db
@@ -131,7 +131,7 @@ class User:
     async def get_events(self, app: Sanic) -> List[Mapping]:
         """Gets a user's events from the database."""
         # does NOT return Event objects, but the raw response from the database
-        return await app.ctx.fetch(
+        return await app.ctx.db.fetch(
             "SELECT * FROM events WHERE event_id IN (SELECT event_id FROM users_events WHERE uid = :uid)",
             uid=self.uid,
         )
@@ -153,7 +153,7 @@ def authorized():
             The decorator will inject an argument:
                 platform: str -> Either "discord" or "firebase"
             """
-            from_discord = await discord.check_logged_in(request)
+            from_discord = discord.check_logged_in(request)
             from_firebase = await firebase.check_logged_in(request)
 
             if from_discord:
