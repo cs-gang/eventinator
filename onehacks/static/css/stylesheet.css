@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 /*! bulma.io v0.9.2 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .button, .input, .textarea, .select select, .file-cta,
@@ -290,7 +291,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: "Playfair Display", sans-serif; }
+  font-family: "Volkhov", sans-serif; }
 
 code,
 pre {
@@ -6944,16 +6945,16 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   font-weight: 700 !important; }
 
 .is-family-primary {
-  font-family: "Playfair Display", sans-serif !important; }
+  font-family: "Volkhov", sans-serif !important; }
 
 .is-family-secondary {
-  font-family: "Playfair Display", sans-serif !important; }
+  font-family: "Volkhov", sans-serif !important; }
 
 .is-family-sans-serif {
-  font-family: "Playfair Display", sans-serif !important; }
+  font-family: "Volkhov", sans-serif !important; }
 
 .is-family-monospace {
-  font-family: "Inknut Antiqua", monospace !important; }
+  font-family: "Volkhov", monospace !important; }
 
 .is-family-code {
   font-family: "Roboto", sans-serif !important; }
