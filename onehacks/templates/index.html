@@ -16,7 +16,7 @@
             <div class="field" id="logged" style="visibility: visible;">
                 <strong>Log In!</strong>
                 <form method="POST" action="/users/login">
-                <!-- {{ form.csrf_token }} -->
+                {{ login_form.csrf_token }}
                     <label for="email" class="label">Email:</label>
                     <div class="control">
                         <input id="email" name="email" type="email" class="input" placeholder="name@domain.com">
@@ -41,7 +41,7 @@
             <div class="field" id="signed" style="visibility: hidden;">
                 <strong>Sign Up!</strong>
                 <form method="POST" action="/users/new">
-                <!-- {{ form.csrf_token }} -->
+                {{ signup_form.csrf_token }}
                     <label for="username" class="label ">Username:</label>
                     <div class="control">
                         <input type="text" id="username" name="username" class="input" placeholder="Username">
