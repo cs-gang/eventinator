@@ -31,7 +31,8 @@ class User:
     @classmethod
     async def from_discord(cls, app: Sanic, request: Request) -> "User":
         """Fetches a user's data from discord and our database.
-        This function is meant to be used after a user has finished authentication only."""
+        This function is meant to be used after a user has finished authentication only.
+        It will register the user in the database if they aren't already."""
         token = discord.check_logged_in(request)
         if token:
             token = {"Authorization": f"Bearer {token['access_token']}"}
@@ -59,7 +60,45 @@ class User:
             )
             return cls(uid=uid, username=username, discord_id=_id)
         else:
-            return cls(**record)
+            # if the username from the api is different than the one we've stored, update it
+            if username != record["username"]:
+                await app.ctx.db.execute(
+                    "UPDATE users SET username = :username WHERE uid = :uid",
+                    username=username,
+                    uid=record["uid"],
+                )
+            return cls(
+                uid=record["uid"], username=username, discord_id=record["discord_id"]
+            )
+
+    @classmethod
+    async def on_firebase(
+        cls, app: Sanic, username: str, email: str, password: str
+    ) -> "User":
+        """
+        Used on the sign-up route. Registers a new user on Firebase and saves their data in the database.
+
+        Arguments ::
+            app: Sanic -> The running Sanic instance.
+            email: str
+            username: str
+            password: str
+        """
+        user_record = await firebase.create_user(
+            app, username=username, email=email, password=password
+        )
+
+        await app.ctx.db.execute(
+            "INSERT INTO users(uid, username, email) VALUES(:uid, :username, :email)",
+            uid=user_record.uid,
+            username=user_record.display_name,
+            email=user_record.email,
+        )
+        return cls(
+            uid=user_record.uid,
+            username=user_record.display_name,
+            email=user_record.email,
+        )
 
     @staticmethod
     async def from_db(
