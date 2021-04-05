@@ -49,6 +49,7 @@ class Event:
 
     async def get_members(self, app: Sanic) -> List[Mapping]:
         """Retrieve all members of this particular Event."""
+        # does NOT return User objects, but the raw response from the database
         return await app.ctx.db.fetch(
             "SELECT * FROM users WHERE uid IN (SELECT uid FROM users_events WHERE event_id = :event_id)",
             event_id=self.event_id,

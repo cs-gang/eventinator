@@ -59,6 +59,7 @@ async def authenticate_user(app: Sanic, email: str, password: str) -> Optional[d
     Returns ::
         None, if the user failed authentication
         Raw response dictionary from the API if the user passed authentication.
+        This dictionary will be added to the user's `session` (request.ctx.session) to retrieve user ID later.
     """
     payload = json.dumps(
         {"email": email, "password": password, "returnSecureToken": True}
@@ -77,6 +78,11 @@ async def authenticate_user(app: Sanic, email: str, password: str) -> Optional[d
         return
     else:
         return response_data
+
+
+async def get_user(app: Sanic, uid: str) -> UserRecord:
+    get = partial(auth.get_user, app=app)
+    return await app.loop.run_in_executor(None, get, uid)
 
 
 async def refresh_token(app: Sanic):
