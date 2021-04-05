@@ -6,6 +6,7 @@ import firebase_admin
 from firebase_admin import credentials
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sanic import Sanic
+from sanic_session import Session, InMemorySessionInterface
 
 from onehacks.database import Database
 from onehacks.utils import IDGenerator
@@ -33,6 +34,14 @@ app.ctx.env = Environment(
 
 # make snowflake generator instance
 app.ctx.snowflake = IDGenerator()
+
+# initialize sessions
+Session(
+    app,
+    interface=InMemorySessionInterface(
+        sessioncookie=True, cookie_name="plantech", expiry=3600
+    ),
+)
 
 app.static("/static", "./onehacks/static")
 
