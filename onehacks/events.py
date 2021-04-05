@@ -54,3 +54,15 @@ class Event:
             "SELECT * FROM users WHERE uid IN (SELECT uid FROM users_events WHERE event_id = :event_id)",
             event_id=self.event_id,
         )
+
+    def __dict__(self) -> dict:
+        return {
+            "event_id": self.event_id,
+            "event_name": self.event_name,
+            "event_owner": self.event_owner,
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "long_desc": self.long_desc,
+            "short_desc": self.short_desc,
+            "passcode": self.passcode,
+        }

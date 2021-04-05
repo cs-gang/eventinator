@@ -6,7 +6,7 @@ from sanic.response import html, HTTPResponse, redirect
 from onehacks.auth import authorized, firebase, User, UnauthenticatedError
 from onehacks.forms import DashboardForm, LoginForm, SignUpForm
 from onehacks.server import app
-from onehacks.utils import render_page
+from onehacks.utils import render_page, transform_tz
 
 user = Blueprint("user", url_prefix="/user")
 
@@ -121,6 +121,27 @@ async def user_dashboard(request: Request, platform: str) -> HTTPResponse:
         tz=user.tz,
     )
     return html(output)
+
+
+@user.route("/tz", methods=["POST"])
+@authorized()
+async def set_user_tz(request: Request, platform: str):
+    form = DashboardForm(request)
+    from_discord = True if platform == "discord" else False
+
+    if form.validate():
+        tz = transform_tz(form.timezone.data)
+
+        if from_discord:
+            user = await User.from_discord(app, request)
+        else:
+            uid = request.ctx.session.get("firebase_auth_data").get("localId")
+            user = await User.from_db(app, uid)
+
+        await user.set_tz(app, tz)
+        url = app.url_for("user.user_dashboard")
+        return redirect(url)
+    raise ServerError("Form didn't validate.", status_code=500)
 
 
 app.blueprint(user)
