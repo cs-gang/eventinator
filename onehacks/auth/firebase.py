@@ -9,6 +9,7 @@ from firebase_admin.auth import UserRecord
 import requests
 from sanic import Sanic
 from sanic.request import Request
+from sanic.exceptions import ServerError
 
 from onehacks.server import app
 
@@ -110,6 +111,24 @@ async def create_session_cookie(app: Sanic, request: Request, data: dict) -> dic
         return {"session_cookie": session_cookie, "expires": expires}
     except exceptions.FirebaseError:
         return False
+
+
+async def delete_session_cookie(app: Sanic, request: Request) -> None:
+    """Clears the session cookie. Meant to be used on sign out.
+    Arguments ::
+        app: Sanic -> The running Sanic instance
+        request: Request
+    """
+    session_cookie = request.cookies.get("session")
+    try:
+        verify_session_cookie = partial(
+            auth.verify_session_cookie, session_cookie, check_revoked=True
+        )
+        decoded_claims = await app.loop.run_in_executor(None, verify_session_cookie)
+        revoke = partial(auth.revoke_refresh_tokens, decoded_claims["sub"])
+        await app.loop.run_in_executor(None, revoke)
+    except auth.InvalidSessionCookieError:
+        raise ServerError("Tried to revoke an invalid session cookie", quiet=True)
 
 
 async def check_logged_in(request: Request) -> bool:

@@ -76,14 +76,14 @@ class Database:
         Creates the tables in the database if they haven't been made already.
         """
         users = """CREATE TABLE IF NOT EXISTS users(
-            uid CHAR(15) PRIMARY KEY,
+            uid CHAR(20) PRIMARY KEY,
             email TEXT UNIQUE,
             username VARCHAR(25) NOT NULL,
             tz VARCHAR(50),
-            discord_id CHAR(15) UNIQUE
+            discord_id CHAR(20) UNIQUE
         )"""
         events = """CREATE TABLE IF NOT EXISTS events(
-            event_id CHAR(15) PRIMARY KEY,
+            event_id CHAR(20) PRIMARY KEY,
             event_name VARCHAR(25) NOT NULL,
             create_time TIMESTAMP NOT NULL,
             start_time TIMESTAMP NOT NULL,
@@ -91,8 +91,8 @@ class Database:
             short_desc VARCHAR(75)
         )"""
         users_events = """CREATE TABLE IF NOT EXISTS users_events(
-            uid CHAR(15) REFERENCES users(uid),
-            event_id CHAR(15) REFERENCES events(event_id)
+            uid CHAR(20) REFERENCES users(uid),
+            event_id CHAR(20) REFERENCES events(event_id)
         )"""
 
         await self.db.execute(query=users)

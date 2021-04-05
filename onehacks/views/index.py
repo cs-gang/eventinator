@@ -13,4 +13,4 @@ async def index(request: Request) -> HTTPResponse:
     output = await render_page(
         app.ctx.env, file="index.html", login_form=login_form, signup_form=signup_form
     )
-    return html(output)
+    return HTTPResponse(output, content_type="text/html")
