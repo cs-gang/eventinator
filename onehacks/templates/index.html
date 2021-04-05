@@ -133,7 +133,6 @@
 
 <script>
     var outerLogin = document.getElementById("login");
-    
     function blurred(z){
         var x = document.getElementById("index");
         var y = document.getElementById("login");
@@ -160,26 +159,8 @@
             y.style.display = "none"
         }
     }
+	
     function switchcase(){
-        var card = document.getElementById("card");
-        if (card.classList.contains("login")){
-            card.classList.remove("login");
-            card.classList.add("signup");
-            document.getElementById("logged").style.visibility = "hidden";
-            document.getElementById("logged").style.height = "0%";
-            document.getElementById("logged").style.margin = "0";
-            document.getElementById("signed").style.visibility = "visible";
-        } else {
-            card.classList.remove("signup");
-            card.classList.add("login");
-            document.getElementById("signed").style.visibility = "hidden";
-            document.getElementById("logged").style.height = "100%";
-            document.getElementById("logged").style.margin = "9vh 0 0 0";
-            document.getElementById("logged").style.visibility = "visible";
-        }
-    }
-
-    function signToLog(){
         var card = document.getElementById("card");
         if (card.classList.contains("login")){
             card.classList.remove("login");
