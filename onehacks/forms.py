@@ -9,7 +9,7 @@ class LoginForm(SanicForm):
     submit = SubmitField("Submit")
 
 
-class SignInForm(SanicForm):
+class SignUpForm(SanicForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     password = StringField("Password", validators=[DataRequired()])

@@ -43,6 +43,10 @@ Session(
     ),
 )
 
+# csrf config
+app.config["WTF_CSRF_SECRET_KEY"] = os.environ.get("CSRF_TOKEN")
+
+
 app.static("/static", "./onehacks/static")
 
 
