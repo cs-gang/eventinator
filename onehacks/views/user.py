@@ -8,7 +8,7 @@ from onehacks.forms import LoginForm, SignUpForm
 from onehacks.server import app
 from onehacks.utils import render_page
 
-user = Blueprint("user", url_prefix="/users")
+user = Blueprint("user", url_prefix="/user")
 
 
 @user.post("/login")
@@ -22,10 +22,14 @@ async def email_login(request: Request) -> HTTPResponse:
     if form.validate():
         email = form.email.data
         password = form.password.data
-        valid = await firebase.authenticate_user(app, email=email, password=password)
+        auth_data = await firebase.authenticate_user(
+            app, email=email, password=password
+        )
+        valid = await firebase.create_session_cookie(app, request, auth_data)
 
         if valid:
-            response = redirect("user_dashboard")
+            url = app.url_for("user.user_dashboard")
+            response = redirect(url)
             response.cookies["session"] = valid["session_cookie"]
             response.cookies["session"]["httponly"] = True
             response.cookies["session"]["secure"] = True
@@ -52,8 +56,18 @@ async def email_signup(request: Request) -> HTTPResponse:
         user = await User.on_firebase(
             app, username=username, email=email, password=password
         )
-        url = app.url_for("users.user_dashboard")
-        return redirect(url)
+        auth_data = await firebase.authenticate_user(
+            app, email=user.email, password=password
+        )
+        valid = await firebase.create_session_cookie(app, request, auth_data)
+
+        url = app.url_for("user.user_dashboard")
+        response = redirect(url)
+        response.cookies["session"] = valid["session_cookie"]
+        response.cookies["session"]["httponly"] = True
+        response.cookies["session"]["secure"] = True
+        response.cookies["session"]["expires"] = valid["expires"]
+        return response
 
     raise UnauthenticatedError("Form did not validate", status_code=403)
 
@@ -75,7 +89,8 @@ async def user_logout(request: Request) -> HTTPResponse:
 
 @user.get("/dashboard")
 async def user_dashboard(request: Request) -> HTTPResponse:
-    return html("<html><title>sign up worked bro</title></html>")
+    output = await render_page(app.ctx.env, file="dashboard.html")
+    return html(output)
 
 
 app.blueprint(user)
