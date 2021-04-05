@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta
 from functools import partial
 import json
+from onehacks.auth import UnauthenticatedError
 from typing import Optional
 
 from firebase_admin import auth, exceptions
@@ -78,6 +79,11 @@ async def authenticate_user(app: Sanic, email: str, password: str) -> Optional[d
         return response_data
 
 
+async def refresh_token(app: Sanic):
+    # TODO: make refresh token function, make it a task for each user
+    pass
+
+
 async def create_session_cookie(app: Sanic, request: Request, data: dict) -> dict:
     """
     Creates a session cookie for a user with the given `idToken`.
@@ -142,7 +148,7 @@ async def check_logged_in(request: Request) -> bool:
         verify_session_cookie = partial(
             auth.verify_session_cookie, session_cookie, check_revoked=True
         )
-        decoded_claims = await app.loop.run_in_executor(None, verify_session_cookie)
+        await app.loop.run_in_executor(None, verify_session_cookie)
         return True
     except auth.InvalidSessionCookieError:
         return False
