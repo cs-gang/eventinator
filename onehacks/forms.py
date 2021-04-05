@@ -24,3 +24,8 @@ class EventCreationForm(SanicForm):
     shortdescription = StringField("Short Description", validators=[DataRequired()])
     longdescription = StringField("Long Description", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+class DashboardForm(SanicForm):
+    usernamecheck = StringField("Username", validators=[DataRequired()])
+    timezone = StringField("Timezone", validators=[DataRequired()])
