@@ -11,14 +11,33 @@
 </head>
 
 <body>
-    <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">
+    <nav class="navbar has-background-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item is-size-2 has-text-warning" href="dashboard">
                 Eventinator
             </a>
-            <div class="navbar-burger"></div>
+            <a role="button" class="navbar-burger my-4 has-dropdown" aria-label="menu" aria-expanded="false"
+                data-target="navburgertarget">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navburgertarget" class="navbar-menu">
+            <div class="navbar-start">
+
+            </div>
+            <div class="navbar-end is-align-items-center is-flex">
+                <button class="button is-success is-rounded mx-5">
+                    Modify personal details
+                </button>
+                <a href=""
+                    class="px-5 py-5 is-flex has-background-success has-text-warning has-text-centered is-size-4">Log
+                    out</a>
+            </div>
         </div>
     </nav>
+
     <main class="box has-background-success-light mx-6 my-6">
         <div class="title is-1">Enter your Event details</div>
 
