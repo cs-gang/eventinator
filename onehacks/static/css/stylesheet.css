@@ -798,14 +798,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-primary.is-light {
-      background-color: #FFC2CF;
+      background-color: #FF859F;
       color: #db0030; }
       .button.is-primary.is-light:hover, .button.is-primary.is-light.is-hovered {
-        background-color: #ffb5c5;
+        background-color: #ff7895;
         border-color: transparent;
         color: #db0030; }
       .button.is-primary.is-light:active, .button.is-primary.is-light.is-active {
-        background-color: #ffa9bb;
+        background-color: #ff6c8b;
         border-color: transparent;
         color: #db0030; }
   .button.is-link {
@@ -956,14 +956,14 @@ a.box:active {
         box-shadow: none;
         color: #fff; }
     .button.is-info.is-light {
-      background-color: #AF8CE3;
+      background-color: #D1BDEF;
       color: #2a44a2; }
       .button.is-info.is-light:hover, .button.is-info.is-light.is-hovered {
-        background-color: #a882e1;
+        background-color: #cab3ed;
         border-color: transparent;
         color: #2a44a2; }
       .button.is-info.is-light:active, .button.is-info.is-light.is-active {
-        background-color: #a177de;
+        background-color: #c3a8ea;
         border-color: transparent;
         color: #2a44a2; }
   .button.is-success {
@@ -1617,7 +1617,7 @@ div.icon-text {
     background-color: #FF3864;
     color: #fff; }
     .notification.is-primary.is-light {
-      background-color: #FFC2CF;
+      background-color: #FF859F;
       color: #db0030; }
   .notification.is-link {
     background-color: #DE5246;
@@ -1629,7 +1629,7 @@ div.icon-text {
     background-color: #738ADB;
     color: #fff; }
     .notification.is-info.is-light {
-      background-color: #AF8CE3;
+      background-color: #D1BDEF;
       color: #2a44a2; }
   .notification.is-success {
     background-color: #261447;
@@ -1980,7 +1980,7 @@ div.icon-text {
     background-color: #FF3864;
     color: #fff; }
     .tag:not(body).is-primary.is-light {
-      background-color: #FFC2CF;
+      background-color: #FF859F;
       color: #db0030; }
   .tag:not(body).is-link {
     background-color: #DE5246;
@@ -1992,7 +1992,7 @@ div.icon-text {
     background-color: #738ADB;
     color: #fff; }
     .tag:not(body).is-info.is-light {
-      background-color: #AF8CE3;
+      background-color: #D1BDEF;
       color: #2a44a2; }
   .tag:not(body).is-success {
     background-color: #261447;
@@ -2088,7 +2088,7 @@ a.tag:hover {
   .title:not(.is-spaced) + .subtitle {
     margin-top: -1.25rem; }
   .title.is-1 {
-    font-size: 5rem; }
+    font-size: 4.5rem; }
   .title.is-2 {
     font-size: 2.5rem; }
   .title.is-3 {
@@ -2113,7 +2113,7 @@ a.tag:hover {
   .subtitle:not(.is-spaced) + .title {
     margin-top: -1.25rem; }
   .subtitle.is-1 {
-    font-size: 5rem; }
+    font-size: 4.5rem; }
   .subtitle.is-2 {
     font-size: 2.5rem; }
   .subtitle.is-3 {
@@ -3350,7 +3350,7 @@ button.dropdown-item {
     .message.is-dark .message-body {
       border-color: #363636; }
   .message.is-primary {
-    background-color: #FFC2CF; }
+    background-color: #FF859F; }
     .message.is-primary .message-header {
       background-color: #FF3864;
       color: #fff; }
@@ -3366,7 +3366,7 @@ button.dropdown-item {
       border-color: #DE5246;
       color: #ba2d21; }
   .message.is-info {
-    background-color: #AF8CE3; }
+    background-color: #D1BDEF; }
     .message.is-info .message-header {
       background-color: #738ADB;
       color: #fff; }
@@ -5920,13 +5920,13 @@ a.has-text-primary:hover, a.has-text-primary:focus {
   background-color: #FF3864 !important; }
 
 .has-text-primary-light {
-  color: #FFC2CF !important; }
+  color: #FF859F !important; }
 
 a.has-text-primary-light:hover, a.has-text-primary-light:focus {
-  color: #ff8fa7 !important; }
+  color: #ff5277 !important; }
 
 .has-background-primary-light {
-  background-color: #FFC2CF !important; }
+  background-color: #FF859F !important; }
 
 .has-text-primary-dark {
   color: #db0030 !important; }
@@ -5974,13 +5974,13 @@ a.has-text-info:hover, a.has-text-info:focus {
   background-color: #738ADB !important; }
 
 .has-text-info-light {
-  color: #AF8CE3 !important; }
+  color: #D1BDEF !important; }
 
 a.has-text-info-light:hover, a.has-text-info-light:focus {
-  color: #9263d9 !important; }
+  color: #b494e5 !important; }
 
 .has-background-info-light {
-  background-color: #AF8CE3 !important; }
+  background-color: #D1BDEF !important; }
 
 .has-text-info-dark {
   color: #2a44a2 !important; }
@@ -6644,7 +6644,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   padding-bottom: 3rem !important; }
 
 .is-size-1 {
-  font-size: 5rem !important; }
+  font-size: 4.5rem !important; }
 
 .is-size-2 {
   font-size: 2.5rem !important; }
@@ -6666,7 +6666,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (max-width: 768px) {
   .is-size-1-mobile {
-    font-size: 5rem !important; }
+    font-size: 4.5rem !important; }
   .is-size-2-mobile {
     font-size: 2.5rem !important; }
   .is-size-3-mobile {
@@ -6682,7 +6682,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 769px), print {
   .is-size-1-tablet {
-    font-size: 5rem !important; }
+    font-size: 4.5rem !important; }
   .is-size-2-tablet {
     font-size: 2.5rem !important; }
   .is-size-3-tablet {
@@ -6698,7 +6698,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (max-width: 1023px) {
   .is-size-1-touch {
-    font-size: 5rem !important; }
+    font-size: 4.5rem !important; }
   .is-size-2-touch {
     font-size: 2.5rem !important; }
   .is-size-3-touch {
@@ -6714,7 +6714,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 1024px) {
   .is-size-1-desktop {
-    font-size: 5rem !important; }
+    font-size: 4.5rem !important; }
   .is-size-2-desktop {
     font-size: 2.5rem !important; }
   .is-size-3-desktop {
@@ -6730,7 +6730,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 1216px) {
   .is-size-1-widescreen {
-    font-size: 5rem !important; }
+    font-size: 4.5rem !important; }
   .is-size-2-widescreen {
     font-size: 2.5rem !important; }
   .is-size-3-widescreen {
@@ -6746,7 +6746,7 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 @media screen and (min-width: 1408px) {
   .is-size-1-fullhd {
-    font-size: 5rem !important; }
+    font-size: 4.5rem !important; }
   .is-size-2-fullhd {
     font-size: 2.5rem !important; }
   .is-size-3-fullhd {
