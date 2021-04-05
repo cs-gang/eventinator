@@ -85,10 +85,12 @@ class Database:
         events = """CREATE TABLE IF NOT EXISTS events(
             event_id CHAR(20) PRIMARY KEY,
             event_name VARCHAR(25) NOT NULL,
-            create_time TIMESTAMP NOT NULL,
+            event_owner CHAR(20) REFERENCES users(uid),
             start_time TIMESTAMP NOT NULL,
+            end_time TIMESTAMP NOT NULL,
             long_desc VARCHAR(5000) NOT NULL,
-            short_desc VARCHAR(75)
+            short_desc VARCHAR(75),
+            passcode CHAR(8)
         )"""
         users_events = """CREATE TABLE IF NOT EXISTS users_events(
             uid CHAR(20) REFERENCES users(uid),

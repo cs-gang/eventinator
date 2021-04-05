@@ -1,11 +1,12 @@
 from dataclasses import dataclass
-from functools import partial
-from typing import Mapping, Optional
+from functools import partial, wraps
+from typing import Any, Awaitable, List, Mapping, Optional
 
 import requests
 from sanic import Sanic
 from sanic.exceptions import SanicException
 from sanic.request import Request
+from sanic.response import HTTPResponse
 
 from onehacks.auth import discord, firebase
 
@@ -100,6 +101,18 @@ class User:
             email=user_record.email,
         )
 
+    @classmethod
+    async def from_firebase(cls, app: Sanic, uid: str) -> "User":
+        """
+        Fetches a user's details from Firebase.
+        This method does an API call, use it sparingly. Wherever possible, use `User.from_db` instead."""
+        user_record = await firebase.get_user(app, uid)
+        return cls(
+            uid=user_record.uid,
+            username=user_record.display_name,
+            email=user_record.email,
+        )
+
     @staticmethod
     async def from_db(
         app: Sanic, _id: str, *, discord: bool = False
@@ -114,3 +127,42 @@ class User:
             return await app.ctx.db.fetchrow(
                 "SELECT * FROM users WHERE uid = :_id", _id=_id
             )
+
+    async def get_events(self, app: Sanic) -> List[Mapping]:
+        """Gets a user's events from the database."""
+        # does NOT return Event objects, but the raw response from the database
+        return await app.ctx.fetch(
+            "SELECT * FROM events WHERE event_id IN (SELECT event_id FROM users_events WHERE uid = :uid)",
+            uid=self.uid,
+        )
+
+    async def set_tz(self, app: Sanic, tz: str) -> None:
+        """Sets the user's timezone."""
+        self.tz = tz
+        await app.ctx.db.execute(
+            "UPDATE users SET tz = :tz WHERE uid = :uid", tz=tz, uid=self.uid
+        )
+
+
+def authorized():
+    def decorator(func: Awaitable) -> Awaitable:
+        @wraps(func)
+        async def wrapper(request: Request, *args: Any, **kwargs: Any) -> HTTPResponse:
+            """
+            Decorator that checks if a user is signed in.
+            The decorator will inject an argument:
+                platform: str -> Either "discord" or "firebase"
+            """
+            from_discord = await discord.check_logged_in(request)
+            from_firebase = await firebase.check_logged_in(request)
+
+            if from_discord:
+                return await func(request, platform="discord")
+            elif from_firebase:
+                return await func(request, platform="firebase")
+            else:
+                raise UnauthenticatedError("Not logged in.", status=403)
+
+        return wrapper
+
+    return decorator

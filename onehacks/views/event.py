@@ -1,0 +1,55 @@
+from sanic import Blueprint
+from sanic.exceptions import ServerError
+from sanic.request import Request
+from sanic.response import html, json, HTTPResponse, redirect  # TODO: change json
+
+from onehacks.auth import authorized, User
+from onehacks.events import Event
+from onehacks.server import app
+from onehacks.forms import EventCreationForm
+
+
+event = Blueprint("event", url_prefix="/event")
+
+# TODO: complete this
+
+
+@event.route("/<event_id:int>")
+async def event_by_id(request: Request, event_id: int) -> HTTPResponse:
+    event_data = await Event.by_id(app, event_id)
+    return json(dict(event_data))
+
+
+@event.post("/new")
+@authorized()
+async def new_event(request: Request, platform: str) -> HTTPResponse:
+    form = EventCreationForm(request)
+
+    if form.validate():
+        if platform == "discord":
+            user = await User.from_discord(request)
+        else:
+            uid = request.ctx.session.get("firebase_auth_data").get("localId")
+            user = await User.from_db(app, uid)
+
+        event_id = str(next(app.ctx.snowflake))
+        details = dict(
+            event_id=event_id,
+            event_name=form.eventname.data,
+            event_owner=user.id,
+            start_time=form.starttime.data,
+            end_time=form.endtime.data,
+            long_desc=form.longdescription.data,
+            short_desc=form.shortdescription.data,
+        )
+
+        await Event(**details).create(app)
+
+        url = app.url_for("event.event_by_id", event_id=event_id)
+
+        return redirect(url)
+    else:
+        raise ServerError("Form didn't validate.", status=500)
+
+
+app.blueprint(event)
