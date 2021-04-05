@@ -63,12 +63,12 @@ $primary-light: $pink;
         margin-left: 55%;
         transition: all 0.25s ease-in-out;
     }
-    
+
     #submit{
         margin-top: 5vh;
         bottom: 0;
     }
-    
+
     #logged{
         margin-top: 9vh;
         transition: all 0.25s ease-in-out;
@@ -94,15 +94,13 @@ $primary-light: $pink;
         font-size: 2vw;
         padding: 10px;
         border-radius: 10px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: $darkpurple;
         color: $cream;
         font-weight: 700;
     }
-    
+
     input{
         font-size: 1.3vw;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     a{
