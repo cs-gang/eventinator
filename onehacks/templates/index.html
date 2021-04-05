@@ -16,7 +16,7 @@
             <div id="card" class="login">
                 <div class="field" id="logged" style="visibility: visible;">
                     <strong>Log In!</strong>
-                    <form method="POST" action="/users/login">
+                    <form method="POST" action="/user/login">
                         {{ login_form.csrf_token }}
                         <label for="email" class="label">Email:</label>
                         <div class="control">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="field" id="signed" style="visibility: hidden;">
                     <strong>Sign Up!</strong>
-                    <form method="POST" action="/users/new">
+                    <form method="POST" action="/user/new">
                         {{ signup_form.csrf_token }}
                         <label for="username" class="label ">Username:</label>
                         <div class="control">
