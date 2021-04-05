@@ -42,18 +42,8 @@
     <div id="personaldetailpopup" class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
-            <form id="check-detail-form" action="" class="box has-background-success-light">
+            <form id="check-detail-form" action="/user/tz" class="box has-background-success-light">
                 {{ form.csrf.token }}
-                <div class="field">
-                    <label class="label is-size-3" for="usernamecheck">Username</label>
-                    <div class="control has-icons-left">
-                        <input class="input" type="text" id="usernamecheck" name="usernamecheck">
-                        <span class="icon is-small is-left">
-                            <span class="fas fa-user-check"></span>
-                        </span>
-                    </div>
-                    <p class="help">This name will be visible to the host of the meeting</p>
-                </div>
                 <div class="field">
                     <label class="label is-size-3" for="timezone">Time zone</label>
                     <div class="control has-icons-left">
