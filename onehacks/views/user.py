@@ -97,7 +97,6 @@ async def user_dashboard(request: Request, user: User, platform: str) -> HTTPRes
     form = DashboardForm(request)
 
     events = await user.get_events(app)
-    print(events)
     from_discord = True if platform == "discord" else False
 
     output = await render_page(

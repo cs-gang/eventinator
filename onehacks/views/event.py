@@ -25,7 +25,6 @@ async def event_by_id(request: Request, event_id: int) -> HTTPResponse:
 @authorized()
 async def new_event(request: Request, user: User, platform: str) -> HTTPResponse:
     form = EventCreationForm(request)
-    print(request.form)
     if request.method == "POST":
         if form.validate():
             event_id = str(next(app.ctx.snowflake))
