@@ -78,13 +78,9 @@ async def email_signup(request: Request) -> HTTPResponse:
     raise UnauthenticatedError("Form did not validate", status_code=403)
 
 
-@user.post("/logout")
+@user.route("/logout")
 @authorized()
 async def user_logout(request: Request, user: User, platform: str) -> HTTPResponse:
-    if request.method != "POST":
-        raise ServerError(
-            "Only POST requests are allowed to this route.", status_code=405
-        )
     del request.ctx.session["firebase_auth_data"]
 
     await firebase.delete_session_cookie(app, request)
@@ -101,6 +97,7 @@ async def user_dashboard(request: Request, user: User, platform: str) -> HTTPRes
     form = DashboardForm(request)
 
     events = await user.get_events(app)
+    print(events)
     from_discord = True if platform == "discord" else False
 
     output = await render_page(

@@ -17,28 +17,22 @@ event = Blueprint("event", url_prefix="/event")
 
 @event.route("/<event_id:int>")
 async def event_by_id(request: Request, event_id: int) -> HTTPResponse:
-    event_data = await Event.by_id(app, event_id)
-    return json(dict(event_data))
+    event_data = await Event.by_id(app, str(event_id))
+    return json({"event name": event_data.event_name})
 
 
 @event.route("/new", methods=["GET", "POST"])
 @authorized()
-async def new_event(request: Request, platform: str) -> HTTPResponse:
+async def new_event(request: Request, user: User, platform: str) -> HTTPResponse:
     form = EventCreationForm(request)
-
+    print(request.form)
     if request.method == "POST":
         if form.validate():
-            if platform == "discord":
-                user = await User.from_discord(request)
-            else:
-                uid = request.ctx.session.get("firebase_auth_data").get("localId")
-                user = await User.from_db(app, uid)
-
             event_id = str(next(app.ctx.snowflake))
             details = dict(
                 event_id=event_id,
                 event_name=form.eventname.data,
-                event_owner=user.id,
+                event_owner=user.uid,
                 start_time=form.starttime.data,
                 end_time=form.endtime.data,
                 long_desc=form.longdescription.data,
