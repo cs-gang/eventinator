@@ -158,10 +158,10 @@ def authorized():
             from_firebase = await firebase.check_logged_in(request)
 
             if from_discord:
-                user = User.from_discord(request.app, request)
+                user = await User.from_discord(request.app, request)
                 return await func(request, platform="discord", user=user)
             elif from_firebase:
-                user = User.from_db(request.app, from_firebase["uid"])
+                user = await User.from_db(request.app, from_firebase["uid"])
                 return await func(request, platform="firebase", user=user)
             else:
                 raise UnauthenticatedError("Not logged in.", status=403)

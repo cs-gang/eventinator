@@ -80,15 +80,14 @@ async def email_signup(request: Request) -> HTTPResponse:
 
 @user.post("/logout")
 @authorized()
-async def user_logout(request: Request, platform: str) -> HTTPResponse:
+async def user_logout(request: Request, user: User, platform: str) -> HTTPResponse:
     if request.method != "POST":
         raise ServerError(
             "Only POST requests are allowed to this route.", status_code=405
         )
     del request.ctx.session["firebase_auth_data"]
 
-    if platform == "firebase":
-        await firebase.delete_session_cookie(app, request)
+    await firebase.delete_session_cookie(app, request)
     url = app.url_for("index")
     response = redirect(url)
     del response.cookies["session"]
@@ -98,18 +97,11 @@ async def user_logout(request: Request, platform: str) -> HTTPResponse:
 
 @user.get("/dashboard")
 @authorized()
-async def user_dashboard(request: Request, platform: str) -> HTTPResponse:
+async def user_dashboard(request: Request, user: User, platform: str) -> HTTPResponse:
     form = DashboardForm(request)
 
-    from_discord = True if platform == "discord" else False
-
-    if from_discord:
-        user = await User.from_discord(app, request)
-    else:
-        uid = request.cookies
-        user = await User.from_db(app, uid)
-
     events = await user.get_events(app)
+    from_discord = True if platform == "discord" else False
 
     output = await render_page(
         app.ctx.env,
@@ -125,18 +117,11 @@ async def user_dashboard(request: Request, platform: str) -> HTTPResponse:
 
 @user.route("/tz", methods=["POST"])
 @authorized()
-async def set_user_tz(request: Request, platform: str):
+async def set_user_tz(request: Request, user: User, platform: str) -> HTTPResponse:
     form = DashboardForm(request)
-    from_discord = True if platform == "discord" else False
 
     if form.validate():
         tz = transform_tz(form.timezone.data)
-
-        if from_discord:
-            user = await User.from_discord(app, request)
-        else:
-            uid = request.ctx.session.get("firebase_auth_data").get("localId")
-            user = await User.from_db(app, uid)
 
         await user.set_tz(app, tz)
         url = app.url_for("user.user_dashboard")
