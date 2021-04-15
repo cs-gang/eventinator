@@ -25,6 +25,7 @@ class Event:
                                     (event_id, event_name, event_owner, start_time, end_time, long_desc, short_desc, passcode)
                                     VALUES(:event_id, :event_name, :event_owner, :start_time, :end_time, :long_desc, :short_desc, :passcode)""",
             event_id=self.event_id,
+            event_name=self.event_name,
             event_owner=self.event_owner,
             start_time=self.start_time,
             end_time=self.end_time,

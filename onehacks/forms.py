@@ -18,7 +18,7 @@ class SignUpForm(SanicForm):
 
 class EventCreationForm(SanicForm):
     eventname = StringField("Name of the event", validators=[DataRequired()])
-    passcode = StringField("Passcode", validators=[DataRequired()])
+    passcode = StringField("Passcode")
     starttime = DateTimeField(
         "Start Time", validators=[DataRequired()], format="%Y-%m-%dT%H:%M"
     )

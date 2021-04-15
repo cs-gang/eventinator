@@ -143,7 +143,9 @@ async def delete_session_cookie(app: Sanic, request: Request) -> None:
 
 
 async def check_logged_in(request: Request) -> bool:
-    """Checks whether a user is signed in (on Firebase, with email and password)
+    """Checks whether a user is signed in (on Firebase, with email and password).
+    Returns ::
+        The validated user details if True, else `bool` False.
     NOTE: This function is a coroutine, unlike `onehacks.auth.discord.check_logged_in`"""
     session_cookie = request.cookies.get("session")
     if not session_cookie:
@@ -153,8 +155,8 @@ async def check_logged_in(request: Request) -> bool:
         verify_session_cookie = partial(
             auth.verify_session_cookie, session_cookie, check_revoked=True
         )
-        await app.loop.run_in_executor(None, verify_session_cookie)
-        return True
+        val = await app.loop.run_in_executor(None, verify_session_cookie)
+        return val
     except auth.InvalidSessionCookieError:
         return False
 

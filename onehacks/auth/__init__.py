@@ -113,19 +113,27 @@ class User:
             email=user_record.email,
         )
 
-    @staticmethod
+    @classmethod
     async def from_db(
-        app: Sanic, _id: str, *, discord: bool = False
+        cls, app: Sanic, _id: str, *, discord: bool = False
     ) -> Optional[Mapping]:
         """Fetches a user's record from the database.
         If `discord` is set to True, the matching row with provided discord ID will be returned."""
         if discord:
-            return await app.ctx.db.fetchrow(
-                "SELECT * FROM users WHERE discord_id = :_id", _id=_id
+            return cls(
+                *(
+                    await app.ctx.db.fetchrow(
+                        "SELECT * FROM users WHERE discord_id = :_id", _id=_id
+                    )
+                )
             )
         else:
-            return await app.ctx.db.fetchrow(
-                "SELECT * FROM users WHERE uid = :_id", _id=_id
+            return cls(
+                *(
+                    await app.ctx.db.fetchrow(
+                        "SELECT * FROM users WHERE uid = :_id", _id=_id
+                    )
+                )
             )
 
     async def get_events(self, app: Sanic) -> List[Mapping]:
@@ -150,18 +158,21 @@ def authorized():
         async def wrapper(request: Request, *args: Any, **kwargs: Any) -> HTTPResponse:
             """
             Decorator that checks if a user is signed in.
-            The decorator will inject an argument:
-                platform: str -> Either "discord" or "firebase"
+            The decorator will inject two arguments:
+                user: User -> The User object for the signed in user.
+                platform: str -> Platform the user used to sign in.
             """
             from_discord = discord.check_logged_in(request)
             from_firebase = await firebase.check_logged_in(request)
 
             if from_discord:
-                return await func(request, platform="discord")
+                user = await User.from_discord(request.app, request)
+                return await func(request, platform="discord", user=user)
             elif from_firebase:
-                return await func(request, platform="firebase")
+                user = await User.from_db(request.app, from_firebase["uid"])
+                return await func(request, platform="firebase", user=user)
             else:
-                raise UnauthenticatedError("Not logged in.", status=403)
+                raise UnauthenticatedError("Not logged in.", status_code=403)
 
         return wrapper
 
