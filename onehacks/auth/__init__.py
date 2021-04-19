@@ -121,7 +121,7 @@ class User:
         If `discord` is set to True, the matching row with provided discord ID will be returned."""
         if discord:
             return cls(
-                *(
+                **(
                     await app.ctx.db.fetchrow(
                         "SELECT * FROM users WHERE discord_id = :_id", _id=_id
                     )
@@ -129,7 +129,7 @@ class User:
             )
         else:
             return cls(
-                *(
+                **(
                     await app.ctx.db.fetchrow(
                         "SELECT * FROM users WHERE uid = :_id", _id=_id
                     )

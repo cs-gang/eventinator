@@ -35,7 +35,10 @@ def is_connected(
     @wraps(func)
     async def wrapper(ref, *args, **kwargs):
         if not ref.is_connected:
-            raise DatabaseNotConnectedError
+            raise DatabaseNotConnectedError(
+                "No database operation can take place without connecting "
+                "to the database first. Has the app started up normally?"
+            )
         else:
             return await func(ref, *args, **kwargs)
 
