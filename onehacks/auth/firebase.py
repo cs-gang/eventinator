@@ -6,6 +6,7 @@ from typing import Optional
 
 from firebase_admin import auth, exceptions
 from firebase_admin.auth import UserRecord
+from firebase_admin._auth_utils import UserNotFoundError
 import requests
 from sanic import Sanic
 from sanic.request import Request
@@ -157,7 +158,7 @@ async def check_logged_in(request: Request) -> bool:
         )
         val = await app.loop.run_in_executor(None, verify_session_cookie)
         return val
-    except auth.InvalidSessionCookieError:
+    except (auth.InvalidSessionCookieError, UserNotFoundError):
         return False
 
 
