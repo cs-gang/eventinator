@@ -57,4 +57,3 @@ function convert(value) {
 }
 
 onload = calculate_time_zone;
-console.log("Done")
