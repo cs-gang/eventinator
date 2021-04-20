@@ -124,7 +124,7 @@
 
     <main class="mx-4 my-6">
         <div class="box has-background-success-light ">
-            <span class="title is-1">{{ username }}'s Events</span>
+            <span class="title is-1">{{ username|capitalize() }}'s Events</span>
             <a href="/event/new" class="button is-success is-large is-pulled-right my-4">Create Event</a>
         </div>
         <div id="events" class="columns box has-background-success-light my-6 mx-3 py-6">
