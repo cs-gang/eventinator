@@ -48,9 +48,11 @@ class User:
 
         _id = str(data.get("id"))
         username = data.get("username")
-        record = await cls.from_db(app, _id, discord=True)
 
-        if not record:
+        try:
+            record = await cls.from_db(app, _id, discord=True)
+
+        except TypeError:
             # query returned None, user doesn't exist in db
             uid = str(next(app.ctx.snowflake))
             await app.ctx.db.execute(
@@ -62,15 +64,13 @@ class User:
             return cls(uid=uid, username=username, discord_id=_id)
         else:
             # if the username from the api is different than the one we've stored, update it
-            if username != record["username"]:
+            if username != record.username:
                 await app.ctx.db.execute(
                     "UPDATE users SET username = :username WHERE uid = :uid",
                     username=username,
-                    uid=record["uid"],
+                    uid=record.uid,
                 )
-            return cls(
-                uid=record["uid"], username=username, discord_id=record["discord_id"]
-            )
+            return cls(uid=record.uid, username=username, discord_id=record.discord_id)
 
     @classmethod
     async def on_firebase(
@@ -114,9 +114,7 @@ class User:
         )
 
     @classmethod
-    async def from_db(
-        cls, app: Sanic, _id: str, *, discord: bool = False
-    ) -> Optional[Mapping]:
+    async def from_db(cls, app: Sanic, _id: str, *, discord: bool = False) -> "User":
         """Fetches a user's record from the database.
         If `discord` is set to True, the matching row with provided discord ID will be returned."""
         if discord:
