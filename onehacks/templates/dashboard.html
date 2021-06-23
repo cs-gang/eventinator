@@ -42,9 +42,9 @@
     </nav>
 
     <div id="personaldetailpopup" class="modal">
-        <div class="modal-background"></div>
+        <div onclick="closepopup()" class="modal-background"></div>
         <div class="modal-content">
-            <form id="check-detail-form" action="/user/tz" class="box has-background-success-light">
+            <form id="check-detail-form" method="POST" action="/user/tz" class="box has-background-success-light">
                 {{ form.csrf_token }}
                 <div class="field">
                     <label class="label is-size-3" for="timezone">Time zone</label>
@@ -169,48 +169,6 @@
             var check_form = document.getElementById("check-detail-form")
             check_form.submit()
             popup.classList.remove("is-active")
-        }
-
-        function generate_event_card(index) {
-            //Make components of event card
-            var event_card = document.createElement('a');
-            var event_header = document.createElement('div');
-            var event_body = document.createElement('div');
-            var event_footer = document.createElement('div');
-            var event_header_text = document.createElement('p');
-            var event_footer_text = document.createElement('p');
-            //Add classes to the componenets
-            event_card.classList.add("card");
-            event_header.classList.add("card-header", "mt-5");
-            event_body.classList.add("card-content", "has-background-info-light");
-            event_footer.classList.add("card-footer", "has-background-success", "has-text-warning");
-            event_header_text.classList.add("card-header-title", "is-size-5", "has-background-success", "has-text-warning");
-            event_footer_text.classList.add("is-size-5", "px-5", "py-2");
-            //Add the components as children
-            event_card.appendChild(event_header);
-            event_card.appendChild(event_body);
-            event_card.appendChild(event_footer);
-            event_header.appendChild(event_header_text);
-            event_footer.appendChild(event_footer_text);
-            //add the text to the card
-            event_header_text.textContent = events[index]['events']['event_name'];
-            event_body.textContent = events[index]['events']['short_desc'];
-            event_footer_text.textContent = events[index]['events']['start_time'];
-
-            return event_card
-        }
-
-        var event_holder = document.getElementById("events")
-        var event_holder_children = [1, 3, 5]
-        var index_count = 1
-        for (i = 0; i < length(events); i++) {
-            event_holder[index_count].appendChild(generate_event_card(i))
-            if (index_count == 5) {
-                index_count = 1
-            }
-            else {
-                index_count = index_count + 2
-            }
         }
 
     </script>
