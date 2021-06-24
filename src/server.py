@@ -8,14 +8,14 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from sanic import Sanic
 from sanic_session import Session, InMemorySessionInterface
 
-from onehacks.database import Database
-from onehacks.utils import IDGenerator
+from src.database import Database
+from src.utils import IDGenerator
 
 
 load_dotenv(find_dotenv())
 
 
-app = Sanic("onehacks")
+app = Sanic("eventinator")
 
 app.config.DB_URI = os.environ.get("DB_URI", "sqlite:///data.db")
 app.ctx.db = Database(app)
@@ -27,7 +27,7 @@ app.config.FIREBASE_API_KEY = os.environ.get("FIREBASE_WEB_API_KEY")
 
 # initializing jinja2 templates
 app.ctx.env = Environment(
-    loader=PackageLoader("onehacks", "templates"),
+    loader=PackageLoader("src", "templates"),
     autoescape=select_autoescape(["html"]),
     enable_async=True,
 )
@@ -47,7 +47,7 @@ Session(
 app.config["WTF_CSRF_SECRET_KEY"] = os.environ.get("CSRF_TOKEN")
 
 
-app.static("/static", "./onehacks/static")
+app.static("/static", "./src/static")
 
 
 @app.before_server_start

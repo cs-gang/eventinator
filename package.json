@@ -1,23 +1,23 @@
 {
-  "name": "onehacks-project",
+  "name": "Eventinator",
   "version": "1.0.0",
   "description": "Our submission for OneHacks hackathon",
-  "main": "onehacks/static/css/stylesheet.sass",
+  "main": "src/static/css/stylesheet.sass",
   "scripts": {
-    "css-build": "node-sass --omit-source-map-url onehacks/static/css/stylesheet.scss onehacks/static/css/stylesheet.css",
+    "css-build": "node-sass --omit-source-map-url src/static/css/stylesheet.scss src/static/css/stylesheet.css",
     "css-watch": "npm run css-build -- --watch",
     "start": "npm run css-watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cs-gang/onehacks-project.git"
+    "url": "git+https://github.com/cs-gang/eventinator.git"
   },
   "author": "cs-gang",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/cs-gang/onehacks-project/issues"
+    "url": "https://github.com/cs-gang/eventinator/issues"
   },
-  "homepage": "https://github.com/cs-gang/onehacks-project#readme",
+  "homepage": "https://github.com/cs-gang/eventinatort#readme",
   "devDependencies": {
     "bulma": "^0.9.2",
     "node-sass": "^5.0.0"

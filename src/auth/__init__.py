@@ -8,7 +8,7 @@ from sanic.exceptions import SanicException
 from sanic.request import Request
 from sanic.response import HTTPResponse
 
-from onehacks.auth import discord, firebase
+from src.auth import discord, firebase
 
 
 class UnauthenticatedError(SanicException):
@@ -25,9 +25,9 @@ class User:
 
     uid: str
     username: str
-    email: str = None
-    tz: str = None
-    discord_id: str = None
+    email: Optional[str] = None
+    tz: Optional[str] = None
+    discord_id: Optional[str] = None
 
     @classmethod
     async def from_discord(cls, app: Sanic, request: Request) -> "User":
@@ -36,7 +36,7 @@ class User:
         It will register the user in the database if they aren't already."""
         token = discord.check_logged_in(request)
         if token:
-            token = {"Authorization": f"Bearer {token['access_token']}"}
+            token = {"Authorization": f"Bearer {token['access_token']}"}  # type: ignore
             get = partial(requests.get, headers=token)
             response = await app.loop.run_in_executor(
                 None, get, discord.API_BASE_URL + "/users/@me"
