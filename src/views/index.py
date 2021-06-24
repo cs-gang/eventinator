@@ -1,9 +1,9 @@
 from sanic.request import Request
 from sanic.response import html, HTTPResponse
 
-from onehacks.forms import LoginForm, SignUpForm
-from onehacks.server import app
-from onehacks.utils import render_page
+from src.forms import LoginForm, SignUpForm
+from src.server import app
+from src.utils import render_page
 
 
 @app.route("/")

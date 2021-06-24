@@ -12,7 +12,7 @@ from sanic import Sanic
 from sanic.request import Request
 from sanic.exceptions import ServerError
 
-from onehacks.server import app
+from src.server import app
 
 
 API_URL = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword"
@@ -147,7 +147,7 @@ async def check_logged_in(request: Request) -> bool:
     """Checks whether a user is signed in (on Firebase, with email and password).
     Returns ::
         The validated user details if True, else `bool` False.
-    NOTE: This function is a coroutine, unlike `onehacks.auth.discord.check_logged_in`"""
+    NOTE: This function is a coroutine, unlike `src.auth.discord.check_logged_in`"""
     session_cookie = request.cookies.get("session")
     if not session_cookie:
         return False

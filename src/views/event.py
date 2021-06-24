@@ -3,11 +3,11 @@ from sanic.exceptions import ServerError
 from sanic.request import Request
 from sanic.response import html, json, HTTPResponse, redirect  # TODO: change json
 
-from onehacks.auth import authorized, User
-from onehacks.events import Event
-from onehacks.forms import EventCreationForm
-from onehacks.server import app
-from onehacks.utils import render_page
+from src.auth import authorized, User
+from src.events import Event
+from src.forms import EventCreationForm
+from src.server import app
+from src.utils import render_page
 
 
 event = Blueprint("event", url_prefix="/event")

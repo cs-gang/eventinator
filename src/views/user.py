@@ -3,10 +3,10 @@ from sanic.exceptions import ServerError
 from sanic.request import Request
 from sanic.response import html, HTTPResponse, redirect
 
-from onehacks.auth import authorized, firebase, User, UnauthenticatedError
-from onehacks.forms import DashboardForm, LoginForm, SignUpForm
-from onehacks.server import app
-from onehacks.utils import render_page, transform_tz
+from src.forms import DashboardForm, LoginForm, SignUpForm
+from src.auth import authorized, firebase, User, UnauthenticatedError
+from src.server import app
+from src.utils import render_page, transform_tz
 
 user = Blueprint("user", url_prefix="/user")
 

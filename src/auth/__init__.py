@@ -8,7 +8,7 @@ from sanic.exceptions import SanicException
 from sanic.request import Request
 from sanic.response import HTTPResponse
 
-from onehacks.auth import discord, firebase
+from src.auth import discord, firebase
 
 
 class UnauthenticatedError(SanicException):

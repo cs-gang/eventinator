@@ -2,9 +2,9 @@ from sanic import Blueprint
 from sanic.request import Request
 from sanic.response import redirect, HTTPResponse
 
-from onehacks.auth import UnauthenticatedError
-from onehacks.auth import discord
-from onehacks.server import app
+from src.auth import UnauthenticatedError
+from src.auth import discord
+from src.server import app
 
 
 discord_bp = Blueprint("discord", url_prefix="/discord")
