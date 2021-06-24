@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/stylesheet.css">
     <script src="https://kit.fontawesome.com/91cb2ec1de.js" crossorigin="anonymous"></script>
-    <script language='javascript' src='../static/javascript/detect_timezone.js'></script>
     <title>Dashboard</title>
 </head>
 
@@ -14,7 +13,7 @@
 
     <nav class="navbar has-background-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item is-size-2 has-text-warning" href="dashboard">
+            <a class="navbar-item is-size-2 has-text-warning" href="/user/dashboard">
                 Eventinator
             </a>
             <a role="button" class="navbar-burger my-4 has-dropdown" aria-label="menu" aria-expanded="false"
@@ -40,9 +39,9 @@
     </nav>
 
     <div id="personaldetailpopup" class="modal">
-        <div class="modal-background"></div>
+        <div onclick="closepopup()" class="modal-background"></div>
         <div class="modal-content">
-            <form id="check-detail-form" action="/user/tz" class="box has-background-success-light">
+            <form id="check-detail-form" method="POST" action="/user/tz" class="box has-background-success-light">
                 {{ form.csrf_token }}
                 <div class="field">
                     <label class="label is-size-3" for="timezone">Time zone</label>
@@ -55,56 +54,25 @@
                                 <option value='-09:00,1'>(-09:00) Alaska</option>
                                 <option value='-08:00,1'>(-08:00) Pacific Time (US & Canada)</option>
                                 <option value='-07:00,0'>(-07:00) Arizona</option>
-                                <option value='-07:00,1'>(-07:00) Mountain Time (US & Canada)</option>
                                 <option value='-06:00,0'>(-06:00) Central America, Saskatchewan</option>
-                                <option value='-06:00,1'>(-06:00) Central Time (US & Canada), Guadalajara, Mexico
-                                    city</option>
                                 <option value='-05:00,0'>(-05:00) Indiana, Bogota, Lima, Quito, Rio Branco</option>
-                                <option value='-05:00,1'>(-05:00) Eastern time (US & Canada)</option>
-                                <option value='-04:00,1'>(-04:00) Atlantic time (Canada), Manaus, Santiago</option>
                                 <option value='-04:00,0'>(-04:00) Caracas, La Paz</option>
-                                <option value='-03:30,1'>(-03:30) Newfoundland</option>
-                                <option value='-03:00,1'>(-03:00) Greenland, Brasilia, Montevideo</option>
                                 <option value='-03:00,0'>(-03:00) Buenos Aires, Georgetown</option>
                                 <option value='-02:00,1'>(-02:00) Mid-Atlantic</option>
-                                <option value='-01:00,1'>(-01:00) Azores</option>
                                 <option value='-01:00,0'>(-01:00) Cape Verde Is.</option>
                                 <option value='00:00,0'>(00:00) Casablanca, Monrovia, Reykjavik</option>
-                                <option value='00:00,1'>(00:00) GMT: Dublin, Edinburgh, Lisbon, London</option>
-                                <option value='+01:00,1'>(+01:00) Amsterdam, Berlin, Rome, Vienna, Prague, Brussels
-                                </option>
                                 <option value='+01:00,0'>(+01:00) West Central Africa</option>
-                                <option value='+02:00,1'>(+02:00) Amman, Athens, Istanbul, Beirut, Cairo, Jerusalem
-                                </option>
                                 <option value='+02:00,0'>(+02:00) Harare, Pretoria</option>
-                                <option value='+03:00,1'>(+03:00) Baghdad, Moscow, St. Petersburg, Volgograd
-                                </option>
                                 <option value='+03:00,0'>(+03:00) Kuwait, Riyadh, Nairobi, Tbilisi</option>
-                                <option value='+03:30,0'>(+03:30) Tehran</option>
-                                <option value='+04:00,0'>(+04:00) Abu Dhabi, Muscat</option>
-                                <option value='+04:00,1'>(+04:00) Baku, Yerevan</option>
-                                <option value='+04:30,0'>(+04:30) Kabul</option>
-                                <option value='+05:00,1'>(+05:00) Ekaterinburg</option>
+                                <option value='+04:00,0'>(+04:00) Abu Dabi, Muscat</option>
                                 <option value='+05:00,0'>(+05:00) Islamabad, Karachi, Tashkent</option>
-                                <option value='+05:30,0'>(+05:30) Chennai, Kolkata, Mumbai, New Delhi, Sri
-                                    Jayawardenepura</option>
-                                <option value='+05:45,0'>(+05:45) Kathmandu</option>
                                 <option value='+06:00,0'>(+06:00) Astana, Dhaka</option>
-                                <option value='+06:00,1'>(+06:00) Almaty, Nonosibirsk</option>
-                                <option value='+06:30,0'>(+06:30) Yangon (Rangoon)</option>
-                                <option value='+07:00,1'>(+07:00) Krasnoyarsk</option>
                                 <option value='+07:00,0'>(+07:00) Bangkok, Hanoi, Jakarta</option>
                                 <option value='+08:00,0'>(+08:00) Beijing, Hong Kong, Singapore, Taipei</option>
-                                <option value='+08:00,1'>(+08:00) Irkutsk, Ulaan Bataar, Perth</option>
-                                <option value='+09:00,1'>(+09:00) Yakutsk</option>
                                 <option value='+09:00,0'>(+09:00) Seoul, Osaka, Sapporo, Tokyo</option>
-                                <option value='+09:30,0'>(+09:30) Darwin</option>
-                                <option value='+09:30,1'>(+09:30) Adelaide</option>
                                 <option value='+10:00,0'>(+10:00) Brisbane, Guam, Port Moresby</option>
-                                <option value='+10:00,1'>(+10:00) Canberra, Melbourne, Sydney, Hobart, Vladivostok
                                 </option>
                                 <option value='+11:00,0'>(+11:00) Magadan, Solomon Is., New Caledonia</option>
-                                <option value='+12:00,1'>(+12:00) Auckland, Wellington</option>
                                 <option value='+12:00,0'>(+12:00) Fiji, Kamchatka, Marshall Is.</option>
                                 <option value='+13:00,0'>(+13:00) Nuku'alofa</option>
                             </select>
@@ -115,6 +83,7 @@
                     </div>
                     <p class="help">Select your timezone</p>
                 </div>
+                <button class="block button is-success">Submit</button>
             </form>
         </div>
         <button onclick="closepopup()" class="modal-close is-large" aria-label="close"></button>
@@ -122,20 +91,31 @@
 
     <main class="mx-4 my-6">
         <div class="box has-background-success-light ">
-            <span class="title is-1">{{ username }}'s Events</span>
+            <span class="title is-1">{{ username|capitalize() }}'s Events</span>
             <a href="/event/new" class="button is-success is-large is-pulled-right my-4">Create Event</a>
         </div>
         <div id="events" class="columns box has-background-success-light my-6 mx-3 py-6">
+            {% for column in events|slice(3) %}
             <div class="column is-4">
-
+                {% for event in column %}
+                <a class="card" href="/event/{{event[0]}}">
+                    <div class="card-header mt-5 has-background-success">
+                        <p class="card-header-title is-size-5 has-text-warning">
+                            {{event[1]}}
+                        </p>
+                    </div>
+                    <div class="card-content has-background-info-light">
+                        {{event[-2]}}
+                    </div>
+                    <div class="card-footer has-background-success has-text-warning">
+                        <p class="is-size-5 px-5 py-2">
+                            Starting on: {{event[3][:11]}}
+                        </p>
+                    </div>
                 </a>
+                {% endfor %}
             </div>
-            <div class=" column is-4">
-
-            </div>
-            <div class="column is-4">
-
-            </div>
+            {% endfor %}
     </main>
 
     <footer class="footer has-background-success mt-6">
@@ -144,16 +124,90 @@
         </div>
     </footer>
 
-
     <script>
-        var from_discord = {{ from_discord }}
-        var events = {{ events }}
+        // script by Josh Fraser (http://www.onlineaspect.com)
 
-
-        if (from_discord) {
-            var signout = document.getElementById("signout").remove();
+        function calculate_time_zone() {
+            let timeZoneField = document.getElementById('timezone');
+            let timezone = '{{ tz }}'
+            var rightNow = new Date();
+            var jan1 = new Date(rightNow.getFullYear(), 0, 1, 0, 0, 0, 0);  // jan 1st
+            var june1 = new Date(rightNow.getFullYear(), 6, 1, 0, 0, 0, 0); // june 1st
+            var temp = jan1.toGMTString();
+            var jan2 = new Date(temp.substring(0, temp.lastIndexOf(" ") - 1));
+            temp = june1.toGMTString();
+            var june2 = new Date(temp.substring(0, temp.lastIndexOf(" ") - 1));
+            var std_time_offset = (jan1 - jan2) / (1000 * 60 * 60);
+            var daylight_time_offset = (june1 - june2) / (1000 * 60 * 60);
+            var dst;
+            if (std_time_offset == daylight_time_offset) {
+                dst = "0"; // daylight savings time is NOT observed
+            } else {
+                // positive is southern, negative is northern hemisphere
+                var hemisphere = std_time_offset - daylight_time_offset;
+                if (hemisphere >= 0)
+                    std_time_offset = daylight_time_offset;
+                dst = "1"; // daylight savings time is observed
+            }
+            var i;
+            // check just to avoid error messages
+            if (timeZoneField && timezone != "None") {
+                for (i = 0; i < timeZoneField.options.length; i++) {
+                    if (timeZoneField.options[i].value.slice(0, 3) == convert_to_value(timezone)) {
+                        timeZoneField.selectedIndex = i
+                        break;
+                    }
+                }
+            }
+            else if (timeZoneField) {
+                for (i = 0; i < timeZoneField.options.length; i++) {
+                    if (timeZoneField.options[i].value == convert(std_time_offset) + "," + dst) {
+                        timeZoneField.selectedIndex = i
+                        timeZoneField.parentElement.parentElement.parentElement.parentElement.submit();
+                        break;
+                    }
+                }
+            }
         }
 
+        function convert(value) {
+            var hours = parseInt(value);
+            value -= parseInt(value);
+            value *= 60;
+            var mins = parseInt(value);
+            value -= parseInt(value);
+            value *= 60;
+            var secs = parseInt(value);
+            var display_hours = hours;
+            // handle GMT case (00:00)
+            if (hours == 0) {
+                display_hours = "00";
+            } else if (hours > 0) {
+                // add a plus sign and perhaps an extra 0
+                display_hours = (hours < 10) ? "+0" + hours : "+" + hours;
+            } else {
+                // add an extra 0 if needed
+                display_hours = (hours > -10) ? "-0" + Math.abs(hours) : hours;
+            }
+
+            mins = (mins < 10) ? "0" + mins : mins;
+            return display_hours + ":" + mins;
+        }
+
+        function convert_to_value(value) {
+            let final = value.slice(7)
+            if (final.length == 2) {
+                final = final[0] + "0" + final[1]
+            }
+            return final
+        }
+
+        calculate_time_zone();
+
+
+    </script>
+
+    <script>
         function check_person_details_popup() {
             var popup = document.getElementById("personaldetailpopup")
             popup.classList.add("is-active")
@@ -161,53 +215,8 @@
 
         function closepopup() {
             var popup = document.getElementById("personaldetailpopup")
-            var check_form = document.getElementById("check-detail-form")
-            check_form.submit()
             popup.classList.remove("is-active")
         }
-
-        function generate_event_card(index) {
-            //Make components of event card
-            var event_card = document.createElement('a');
-            var event_header = document.createElement('div');
-            var event_body = document.createElement('div');
-            var event_footer = document.createElement('div');
-            var event_header_text = document.createElement('p');
-            var event_footer_text = document.createElement('p');
-            //Add classes to the componenets
-            event_card.classList.add("card");
-            event_header.classList.add("card-header", "mt-5");
-            event_body.classList.add("card-content", "has-background-info-light");
-            event_footer.classList.add("card-footer", "has-background-success", "has-text-warning");
-            event_header_text.classList.add("card-header-title", "is-size-5", "has-background-success", "has-text-warning");
-            event_footer_text.classList.add("is-size-5", "px-5", "py-2");
-            //Add the components as children
-            event_card.appendChild(event_header);
-            event_card.appendChild(event_body);
-            event_card.appendChild(event_footer);
-            event_header.appendChild(event_header_text);
-            event_footer.appendChild(event_footer_text);
-            //add the text to the card
-            event_header_text.textContent = events[index]['events']['event_name'];
-            event_body.textContent = events[index]['events']['short_desc'];
-            event_footer_text.textContent = events[index]['events']['start_time'];
-
-            return event_card
-        }
-
-        var event_holder = document.getElementById("events")
-        var event_holder_children = [1, 3, 5]
-        var index_count = 1
-        for (i = 0; i < length(events); i++) {
-            event_holder[index_count].appendChild(generate_event_card(i))
-            if (index_count == 5) {
-                index_count = 1
-            }
-            else {
-                index_count = index_count + 2
-            }
-        }
-
     </script>
 </body>
 
