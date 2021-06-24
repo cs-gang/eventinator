@@ -81,14 +81,15 @@ async def email_signup(request: Request) -> HTTPResponse:
 @user.route("/logout")
 @authorized()
 async def user_logout(request: Request, user: User, platform: str) -> HTTPResponse:
+    url = app.url_for("index")
+    response = redirect(url)
+
     if platform == "firebase":
         del request.ctx.session["firebase_auth_data"]
         await firebase.delete_session_cookie(app, request)
     elif platform == "discord":
         del response.cookies["session"]
-
-    url = app.url_for("index")
-    response = redirect(url)
+        
     return response
 
 
