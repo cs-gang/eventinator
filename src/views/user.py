@@ -89,7 +89,7 @@ async def user_logout(request: Request, user: User, platform: str) -> HTTPRespon
         await firebase.delete_session_cookie(app, request)
     elif platform == "discord":
         del response.cookies["session"]
-        
+
     return response
 
 
