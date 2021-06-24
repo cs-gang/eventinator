@@ -70,7 +70,12 @@ class User:
                     username=username,
                     uid=record.uid,
                 )
-            return cls(uid=record.uid, username=username, discord_id=record.discord_id)
+            return cls(
+                uid=record.uid,
+                username=username,
+                discord_id=record.discord_id,
+                tz=record.tz,
+            )
 
     @classmethod
     async def on_firebase(
