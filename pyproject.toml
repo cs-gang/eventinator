@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "onehacks-project"
+name = "Eventinator"
 version = "0.1.0"
-description = "Our submission for OneHacks hackathon"
+description = "Plan better."
 authors = ["cs-gang"]
 
 [tool.poetry.dependencies]
