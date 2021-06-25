@@ -1,7 +1,7 @@
 from sanic import Blueprint
 from sanic.exceptions import ServerError
 from sanic.request import Request
-from sanic.response import html, json, HTTPResponse, redirect  # TODO: change json
+from sanic.response import html, HTTPResponse, redirect
 
 from src.auth import authorized, User
 from src.events import Event
@@ -17,8 +17,9 @@ event = Blueprint("event", url_prefix="/event")
 
 @event.route("/<event_id:int>")
 async def event_by_id(request: Request, event_id: int) -> HTTPResponse:
-    event_data = await Event.by_id(app, str(event_id))
-    return json({"event name": event_data.event_name})
+    event = await Event.by_id(app, str(event_id))
+    output = await render_page(app.ctx.env, file="event-display.html", event=event)
+    return html(output)
 
 
 @event.route("/new", methods=["GET", "POST"])
