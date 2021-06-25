@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from functools import partial, wraps
-from typing import Any, Awaitable, List, Mapping, Optional
+from typing import Any, Callable, List, Mapping, Optional
 
 import requests
 from sanic import Sanic
@@ -156,7 +156,7 @@ class User:
 
 
 def authorized():
-    def decorator(func: Awaitable) -> Awaitable:
+    def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def wrapper(request: Request, *args: Any, **kwargs: Any) -> HTTPResponse:
             """
@@ -176,6 +176,33 @@ def authorized():
                 return await func(request, platform="firebase", user=user)
             else:
                 raise UnauthenticatedError("Not logged in.", status_code=403)
+
+        return wrapper
+
+    return decorator
+
+
+def guest_or_authorized():
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        async def wrapper(request: Request, *args: Any, **kwargs: Any) -> HTTPResponse:
+            """
+            Decorator that checks if a user is signed in.
+            Unlike the `src.auth.authenticated` decorator, this will NOT
+            raise an UnauthenticatedError in the case the user is not logged
+            in, but sets the injected User variable to "guest".
+            """
+            from_discord = discord.check_logged_in(request)
+            from_firebase = await firebase.check_logged_in(request)
+
+            if from_discord:
+                user = await User.from_discord(request.app, request)
+                return await func(request, platform="discord", user=user)
+            elif from_firebase:
+                user = await User.from_db(request.app, from_firebase["uid"])
+                return await func(request, platform="firebase", user=user)
+            else:
+                return await func(request, platform=None, user="guest")
 
         return wrapper
 

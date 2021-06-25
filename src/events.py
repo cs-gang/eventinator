@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Mapping
+from typing import List, Mapping, Optional
 
 from sanic import Sanic
 
@@ -16,9 +16,9 @@ class Event:
     end_time: datetime
     long_desc: str
     short_desc: str
-    passcode: str = None
+    passcode: Optional[str] = None
 
-    async def create(self, app: Sanic) -> None:
+    async def create(self, app: Sanic) -> "Event":
         """Inserts a record for the event in the database."""
         await app.ctx.db.execute(
             """INSERT INTO events
@@ -56,14 +56,12 @@ class Event:
             event_id=self.event_id,
         )
 
-    def __dict__(self) -> dict:
-        return {
-            "event_id": self.event_id,
-            "event_name": self.event_name,
-            "event_owner": self.event_owner,
-            "start_time": self.start_time,
-            "end_time": self.end_time,
-            "long_desc": self.long_desc,
-            "short_desc": self.short_desc,
-            "passcode": self.passcode,
-        }
+    async def get_members_usernames(self, app: Sanic) -> List[str]:
+        """Retrieve the usernames of all members of this particular Event."""
+        return [
+            i["username"]
+            for i in await app.ctx.db.fetch(
+                "SELECT username FROM users WHERE uid IN (SELECT uid FROM users_event WHERE event_id = :event_id)",
+                event_id=self.event_id,
+            )
+        ]

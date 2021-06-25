@@ -1,9 +1,11 @@
+from typing import Optional, Union
+
 from sanic import Blueprint
 from sanic.exceptions import ServerError
 from sanic.request import Request
 from sanic.response import html, HTTPResponse, redirect
 
-from src.auth import authorized, User
+from src.auth import authorized, guest_or_authorized, User
 from src.events import Event
 from src.forms import EventCreationForm
 from src.server import app
@@ -16,9 +18,31 @@ event = Blueprint("event", url_prefix="/event")
 
 
 @event.route("/<event_id:int>")
-async def event_by_id(request: Request, event_id: int) -> HTTPResponse:
+@guest_or_authorized()
+async def event_by_id(
+    request: Request, event_id: int, user: Union[User, str], platform: Optional[str]
+) -> HTTPResponse:
     event = await Event.by_id(app, str(event_id))
-    output = await render_page(app.ctx.env, file="event-display.html", event=event)
+    owner = await User.from_db(app, _id=event.event_owner)
+
+    if isinstance(user, User):
+        # the user is logged in, display all the details
+        user_tz = user.tz
+        event_members_names = await event.get_members_usernames(app)
+    else:
+        # not logged in, show only minimal info
+        user_tz = None
+        event_members_names = None
+
+    output = await render_page(
+        app.ctx.env,
+        file="event-display.html",
+        event=event,
+        event_members=event_members_names,
+        user_tz=user_tz,
+        owner_tz=owner.tz,
+    )
+
     return html(output)
 
 
