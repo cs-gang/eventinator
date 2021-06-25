@@ -1,15 +1,19 @@
 import asyncio
 import os
+from typing import Type
 
-from dotenv import find_dotenv, load_dotenv
 import firebase_admin
+from dotenv import find_dotenv, load_dotenv
 from firebase_admin import credentials
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sanic import Sanic
+from sanic.request import Request
+from sanic.response import HTTPResponse, html
 from sanic_session import Session, InMemorySessionInterface
 
+from src.auth import UnauthenticatedError
 from src.database import Database
-from src.utils import IDGenerator
+from src.utils import IDGenerator, render_page
 
 
 load_dotenv(find_dotenv())
@@ -59,3 +63,11 @@ async def connect_db(app: Sanic, loop: asyncio.AbstractEventLoop) -> None:
 @app.after_server_stop
 async def disconnect_db(app: Sanic, loop: asyncio.AbstractEventLoop) -> None:
     await app.ctx.db.disconnect()
+
+
+@app.exception(UnauthenticatedError)
+async def redirect_to_login(
+    request: Request, exception: Type[Exception]
+) -> HTTPResponse:
+    output = await render_page(app.ctx.env, file="not-logged-in.html")
+    return html(output)
