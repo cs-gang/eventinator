@@ -11,7 +11,6 @@ from sanic.request import Request
 from sanic.response import HTTPResponse, html
 from sanic_session import Session, InMemorySessionInterface
 
-from src.auth import UnauthenticatedError
 from src.database import Database
 from src.utils import IDGenerator, render_page
 
@@ -63,11 +62,3 @@ async def connect_db(app: Sanic, loop: asyncio.AbstractEventLoop) -> None:
 @app.after_server_stop
 async def disconnect_db(app: Sanic, loop: asyncio.AbstractEventLoop) -> None:
     await app.ctx.db.disconnect()
-
-
-@app.exception(UnauthenticatedError)
-async def redirect_to_login(
-    request: Request, exception: Type[Exception]
-) -> HTTPResponse:
-    output = await render_page(app.ctx.env, file="not-logged-in.html")
-    return html(output)
