@@ -1,3 +1,5 @@
+from typing import Type
+
 from sanic.request import Request
 from sanic.response import html, HTTPResponse
 
