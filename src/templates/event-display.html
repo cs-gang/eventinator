@@ -1,14 +1,45 @@
-<html lang="en">
+<html lang="en" class="has-navbar-fixed-top has-background-success-light">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/stylesheet.css">
     <title>Event Display</title>
 </head>
 
 <body>
+    <nav class="navbar has-background-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item is-size-2 has-text-warning" href="/user/dashboard">
+                Eventinator
+            </a>
+            <a role="button" class="navbar-burger my-4 has-dropdown" aria-label="menu" aria-expanded="false"
+                data-target="navburgertarget">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navburgertarget" class="navbar-menu">
+            <div class="navbar-start">
 
+            </div>
+            <div class="navbar-end is-align-items-center is-flex">
+                <button class="button is-success is-rounded mx-5">
+                    Modify personal details
+                </button>
+                <a href="/user/logout"
+                    class="px-5 py-5 is-flex has-background-success has-text-warning has-text-centered is-size-4">Log
+                    out</a>
+            </div>
+        </div>
+    </nav>
+    <footer class="footer has-background-success">
+        <div class="has-text-centered has-text-link-light">
+            This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
+        </div>
+    </footer>
 </body>
 
 </html>
