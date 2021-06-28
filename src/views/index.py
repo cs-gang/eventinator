@@ -1,5 +1,3 @@
-from typing import Type
-
 from sanic.request import Request
 from sanic.response import html, HTTPResponse
 
@@ -20,8 +18,6 @@ async def index(request: Request) -> HTTPResponse:
 
 
 @app.exception(UnauthenticatedError)
-async def redirect_to_login(
-    request: Request, exception: Type[Exception]
-) -> HTTPResponse:
+async def redirect_to_login(request: Request, exception: Exception) -> HTTPResponse:
     output = await render_page(app.ctx.env, file="not-logged-in.html")
     return html(output)
