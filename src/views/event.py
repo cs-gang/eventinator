@@ -7,7 +7,7 @@ from sanic.response import html, HTTPResponse, redirect
 
 from src.auth import authorized, guest_or_authorized, User
 from src.events import Event
-from src.forms import EventCreationForm, LeaveEventForm
+from src.forms import EventCreationForm, LeaveEventForm, JoinEventForm
 from src.server import app
 from src.utils import render_page
 
@@ -50,6 +50,19 @@ async def event_by_id(
 @authorized()
 async def leave_event(request: Request, user: User, platform: str) -> HTTPResponse:
     form = LeaveEventForm(request)
+
+    if form.validate():
+        event = await Event.by_id(app, form.event_id.data)
+        await user.leave_event(app, event)
+        return redirect("user.dashboard")
+    else:
+        raise ServerError("Form did not validate.", status_code=500)
+
+
+@event.post("/join")
+@authorized()
+async def join_event(request: Request, user: User, platform: str) -> HTTPResponse:
+    form = JoinEventForm(request)
 
     if form.validate():
         event = await Event.by_id(app, form.event_id.data)

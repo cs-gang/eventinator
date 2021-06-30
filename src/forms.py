@@ -36,3 +36,6 @@ class DashboardForm(SanicForm):
 
 class LeaveEventForm(SanicForm):
     event_id = StringField("Event", validators=[DataRequired()])
+
+
+JoinEventForm = LeaveEventForm
