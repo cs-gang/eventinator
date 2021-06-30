@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from functools import partial, wraps
+from src.events import Event
 from typing import Any, Callable, List, Mapping, Optional
 
 import requests
@@ -154,6 +155,22 @@ class User:
             "UPDATE users SET tz = :tz WHERE uid = :uid", tz=tz, uid=self.uid
         )
 
+    async def join_event(self, app: Sanic, event: Event) -> None:
+        """Adds the user to specified event."""
+        await app.ctx.db.execute(
+            "INSERT INTO users_events(uid, event_id) VALUES(:uid, :eid)",
+            uid=self.uid,
+            eid=event.event_id,
+        )
+
+    async def leave_event(self, app: Sanic, event: Event) -> None:
+        """Removes the user from the specified event."""
+        await app.ctx.db.execute(
+            "DELETE FROM users_events WHERE uid=:uid AND event_id=:eid",
+            uid=self.uid,
+            eid=event.event_id,
+        )
+
 
 def authorized():
     def decorator(func: Callable) -> Callable:
@@ -170,10 +187,14 @@ def authorized():
 
             if from_discord:
                 user = await User.from_discord(request.app, request)
-                return await func(request, platform="discord", user=user, *args, **kwargs)
+                return await func(
+                    request, platform="discord", user=user, *args, **kwargs
+                )
             elif from_firebase:
                 user = await User.from_db(request.app, from_firebase["uid"])
-                return await func(request, platform="firebase", user=user, *args, **kwargs)
+                return await func(
+                    request, platform="firebase", user=user, *args, **kwargs
+                )
             else:
                 raise UnauthenticatedError("Not logged in.", status_code=403)
 
@@ -197,10 +218,14 @@ def guest_or_authorized():
 
             if from_discord:
                 user = await User.from_discord(request.app, request)
-                return await func(request, platform="discord", user=user, *args, **kwargs)
+                return await func(
+                    request, platform="discord", user=user, *args, **kwargs
+                )
             elif from_firebase:
                 user = await User.from_db(request.app, from_firebase["uid"])
-                return await func(request, platform="firebase", user=user, *args, **kwargs)
+                return await func(
+                    request, platform="firebase", user=user, *args, **kwargs
+                )
             else:
                 return await func(request, platform=None, user="guest", *args, **kwargs)
 

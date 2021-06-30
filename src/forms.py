@@ -1,5 +1,5 @@
 from sanic_wtf import SanicForm
-from wtforms import StringField, SubmitField, DateTimeField
+from wtforms import DateTimeField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
@@ -32,3 +32,7 @@ class EventCreationForm(SanicForm):
 
 class DashboardForm(SanicForm):
     timezone = StringField("Timezone", validators=[DataRequired()])
+
+
+class LeaveEventForm(SanicForm):
+    event_id = StringField("Event", validators=[DataRequired()])

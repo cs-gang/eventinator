@@ -7,7 +7,7 @@ from sanic.response import html, HTTPResponse, redirect
 
 from src.auth import authorized, guest_or_authorized, User
 from src.events import Event
-from src.forms import EventCreationForm
+from src.forms import EventCreationForm, LeaveEventForm
 from src.server import app
 from src.utils import render_page
 
@@ -17,7 +17,7 @@ event = Blueprint("event", url_prefix="/event")
 # TODO: complete this
 
 
-@event.route("/<event_id:int>")
+@event.get("/<event_id:int>")
 @guest_or_authorized()
 async def event_by_id(
     request: Request, event_id: int, user: Union[User, str], platform: Optional[str]
@@ -44,6 +44,19 @@ async def event_by_id(
     )
 
     return html(output)
+
+
+@event.post("/leave")
+@authorized()
+async def leave_event(request: Request, user: User, platform: str) -> HTTPResponse:
+    form = LeaveEventForm(request)
+
+    if form.validate():
+        event = await Event.by_id(app, form.event_id.data)
+        await user.join_event(app, event)
+        return redirect("user.dashboard")
+    else:
+        raise ServerError("Form did not validate.", status_code=500)
 
 
 @event.route("/new", methods=["GET", "POST"])
