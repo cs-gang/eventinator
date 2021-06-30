@@ -61,7 +61,7 @@ class Event:
         return [
             i["username"]
             for i in await app.ctx.db.fetch(
-                "SELECT username FROM users WHERE uid IN (SELECT uid FROM users_event WHERE event_id = :event_id)",
+                "SELECT username FROM users WHERE uid IN (SELECT uid FROM users_events WHERE event_id = :event_id)",
                 event_id=self.event_id,
             )
         ]
