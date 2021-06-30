@@ -170,10 +170,10 @@ def authorized():
 
             if from_discord:
                 user = await User.from_discord(request.app, request)
-                return await func(request, platform="discord", user=user)
+                return await func(request, platform="discord", user=user, *args, **kwargs)
             elif from_firebase:
                 user = await User.from_db(request.app, from_firebase["uid"])
-                return await func(request, platform="firebase", user=user)
+                return await func(request, platform="firebase", user=user, *args, **kwargs)
             else:
                 raise UnauthenticatedError("Not logged in.", status_code=403)
 
@@ -197,12 +197,12 @@ def guest_or_authorized():
 
             if from_discord:
                 user = await User.from_discord(request.app, request)
-                return await func(request, platform="discord", user=user)
+                return await func(request, platform="discord", user=user, *args, **kwargs)
             elif from_firebase:
                 user = await User.from_db(request.app, from_firebase["uid"])
-                return await func(request, platform="firebase", user=user)
+                return await func(request, platform="firebase", user=user, *args, **kwargs)
             else:
-                return await func(request, platform=None, user="guest")
+                return await func(request, platform=None, user="guest", *args, **kwargs)
 
         return wrapper
 
