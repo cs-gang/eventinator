@@ -171,6 +171,12 @@ class User:
             eid=event.event_id,
         )
 
+    async def get_owned_events(self, app: Sanic) -> List[Mapping]:
+        """Get all events owned by this user."""
+        return await app.ctx.db.fetch(
+            "SELECT * FROM events WHERE event_owner=:uid", uid=self.uid
+        )
+
 
 def authorized():
     def decorator(func: Callable) -> Callable:

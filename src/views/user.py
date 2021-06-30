@@ -98,7 +98,8 @@ async def user_logout(request: Request, user: User, platform: str) -> HTTPRespon
 async def user_dashboard(request: Request, user: User, platform: str) -> HTTPResponse:
     form = DashboardForm(request)
 
-    events = await user.get_events(app)
+    all_events = await user.get_events(app)
+    owned_events = await user.get_owned_events(app)
     from_discord = True if platform == "discord" else False
 
     output = await render_page(
@@ -106,7 +107,8 @@ async def user_dashboard(request: Request, user: User, platform: str) -> HTTPRes
         file="dashboard.html",
         form=form,
         from_discord=from_discord,
-        events=events,
+        all_events=all_events,
+        owned_events=owned_events,
         username=user.username,
         tz=user.tz,
     )
