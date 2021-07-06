@@ -14,8 +14,6 @@ from src.utils import render_page
 
 event = Blueprint("event", url_prefix="/event")
 
-# TODO: complete this
-
 
 @event.get("/<event_id:int>")
 @guest_or_authorized()
@@ -24,6 +22,8 @@ async def event_by_id(
 ) -> HTTPResponse:
     event = await Event.by_id(app, str(event_id))
     owner = await User.from_db(app, _id=event.event_owner)
+    
+    join_form, leave_form = JoinEventForm(request), LeaveEventForm(request)
 
     if isinstance(user, User):
         # the user is logged in, display all the details
@@ -39,6 +39,8 @@ async def event_by_id(
         event_members=event_members_names,
         user=user,  # can be either a User object, or a string saying "guest"
         owner_tz=owner.tz,
+        leave_form=leave_form,
+        join_form=join_form
     )
 
     return html(output)
