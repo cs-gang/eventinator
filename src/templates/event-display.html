@@ -16,6 +16,8 @@
 </head>
 
 <body>
+    <script>let bro = '{{event}}'</script>
+    <script>let broski = '{{event_members}}'</script>
     <nav class="navbar has-background-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item is-size-2 has-text-warning" href="/user/dashboard">
@@ -29,53 +31,26 @@
             </a>
         </div>
         <div id="navburgertarget" class="navbar-menu">
-            <div class="navbar-start">
-
-            </div>
+            <div class="navbar-start"></div>
             <div class="navbar-end is-align-items-center is-flex">
+                {% if user.username != "guest" %}
                 <button class="button is-success is-rounded mx-5">
                     Modify personal details
                 </button>
                 <a href="/user/logout"
                     class="px-5 py-5 is-flex has-background-success has-text-warning has-text-centered is-size-4">Log
                     out</a>
+                {% endif %}
+
             </div>
         </div>
     </nav>
 
     <section class="box has-background-success-light mx-6 my-6">
-        <div class="title is-1">Title Of Event Placeholder</div>
-        <div class="subtitle my-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt libero aperiam aut
-            ullam
-            repellendus ut iusto nemo neque magnam! Iste magnam sunt accusantium explicabo hic unde, eligendi delectus
-            nisi vero doloremque ad ullam officiis error eius doloribus minima ratione ut! Quam eum dolore maiores velit
-            laborum tempore deleniti reprehenderit ducimus? short description</div>
+        <div class="title is-1 has-text-centered">{{event.event_name}}</div>
+        <div class="subtitle my-6 has-text-centered">{{event.short_desc}}</div>
 
-        <div class="box has-background-success-light mx-3 my-3">Long description Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Odit, totam. Voluptate asperiores, modi, earum nesciunt pariatur error perspiciatis
-            possimus accusamus ex itaque, iste similique? Expedita, cupiditate? Reprehenderit, quis qui? Quibusdam nemo
-            voluptatum error esse at perspiciatis praesentium, molestias rerum earum unde harum vel minima in nisi
-            laboriosam dicta asperiores repellat, eveniet animi consequuntur temporibus. Voluptatem totam deserunt,
-            earum officia doloribus vitae a natus quae autem eius similique, nesciunt exercitationem distinctio, neque
-            sequi molestiae sed. Excepturi tenetur possimus ea deleniti voluptates soluta deserunt adipisci nemo
-            temporibus itaque ullam explicabo cupiditate sed amet in quae, rem, voluptatem, corrupti aliquam officia
-            velit. Veniam. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio nulla atque rem temporibus
-            delectus debitis reiciendis, veniam a ipsa, reprehenderit, quo dicta molestiae mollitia quidem expedita
-
-            <br><br>
-            porro aspernatur quam qui maxime dolorum voluptatibus magni. Doloribus natus in veritatis temporibus atque
-            nostrum voluptas quod cum blanditiis et consequuntur non, architecto veniam accusantium sint at magni velit
-            quae. Rem explicabo et vitae porro quos nemo voluptatem, amet dolores dolor, iure minus. Unde laudantium est
-            quidem quae earum illum totam id, quo doloremque magnam ipsam modi corrupti cupiditate laborum eum quod
-            architecto! Consequatur molestias, eligendi pariatur porro architecto est molestiae eaque consequuntur
-            fugit, natus laborum fuga aliquid corrupti voluptatibus non sint explicabo delectus laudantium? Commodi,
-            dolorum dignissimos a, impedit, sequi praesentium officiis beatae hic molestias consectetur corporis eum
-            numquam odio excepturi incidunt nobis explicabo consequatur? Iure expedita repellat illum itaque labore
-            ipsa, aut unde a ad eum rem consequuntur, quia ullam officiis voluptatibus consequatur ducimus culpa! Quasi
-            quaerat perferendis odio iusto at, hic minus magni deserunt cum eum itaque quae nam consequuntur harum illo
-            dolores corporis quisquam numquam voluptatem dicta laboriosam repellat praesentium! Provident odit dolores
-            itaque libero quis asperiores culpa pariatur ab, consequatur, perferendis eveniet totam eligendi minus
-            fugiat ipsa ipsum molestiae.
+        <div class="box has-background-success-light mx-3 my-3 has-text-centered">{{event.long_desc}}
         </div>
 
         <div class="px-4 py-5">
@@ -83,25 +58,37 @@
             <span class="is-pulled-right is-size-4">End Date Placeholder</span>
         </div>
 
-        <div class="box columns has-background-success-light mx-6 my-3 mt-6">
-            <div class="column content">
+        {% if event_members %}
+        <div class="box has-background-success-light mx-6 my-3 mt-6">
+            <div class="content">
                 <p>Users who have joined the event</p>
                 <ul>
-                    <li>Bro</li>
-                    <li>Sis</li>
-                    <li>Urmom</li>
-                    <li>Urdad</li>
-                    <li>Shrek</li>
+                    {% for person in event_members %}
+                    <li>{{person}}</li>
+                    {% endfor %}
                 </ul>
             </div>
-            <div class="column">
+        </div>
+        {% endif %}
 
-            </div>
-        </div>
+        {% if event_members %}
         <div class="pb-6 my-2">
-            <a href="" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave
-                Meeting</a>
+            {% if user.username in event_members%}
+            <a href="/leave" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave Meeting</a>
+            {% else if user.username != "guest" %}
+            <a href="/join" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Join Meeting</a>
+            {% endif %}
         </div>
+        {% else %}
+        <div class="pb-3 my-2 has-text-centered">
+            {% if user.username in event_members %}
+            <a href="/leave" class="button is-success is-large mt-6">Leave Meeting</a>
+            {% else if user.username != "guest" %}
+            <a href="/join" class="button is-success is-large mt-6">Join Meeting</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
     </section>
 
     <footer class="footer has-background-success">
