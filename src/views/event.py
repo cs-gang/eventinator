@@ -27,11 +27,9 @@ async def event_by_id(
 
     if isinstance(user, User):
         # the user is logged in, display all the details
-        user_tz = user.tz
         event_members_names = await event.get_members_usernames(app)
     else:
         # not logged in, show only minimal info
-        user_tz = None
         event_members_names = None
 
     output = await render_page(
@@ -39,7 +37,7 @@ async def event_by_id(
         file="event-display.html",
         event=event,
         event_members=event_members_names,
-        user_tz=user_tz,
+        user=user,  # can be either a User object, or a string saying "guest"
         owner_tz=owner.tz,
     )
 
