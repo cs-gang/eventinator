@@ -22,7 +22,7 @@ async def event_by_id(
 ) -> HTTPResponse:
     event = await Event.by_id(app, str(event_id))
     owner = await User.from_db(app, _id=event.event_owner)
-    
+
     join_form, leave_form = JoinEventForm(request), LeaveEventForm(request)
 
     if isinstance(user, User):
@@ -40,7 +40,7 @@ async def event_by_id(
         user=user,  # can be either a User object, or a string saying "guest"
         owner_tz=owner.tz,
         leave_form=leave_form,
-        join_form=join_form
+        join_form=join_form,
     )
 
     return html(output)
@@ -50,7 +50,7 @@ async def event_by_id(
 @authorized()
 async def leave_event(request: Request, user: User, platform: str) -> HTTPResponse:
     form = LeaveEventForm(request)
-
+    print(request.parsed_form)
     if form.validate():
         event = await Event.by_id(app, form.event_id.data)
         await user.leave_event(app, event)
@@ -63,7 +63,7 @@ async def leave_event(request: Request, user: User, platform: str) -> HTTPRespon
 @authorized()
 async def join_event(request: Request, user: User, platform: str) -> HTTPResponse:
     form = JoinEventForm(request)
-
+    print(request.parsed_form)
     if form.validate():
         event = await Event.by_id(app, form.event_id.data)
         await user.join_event(app, event)

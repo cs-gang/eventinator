@@ -1,5 +1,5 @@
 from sanic_wtf import SanicForm
-from wtforms import DateTimeField, StringField, SubmitField
+from wtforms import DateField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
@@ -19,12 +19,8 @@ class SignUpForm(SanicForm):
 class EventCreationForm(SanicForm):
     eventname = StringField("Name of the event", validators=[DataRequired()])
     passcode = StringField("Passcode")
-    starttime = DateTimeField(
-        "Start Time", validators=[DataRequired()], format="%Y-%m-%dT%H:%M"
-    )
-    endtime = DateTimeField(
-        "End Time", validators=[DataRequired()], format="%Y-%m-%dT%H:%M"
-    )
+    starttime = DateField("Start Time", validators=[DataRequired()], format="%Y-%m-%d")
+    endtime = DateField("End Time", validators=[DataRequired()], format="%Y-%m-%d")
     shortdescription = StringField("Short Description", validators=[DataRequired()])
     longdescription = StringField("Long Description", validators=[DataRequired()])
     submit = SubmitField("Submit")
