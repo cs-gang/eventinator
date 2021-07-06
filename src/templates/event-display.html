@@ -54,8 +54,8 @@
         </div>
 
         <div class="px-4 py-5">
-            <span class="is-pulled-left is-size-4">Start Date Placeholder</span>
-            <span class="is-pulled-right is-size-4">End Date Placeholder</span>
+            <span class="is-pulled-left is-size-4">{{event.starttime}}</span>
+            <span class="is-pulled-right is-size-4">{{event.endtime}}</span>
         </div>
 
         {% if event_members %}
@@ -74,16 +74,24 @@
         {% if event_members %}
         <div class="pb-6 my-2">
             {% if user.username in event_members%}
-            <a href="/leave" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave Meeting</a>
-            {% else if user.username != "guest" %}
+            <form action="/event/leave" method="POST">
+                {{ leave_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.id}}" hidden>
+                <button class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave Meeting</button>
+            </form>
+            {% elif user.username != "guest" %}
             <a href="/join" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Join Meeting</a>
             {% endif %}
         </div>
         {% else %}
         <div class="pb-3 my-2 has-text-centered">
             {% if user.username in event_members %}
-            <a href="/leave" class="button is-success is-large mt-6">Leave Meeting</a>
-            {% else if user.username != "guest" %}
+            <form action="/event/leave" method="POST">
+                {{ leave_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.id}}" hidden>
+                <button class="button is-success is-large mt-6">Leave Meeting</button>
+            </form>
+            {% elif user.username != "guest" %}
             <a href="/join" class="button is-success is-large mt-6">Join Meeting</a>
             {% endif %}
         </div>
