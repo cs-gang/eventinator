@@ -94,8 +94,16 @@
             <span class="title is-1">{{ username|capitalize() }}'s Events</span>
             <a href="/event/new" class="button is-success is-large is-pulled-right my-4">Create Event</a>
         </div>
-        <div id="events" class="columns box has-background-success-light my-6 mx-3 py-6">
-            {% for column in events|slice(3) %}
+
+        <div class="tabs is-centered is-medium">
+            <ul>
+                <li class="is-active"><a id="JoinedEventsTab">Joined Events</a></li>
+                <li><a id="CreatedEventsTab">Created Events</a></li>
+            </ul>
+        </div>
+
+        <div id="joined-events" class="columns box has-background-success-light my-6 mx-3 py-6">
+            {% for column in all_events|slice(3) %}
             <div class="column is-4">
                 {% for event in column %}
                 <a class="card" href="/event/{{event[0]}}">
@@ -116,6 +124,30 @@
                 {% endfor %}
             </div>
             {% endfor %}
+        </div>
+        <div id="created-events" class="columns box has-background-success-light my-6 mx-3 py-6" style="display: none;">
+            {% for column in owned_events|slice(3) %}
+            <div class="column is-4">
+                {% for event in column %}
+                <a class="card" href="/event/{{event[0]}}">
+                    <div class="card-header mt-5 has-background-success">
+                        <p class="card-header-title is-size-5 has-text-warning">
+                            {{event[1]}}
+                        </p>
+                    </div>
+                    <div class="card-content has-background-info-light">
+                        {{event[-2]}}
+                    </div>
+                    <div class="card-footer has-background-success has-text-warning">
+                        <p class="is-size-5 px-5 py-2">
+                            Starting on: {{event[3][:11]}}
+                        </p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
     </main>
 
     <footer class="footer has-background-success mt-6">
@@ -126,7 +158,6 @@
 
     <script>
         // script by Josh Fraser (http://www.onlineaspect.com)
-
         function calculate_time_zone() {
             let timeZoneField = document.getElementById('timezone');
             let timezone = '{{ tz }}'
@@ -216,6 +247,32 @@
         function closepopup() {
             var popup = document.getElementById("personaldetailpopup")
             popup.classList.remove("is-active")
+        }
+
+        let joinedTab = document.getElementById("JoinedEventsTab")
+        let createdTab = document.getElementById("CreatedEventsTab")
+        let joinedEvents = document.getElementById("joined-events")
+        let createdEvents = document.getElementById("created-events")
+
+        joinedTab.addEventListener("click", tabhandler("joined"));
+        createdTab.addEventListener("click", tabhandler("created"))
+
+        function tabhandler(tab) {
+            if (tab == "joined") {
+                return () => {
+                    joinedTab.parentElement.classList.add("is-active");
+                    createdTab.parentElement.classList.remove("is-active");
+                    joinedEvents.style.display = "block"
+                    createdEvents.style.display = "none"
+                }
+            } else if (tab == "created") {
+                return () => {
+                    joinedTab.parentElement.classList.remove("is-active");
+                    createdTab.parentElement.classList.add("is-active");
+                    joinedEvents.style.display = "none"
+                    createdEvents.style.display = "block"
+                }
+            }
         }
     </script>
 </body>
