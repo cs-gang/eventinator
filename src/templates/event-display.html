@@ -33,7 +33,7 @@
         <div id="navburgertarget" class="navbar-menu">
             <div class="navbar-start"></div>
             <div class="navbar-end is-align-items-center is-flex">
-                {% if user.username != "guest" %}
+                {% if user != "guest" %}
                 <button class="button is-success is-rounded mx-5">
                     Modify personal details
                 </button>
@@ -76,11 +76,16 @@
             {% if user.username in event_members%}
             <form action="/event/leave" method="POST">
                 {{ leave_form.csrf_token }}
-                <input type="text" name="event_id" id="event_id" value="{{event.id}}" hidden>
-                <button class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave Meeting</button>
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button type="submit" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave
+                    Meeting</button>
             </form>
-            {% elif user.username != "guest" %}
-            <a href="/event/join" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Join Meeting</a>
+            {% elif user != "guest" %}
+            <form action="/event/join" method="POST">
+                {{ join_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button class="button is-success is-medium mx-6 mt-2 is-pulled-right">Join Meeting</button>
+            </form>
             {% endif %}
         </div>
         {% else %}
@@ -88,11 +93,15 @@
             {% if user.username in event_members %}
             <form action="/event/leave" method="POST">
                 {{ leave_form.csrf_token }}
-                <input type="text" name="event_id" id="event_id" value="{{event.id}}" hidden>
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
                 <button class="button is-success is-large mt-6">Leave Meeting</button>
             </form>
-            {% elif user.username != "guest" %}
-            <a href="/join" class="button is-success is-large mt-6">Join Meeting</a>
+            {% elif user != "guest" %}
+            <form action="/event/join" method="POST">
+                {{ join_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button class="button is-success is-large mt-6">Join Meeting</a>
+            </form>
             {% endif %}
         </div>
         {% endif %}

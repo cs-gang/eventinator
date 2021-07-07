@@ -54,7 +54,8 @@ async def leave_event(request: Request, user: User, platform: str) -> HTTPRespon
     if form.validate():
         event = await Event.by_id(app, form.event_id.data)
         await user.leave_event(app, event)
-        return redirect("user.user_dashboard")
+        url = app.url_for("user.user_dashboard")
+        return redirect(url)
     else:
         raise ServerError("Form did not validate.", status_code=500)
 
