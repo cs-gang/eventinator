@@ -106,21 +106,21 @@
             {% for column in all_events|slice(3) %}
             <div class="column is-4">
                 {% for event in column %}
-                <a class="card" href="/event/{{event[0]}}">
+                <a href="/event/{{event[0]}}">
                     <div class="card-header mt-5 has-background-success">
                         <p class="card-header-title is-size-5 has-text-warning">
                             {{event[1]}}
                         </p>
                     </div>
-                    <div class="card-content has-background-info-light">
-                        {{event[-2]}}
-                    </div>
-                    <div class="card-footer has-background-success has-text-warning">
-                        <p class="is-size-5 px-5 py-2">
-                            Starting on: {{event[3][:11]}}
-                        </p>
-                    </div>
                 </a>
+                <div class="card-content has-background-info-light">
+                    {{event[-2]}}
+                </div>
+                <div class="card-footer has-background-success has-text-warning">
+                    <p class="is-size-5 px-5 py-2 pb-4">
+                        Starting on: {{event[3][:11]}}
+                    </p>
+                </div>
                 {% endfor %}
             </div>
             {% endfor %}
@@ -129,21 +129,29 @@
             {% for column in owned_events|slice(3) %}
             <div class="column is-4">
                 {% for event in column %}
-                <a class="card" href="/event/{{event[0]}}">
+                <div class="card"></div>
+                <a href="/event/{{event[0]}}">
                     <div class="card-header mt-5 has-background-success">
                         <p class="card-header-title is-size-5 has-text-warning">
                             {{event[1]}}
                         </p>
                     </div>
-                    <div class="card-content has-background-info-light">
-                        {{event[-2]}}
-                    </div>
-                    <div class="card-footer has-background-success has-text-warning">
-                        <p class="is-size-5 px-5 py-2">
-                            Starting on: {{event[3][:11]}}
-                        </p>
-                    </div>
                 </a>
+                <div class="card-content has-background-info-light">
+                    {{event[-2]}}
+                </div>
+                <div class="card-footer has-background-success has-text-warning">
+                    <p class="is-size-5 px-5 py-2">
+                        Starting on: {{event[3][:11]}}
+                    </p>
+                    <form action="/event/delete" method="POST" class="mt-2 ml-5 is-inline">
+                        <input type="text" name="event_id" value="{{event[0]}}" hidden>
+                        <button class="is-pulled-right has-background-success ml-6" style="border: 0;">
+                            <a class="far fa-times-circle is-size-3 has-text-white"></a>
+                        </button>
+                    </form>
+                </div>
+
                 {% endfor %}
             </div>
             {% endfor %}
@@ -262,7 +270,7 @@
                 return () => {
                     joinedTab.parentElement.classList.add("is-active");
                     createdTab.parentElement.classList.remove("is-active");
-                    joinedEvents.style.display = "block"
+                    joinedEvents.style.display = ""
                     createdEvents.style.display = "none"
                 }
             } else if (tab == "created") {
@@ -270,7 +278,7 @@
                     joinedTab.parentElement.classList.remove("is-active");
                     createdTab.parentElement.classList.add("is-active");
                     joinedEvents.style.display = "none"
-                    createdEvents.style.display = "block"
+                    createdEvents.style.display = ""
                 }
             }
         }
