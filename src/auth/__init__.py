@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from functools import partial, wraps
+
 from src.events import Event
 from typing import Any, Callable, List, Mapping, Optional
 
@@ -113,7 +114,7 @@ class User:
         )
         return cls(
             uid=user_record.uid,
-            username=user_record.display_name,
+            username=user_record.display_name or "NO USERNAME",
             email=user_record.email,
         )
 
@@ -125,7 +126,7 @@ class User:
         user_record = await firebase.get_user(app, uid)
         return cls(
             uid=user_record.uid,
-            username=user_record.display_name,
+            username=user_record.display_name or "NO USERNAME",
             email=user_record.email,
         )
 
@@ -218,7 +219,9 @@ def authorized():
                     request, platform="discord", user=user, *args, **kwargs
                 )
             elif from_firebase:
-                user = await User.from_db(request.app, from_firebase["uid"])
+                user = await User.from_db(
+                    request.app, from_firebase["uid"]
+                )  # type: ignore
                 return await func(
                     request, platform="firebase", user=user, *args, **kwargs
                 )
