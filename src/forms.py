@@ -30,8 +30,12 @@ class DashboardForm(SanicForm):
     timezone = StringField("Timezone", validators=[DataRequired()])
 
 
-class LeaveEventForm(SanicForm):
+class EventActionForm(SanicForm):
+    """
+    Form to:
+        1) Leave an event
+        2) Join an event
+        3) Delete an event
+    """
+
     event_id = StringField("Event", validators=[DataRequired()])
-
-
-JoinEventForm = LeaveEventForm

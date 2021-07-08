@@ -7,7 +7,7 @@ from sanic.response import html, HTTPResponse, redirect
 
 from src.auth import authorized, guest_or_authorized, User
 from src.events import Event
-from src.forms import EventCreationForm, LeaveEventForm, JoinEventForm
+from src.forms import EventCreationForm, EventActionForm
 from src.server import app
 from src.utils import render_page
 
@@ -23,7 +23,7 @@ async def event_by_id(
     event = await Event.by_id(app, str(event_id))
     owner = await User.from_db(app, _id=event.event_owner)
 
-    join_form, leave_form = JoinEventForm(request), LeaveEventForm(request)
+    join_form, leave_form = [EventActionForm(request)] * 2
 
     if isinstance(user, User):
         # the user is logged in, display all the details
@@ -49,7 +49,7 @@ async def event_by_id(
 @event.post("/leave")
 @authorized()
 async def leave_event(request: Request, user: User, platform: str) -> HTTPResponse:
-    form = LeaveEventForm(request)
+    form = EventActionForm(request)
     print(request.parsed_form)
     if form.validate():
         event = await Event.by_id(app, form.event_id.data)
@@ -63,7 +63,7 @@ async def leave_event(request: Request, user: User, platform: str) -> HTTPRespon
 @event.post("/join")
 @authorized()
 async def join_event(request: Request, user: User, platform: str) -> HTTPResponse:
-    form = JoinEventForm(request)
+    form = EventActionForm(request)
     print(request.parsed_form)
     if form.validate():
         event = await Event.by_id(app, form.event_id.data)
