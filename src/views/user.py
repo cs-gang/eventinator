@@ -8,15 +8,12 @@ from src.auth import authorized, firebase, User, UnauthenticatedError
 from src.server import app
 from src.utils import render_page, transform_tz
 
+
 user = Blueprint("user", url_prefix="/user")
 
 
 @user.post("/login")
 async def email_login(request: Request) -> HTTPResponse:
-    if request.method != "POST":
-        raise ServerError(
-            "Only POST requests are allowed to this route.", status_code=405
-        )
     form = LoginForm(request)
 
     if form.validate():
@@ -25,6 +22,9 @@ async def email_login(request: Request) -> HTTPResponse:
         auth_data = await firebase.authenticate_user(
             app, email=email, password=password
         )
+
+        if not auth_data:
+            raise ServerError("-- `auth_data` returned None: L27 user.py --")
 
         request.ctx.session["firebase_auth_data"] = auth_data
 
@@ -45,11 +45,6 @@ async def email_login(request: Request) -> HTTPResponse:
 
 @user.post("/new")
 async def email_signup(request: Request) -> HTTPResponse:
-    if request.method != "POST":
-        raise ServerError(
-            "Only POST requests are allowed to this route.", status_code=405
-        )
-
     form = SignUpForm(request)
 
     if form.validate():
@@ -60,12 +55,20 @@ async def email_signup(request: Request) -> HTTPResponse:
             app, username=username, email=email, password=password
         )
         auth_data = await firebase.authenticate_user(
-            app, email=user.email, password=password
+            app,
+            email=user.email or "",
+            password=password,  # that `or` case will never happen here.
         )
+
+        if not auth_data:
+            raise ServerError("-- `auth_data` is None L62 user.py --")
 
         request.ctx.session["firebase_auth_data"] = auth_data
 
         valid = await firebase.create_session_cookie(app, request, auth_data)
+
+        if not valid:
+            raise UnauthenticatedError("Something is wrong. Please login again.")
 
         url = app.url_for("user.user_dashboard")
         response = redirect(url)
