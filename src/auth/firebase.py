@@ -1,8 +1,9 @@
 """Handles the authentication process with Firebase for the Login with Email function."""
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from functools import partial
 import json
-from typing import Optional
+from typing import Literal, Optional, Union
 
 from firebase_admin import auth, exceptions
 from firebase_admin.auth import UserRecord
@@ -18,9 +19,20 @@ from src.server import app
 API_URL = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword"
 
 
+@dataclass
+class TypedUserRecord:
+    # firebase-admin did not type their UserRecord class, hence making Pylance scream.
+    # As we do not any of it's methods, and only it's attributes, this class can help quite pylance
+    # https://firebase.google.com/docs/reference/admin/python/firebase_admin.auth#userrecord
+    disabled: bool
+    display_name: Optional[str]
+    email: Optional[str]
+    uid: str
+
+
 async def create_user(
     app: Sanic, username: str, email: str, password: str
-) -> UserRecord:
+) -> TypedUserRecord:
     """
     Creates a new user on Firebase with the given username, email and password,
     and inserts the details to our database.
@@ -32,7 +44,7 @@ async def create_user(
         email: str
         password: str -> The UNHASHED, raw string password.
     Returns ::
-        firebase_admin.auth.UserRecord
+        src.auth.firebase.TypedUserRecord
     """
     uid = next(app.ctx.snowflake)
     create_user = partial(
@@ -43,7 +55,13 @@ async def create_user(
         password=password,
         app=app.ctx.firebase,
     )
-    return await app.loop.run_in_executor(None, create_user)
+    user_record = await app.loop.run_in_executor(None, create_user)
+    return TypedUserRecord(
+        disabled=user_record.disabled,
+        display_name=user_record.display_name,
+        email=user_record.email,
+        uid=user_record.uid,
+    )
 
 
 async def authenticate_user(app: Sanic, email: str, password: str) -> Optional[dict]:
@@ -80,9 +98,15 @@ async def authenticate_user(app: Sanic, email: str, password: str) -> Optional[d
         return response_data
 
 
-async def get_user(app: Sanic, uid: str) -> UserRecord:
+async def get_user(app: Sanic, uid: str) -> TypedUserRecord:
     get = partial(auth.get_user, app=app)
-    return await app.loop.run_in_executor(None, get, uid)
+    user_record = await app.loop.run_in_executor(None, get, uid)
+    return TypedUserRecord(
+        disabled=user_record.disabled,
+        display_name=user_record.display_name,
+        email=user_record.email,
+        uid=user_record.uid,
+    )
 
 
 async def refresh_token(app: Sanic):
@@ -90,7 +114,9 @@ async def refresh_token(app: Sanic):
     pass
 
 
-async def create_session_cookie(app: Sanic, request: Request, data: dict) -> dict:
+async def create_session_cookie(
+    app: Sanic, request: Request, data: dict
+) -> Union[dict, Literal[False]]:
     """
     Creates a session cookie for a user with the given `idToken`.
 
@@ -143,7 +169,7 @@ async def delete_session_cookie(app: Sanic, request: Request) -> None:
         raise ServerError("Tried to revoke an invalid session cookie", quiet=True)
 
 
-async def check_logged_in(request: Request) -> bool:
+async def check_logged_in(request: Request) -> Union[dict, Literal[False]]:
     """Checks whether a user is signed in (on Firebase, with email and password).
     Returns ::
         The validated user details if True, else `bool` False.

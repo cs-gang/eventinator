@@ -1,14 +1,5 @@
 from functools import wraps
-from typing import (
-    Any,
-    AsyncGenerator,
-    AsyncGenerator,
-    Awaitable,
-    Callable,
-    List,
-    Mapping,
-    Optional,
-)
+from typing import Any, AsyncGenerator, List, Mapping, Optional
 
 from databases import Database as _Database
 from sanic import Sanic
@@ -18,12 +9,8 @@ class DatabaseNotConnectedError(Exception):
     """Exception raised when any queries are attempted before the connection was made
     using the `Database.connect` method."""
 
-    pass
 
-
-def is_connected(
-    func: Callable[[Any], Awaitable[Any]]
-) -> Callable[[Any], Awaitable[Any]]:
+def is_connected(func: Any) -> Any:
     """
     A decorator which checks if the connection has been initialized using the
     `Database.connect` method before running any queries.
@@ -109,8 +96,8 @@ class Database:
         return await self.db.execute(query=query, values=kwargs)
 
     @is_connected
-    async def executemany(self, query: str, *args: Any) -> str:
-        return await self.db.execute_many(query=query, values=args)
+    async def executemany(self, query: str, *args: Any) -> None:
+        return await self.db.execute_many(query=query, values=list(args))
 
     @is_connected
     async def fetch(self, query: str, **kwargs: Any) -> List[Mapping]:
