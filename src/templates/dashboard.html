@@ -42,7 +42,7 @@
         <div onclick="closepopup()" class="modal-background"></div>
         <div class="modal-content">
             <form id="check-detail-form" method="POST" action="/user/tz" class="box has-background-success-light">
-                {{ form.csrf_token }}
+                {{ dashboard_form.csrf_token }}
                 <div class="field">
                     <label class="label is-size-3" for="timezone">Time zone</label>
                     <div class="control has-icons-left">
@@ -145,6 +145,7 @@
                         Starting on: {{event[3][:11]}}
                     </p>
                     <form action="/event/delete" method="POST" class="mt-2 ml-5 is-inline">
+                        {{ delete_event_form.csrf_token }}
                         <input type="text" name="event_id" value="{{event[0]}}" hidden>
                         <button class="is-pulled-right has-background-success ml-6" style="border: 0;">
                             <a class="far fa-times-circle is-size-3 has-text-white"></a>

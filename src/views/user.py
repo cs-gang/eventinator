@@ -3,7 +3,7 @@ from sanic.exceptions import ServerError
 from sanic.request import Request
 from sanic.response import html, HTTPResponse, redirect
 
-from src.forms import DashboardForm, LoginForm, SignUpForm
+from src.forms import DashboardForm, LoginForm, SignUpForm, EventActionForm
 from src.auth import authorized, firebase, User, UnauthenticatedError
 from src.server import app
 from src.utils import render_page, transform_tz
@@ -96,7 +96,8 @@ async def user_logout(request: Request, user: User, platform: str) -> HTTPRespon
 @user.get("/dashboard")
 @authorized()
 async def user_dashboard(request: Request, user: User, platform: str) -> HTTPResponse:
-    form = DashboardForm(request)
+    dashboard_form = DashboardForm(request)
+    delete_form = EventActionForm(request)
 
     all_events = await user.get_events(app)
     owned_events = await user.get_owned_events(app)
@@ -105,7 +106,8 @@ async def user_dashboard(request: Request, user: User, platform: str) -> HTTPRes
     output = await render_page(
         app.ctx.env,
         file="dashboard.html",
-        form=form,
+        dashboard_form=dashboard_form,
+        delete_event_form=delete_form,
         from_discord=from_discord,
         all_events=all_events,
         owned_events=owned_events,

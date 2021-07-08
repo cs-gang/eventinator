@@ -13,7 +13,17 @@ from src.auth import discord, firebase
 
 
 class UnauthenticatedError(SanicException):
-    pass
+    """
+    Exception raised when a user attempts to reach a route
+    that requires authentication.
+    """
+
+
+class OwnerOnlyActionError(UnauthenticatedError):
+    """
+    Exception raised when a user attempts to run an action
+    that requires them to be the owner of that resource.
+    """
 
 
 @dataclass

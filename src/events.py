@@ -1,8 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Mapping, Optional
+from typing import List, Mapping, Optional, TYPE_CHECKING
 
 from sanic import Sanic
+
+if TYPE_CHECKING:
+    from src.auth import User
 
 
 @dataclass
@@ -65,3 +68,21 @@ class Event:
                 event_id=self.event_id,
             )
         ]
+
+    def is_owner(self, user: "User") -> bool:
+        return user.uid == self.event_owner
+
+    async def delete(self, app: Sanic) -> None:
+        """
+        Deletes the event.
+        """
+        # the local sqlite db was not configured to ON DELETE CASCADE
+        # and testing this again will be a pain
+        # if we deploy, TODO: write a proper init.sql for postgres
+        # for now, just delete from both tables.
+        await app.ctx.db.execute(
+            "DELETE FROM users_events WHERE event_id = :id", id=self.event_id
+        )
+        await app.ctx.db.execute(
+            "DELETE FROM events WHERE event_id = :id", id=self.event_id
+        )
