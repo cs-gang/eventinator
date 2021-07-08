@@ -187,6 +187,17 @@ class User:
             "SELECT * FROM events WHERE event_owner=:uid", uid=self.uid
         )
 
+    async def delete(self, app: Sanic) -> None:
+        """
+        Deletes a user and the events they own.
+        """
+        # same TODO as src/events.py
+        await app.ctx.db.execute(
+            "DELETE FROM users_events WHERE uid = :id", id=self.uid
+        )
+        await app.ctx.db.execute("DELETE FROM events WHERE owner_id = :id", id=self.uid)
+        await app.ctx.db.execute("DELETE FROM users WHERE uid = :id", id=self.uid)
+
 
 def authorized():
     def decorator(func: Callable) -> Callable:
