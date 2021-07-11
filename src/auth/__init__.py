@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from functools import partial, wraps
-from typing import Any, Awaitable, List, Mapping, Optional
+
+from src.events import Event
+from typing import Any, Callable, List, Mapping, Optional
 
 import requests
 from sanic import Sanic
@@ -12,7 +14,17 @@ from src.auth import discord, firebase
 
 
 class UnauthenticatedError(SanicException):
-    pass
+    """
+    Exception raised when a user attempts to reach a route
+    that requires authentication.
+    """
+
+
+class OwnerOnlyActionError(UnauthenticatedError):
+    """
+    Exception raised when a user attempts to run an action
+    that requires them to be the owner of that resource.
+    """
 
 
 @dataclass
@@ -102,7 +114,7 @@ class User:
         )
         return cls(
             uid=user_record.uid,
-            username=user_record.display_name,
+            username=user_record.display_name or "NO USERNAME",
             email=user_record.email,
         )
 
@@ -114,7 +126,7 @@ class User:
         user_record = await firebase.get_user(app, uid)
         return cls(
             uid=user_record.uid,
-            username=user_record.display_name,
+            username=user_record.display_name or "NO USERNAME",
             email=user_record.email,
         )
 
@@ -154,9 +166,42 @@ class User:
             "UPDATE users SET tz = :tz WHERE uid = :uid", tz=tz, uid=self.uid
         )
 
+    async def join_event(self, app: Sanic, event: Event) -> None:
+        """Adds the user to specified event."""
+        await app.ctx.db.execute(
+            "INSERT INTO users_events(uid, event_id) VALUES(:uid, :eid)",
+            uid=self.uid,
+            eid=event.event_id,
+        )
+
+    async def leave_event(self, app: Sanic, event: Event) -> None:
+        """Removes the user from the specified event."""
+        await app.ctx.db.execute(
+            "DELETE FROM users_events WHERE uid=:uid AND event_id=:eid",
+            uid=self.uid,
+            eid=event.event_id,
+        )
+
+    async def get_owned_events(self, app: Sanic) -> List[Mapping]:
+        """Get all events owned by this user."""
+        return await app.ctx.db.fetch(
+            "SELECT * FROM events WHERE event_owner=:uid", uid=self.uid
+        )
+
+    async def delete(self, app: Sanic) -> None:
+        """
+        Deletes a user and the events they own.
+        """
+        # same TODO as src/events.py
+        await app.ctx.db.execute(
+            "DELETE FROM users_events WHERE uid = :id", id=self.uid
+        )
+        await app.ctx.db.execute("DELETE FROM events WHERE owner_id = :id", id=self.uid)
+        await app.ctx.db.execute("DELETE FROM users WHERE uid = :id", id=self.uid)
+
 
 def authorized():
-    def decorator(func: Awaitable) -> Awaitable:
+    def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def wrapper(request: Request, *args: Any, **kwargs: Any) -> HTTPResponse:
             """
@@ -170,12 +215,49 @@ def authorized():
 
             if from_discord:
                 user = await User.from_discord(request.app, request)
-                return await func(request, platform="discord", user=user)
+                return await func(
+                    request, platform="discord", user=user, *args, **kwargs
+                )
             elif from_firebase:
-                user = await User.from_db(request.app, from_firebase["uid"])
-                return await func(request, platform="firebase", user=user)
+                user = await User.from_db(
+                    request.app, from_firebase["uid"]
+                )  # type: ignore
+                return await func(
+                    request, platform="firebase", user=user, *args, **kwargs
+                )
             else:
                 raise UnauthenticatedError("Not logged in.", status_code=403)
+
+        return wrapper
+
+    return decorator
+
+
+def guest_or_authorized():
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        async def wrapper(request: Request, *args: Any, **kwargs: Any) -> HTTPResponse:
+            """
+            Decorator that checks if a user is signed in.
+            Unlike the `src.auth.authenticated` decorator, this will NOT
+            raise an UnauthenticatedError in the case the user is not logged
+            in, but sets the injected User variable to "guest".
+            """
+            from_discord = discord.check_logged_in(request)
+            from_firebase = await firebase.check_logged_in(request)
+
+            if from_discord:
+                user = await User.from_discord(request.app, request)
+                return await func(
+                    request, platform="discord", user=user, *args, **kwargs
+                )
+            elif from_firebase:
+                user = await User.from_db(request.app, from_firebase["uid"])
+                return await func(
+                    request, platform="firebase", user=user, *args, **kwargs
+                )
+            else:
+                return await func(request, platform=None, user="guest", *args, **kwargs)
 
         return wrapper
 

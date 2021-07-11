@@ -1,15 +1,18 @@
 import asyncio
 import os
 
-from dotenv import find_dotenv, load_dotenv
 import firebase_admin
+from dotenv import find_dotenv, load_dotenv
 from firebase_admin import credentials
 from jinja2 import Environment, PackageLoader, select_autoescape
 from sanic import Sanic
+from sanic import exceptions
+from sanic.request import Request
+from sanic.response import html, HTTPResponse
 from sanic_session import Session, InMemorySessionInterface
 
 from src.database import Database
-from src.utils import IDGenerator
+from src.utils import IDGenerator, render_page
 
 
 load_dotenv(find_dotenv())
@@ -59,3 +62,12 @@ async def connect_db(app: Sanic, loop: asyncio.AbstractEventLoop) -> None:
 @app.after_server_stop
 async def disconnect_db(app: Sanic, loop: asyncio.AbstractEventLoop) -> None:
     await app.ctx.db.disconnect()
+
+
+IGNORED = (exceptions.NotFound,)
+
+
+@app.exception(*IGNORED)
+async def generic_error_handler(request: Request, exception: Exception) -> HTTPResponse:
+    output = await render_page(app.ctx.env, file="error.html", exception=str(exception))
+    return html(output)

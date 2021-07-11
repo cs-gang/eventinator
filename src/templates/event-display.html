@@ -1,0 +1,119 @@
+<html lang="en" class="has-navbar-fixed-top has-background-success-light">
+
+<head>
+    <meta content="Event title" property="og:title">
+    <meta content="Short description" property="og:description">
+
+    <!--Placeholder image. Change when/if you get proper image-->
+    <meta content='https://discordapp.com/assets/ba74954dde74ff40a32ff58069e78c36.png' property='og:image'>
+    <meta name="theme-color" content="#FF3864">
+    <link type="application/json+oembed" href="../static/json/meta-tag.json" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/stylesheet.css">
+    <title>Event Display</title>
+</head>
+
+<body>
+    <nav class="navbar has-background-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item is-size-2 has-text-warning" href="/user/dashboard">
+                Eventinator
+            </a>
+            <a role="button" class="navbar-burger my-4 has-dropdown" aria-label="menu" aria-expanded="false"
+                data-target="navburgertarget">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navburgertarget" class="navbar-menu">
+            <div class="navbar-start"></div>
+            <div class="navbar-end is-align-items-center is-flex">
+                {% if user != "guest" %}
+                <button class="button is-success is-rounded mx-5">
+                    Modify personal details
+                </button>
+                <a href="/user/logout"
+                    class="px-5 py-5 is-flex has-background-success has-text-warning has-text-centered is-size-4">Log
+                    out</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </nav>
+
+    <section class="box has-background-success-light mx-6 my-6">
+        <div class="title is-1 has-text-centered">{{event.event_name}}</div>
+        <div class="subtitle my-6 has-text-centered">{{event.short_desc}}</div>
+
+        <div class="box has-background-success-light mx-3 my-3 has-text-centered">{{event.long_desc}}
+        </div>
+
+        <div class="px-4 py-5">
+            <span class="is-pulled-left is-size-4">{{event.starttime}}</span>
+            <span class="is-pulled-right is-size-4">{{event.endtime}}</span>
+        </div>
+
+        {% if event_members %}
+        <div class="box has-background-success-light mx-6 my-2 mb-3">
+            <div class="content">
+                <p>Users who have joined the event</p>
+                <ul>
+                    {% for person in event_members %}
+                    <li>{{person}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if not (user.id == owner.id) %}
+        {% if event_members %}
+        <div class="pb-6 my-2">
+            {% if user.username in event_members%}
+            <form action="/event/leave" method="POST">
+                {{ leave_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button type="submit" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave
+                    Meeting</button>
+            </form>
+            {% elif user != "guest" %}
+            <form action="/event/join" method="POST">
+                {{ join_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button class="button is-success is-medium mx-6 mt-2 is-pulled-right">Join Meeting</button>
+            </form>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="pb-3 my-2 has-text-centered">
+            {% if user.username in event_members %}
+            <form action="/event/leave" method="POST">
+                {{ leave_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button class="button is-success is-large mt-6">Leave Meeting</button>
+            </form>
+            {% elif user != "guest" %}
+            <form action="/event/join" method="POST">
+                {{ join_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button class="button is-success is-large mt-6">Join Meeting</a>
+            </form>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endif %}
+
+
+    </section>
+
+    <footer class="footer has-background-success">
+        <div class="has-text-centered has-text-link-light">
+            This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
+        </div>
+    </footer>
+</body>
+
+</html>

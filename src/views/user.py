@@ -3,20 +3,17 @@ from sanic.exceptions import ServerError
 from sanic.request import Request
 from sanic.response import html, HTTPResponse, redirect
 
-from src.forms import DashboardForm, LoginForm, SignUpForm
+from src.forms import DashboardForm, LoginForm, SignUpForm, EventActionForm
 from src.auth import authorized, firebase, User, UnauthenticatedError
 from src.server import app
 from src.utils import render_page, transform_tz
+
 
 user = Blueprint("user", url_prefix="/user")
 
 
 @user.post("/login")
 async def email_login(request: Request) -> HTTPResponse:
-    if request.method != "POST":
-        raise ServerError(
-            "Only POST requests are allowed to this route.", status_code=405
-        )
     form = LoginForm(request)
 
     if form.validate():
@@ -25,6 +22,9 @@ async def email_login(request: Request) -> HTTPResponse:
         auth_data = await firebase.authenticate_user(
             app, email=email, password=password
         )
+
+        if not auth_data:
+            raise ServerError("-- `auth_data` returned None: L27 user.py --")
 
         request.ctx.session["firebase_auth_data"] = auth_data
 
@@ -45,11 +45,6 @@ async def email_login(request: Request) -> HTTPResponse:
 
 @user.post("/new")
 async def email_signup(request: Request) -> HTTPResponse:
-    if request.method != "POST":
-        raise ServerError(
-            "Only POST requests are allowed to this route.", status_code=405
-        )
-
     form = SignUpForm(request)
 
     if form.validate():
@@ -60,12 +55,20 @@ async def email_signup(request: Request) -> HTTPResponse:
             app, username=username, email=email, password=password
         )
         auth_data = await firebase.authenticate_user(
-            app, email=user.email, password=password
+            app,
+            email=user.email or "",
+            password=password,  # that `or` case will never happen here.
         )
+
+        if not auth_data:
+            raise ServerError("-- `auth_data` is None L62 user.py --")
 
         request.ctx.session["firebase_auth_data"] = auth_data
 
         valid = await firebase.create_session_cookie(app, request, auth_data)
+
+        if not valid:
+            raise UnauthenticatedError("Something is wrong. Please login again.")
 
         url = app.url_for("user.user_dashboard")
         response = redirect(url)
@@ -96,17 +99,21 @@ async def user_logout(request: Request, user: User, platform: str) -> HTTPRespon
 @user.get("/dashboard")
 @authorized()
 async def user_dashboard(request: Request, user: User, platform: str) -> HTTPResponse:
-    form = DashboardForm(request)
+    dashboard_form = DashboardForm(request)
+    delete_form = EventActionForm(request)
 
-    events = await user.get_events(app)
+    all_events = await user.get_events(app)
+    owned_events = await user.get_owned_events(app)
     from_discord = True if platform == "discord" else False
 
     output = await render_page(
         app.ctx.env,
         file="dashboard.html",
-        form=form,
+        dashboard_form=dashboard_form,
+        delete_event_form=delete_form,
         from_discord=from_discord,
-        events=events,
+        all_events=all_events,
+        owned_events=owned_events,
         username=user.username,
         tz=user.tz,
     )
