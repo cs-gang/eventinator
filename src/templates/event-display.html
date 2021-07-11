@@ -16,8 +16,6 @@
 </head>
 
 <body>
-    <script>let bro = '{{event}}'</script>
-    <script>let broski = '{{event_members}}'</script>
     <nav class="navbar has-background-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item is-size-2 has-text-warning" href="/user/dashboard">
@@ -59,7 +57,7 @@
         </div>
 
         {% if event_members %}
-        <div class="box has-background-success-light mx-6 my-3 mt-6">
+        <div class="box has-background-success-light mx-6 my-2 mb-3">
             <div class="content">
                 <p>Users who have joined the event</p>
                 <ul>
@@ -71,6 +69,7 @@
         </div>
         {% endif %}
 
+        {% if not (user.id == owner.id) %}
         {% if event_members %}
         <div class="pb-6 my-2">
             {% if user.username in event_members%}
@@ -105,6 +104,8 @@
             {% endif %}
         </div>
         {% endif %}
+        {% endif %}
+
 
     </section>
 
