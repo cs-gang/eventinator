@@ -1,0 +1,112 @@
+<html lang="en" class="has-navbar-fixed-top has-background-success-light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/stylesheet.css">
+    <script src="https://kit.fontawesome.com/91cb2ec1de.js" crossorigin="anonymous"></script>
+    <title>Event Update</title>
+</head>
+
+<body>
+    <nav class="navbar has-background-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item is-size-2 has-text-warning" href="/user/dashboard">
+                Eventinator
+            </a>
+            <a role="button" class="navbar-burger my-4 has-dropdown" aria-label="menu" aria-expanded="false"
+                data-target="navburgertarget">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navburgertarget" class="navbar-menu">
+            <div class="navbar-start">
+
+            </div>
+            <div class="navbar-end is-align-items-center is-flex">
+                <button class="button is-success is-rounded mx-5">
+                    Modify personal details
+                </button>
+                <a href="/user/logout"
+                    class="px-5 py-5 is-flex has-background-success has-text-warning has-text-centered is-size-4">Log
+                    out</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="box has-background-success-light mx-6 my-6">
+        <div class="title is-1">Enter your Event details</div>
+
+        <form action="/event/update" method="POST">
+            {{ form.csrf_token }}
+            <div class="columns">
+                <div class="column is-6 box has-background-success-light mx-3 mt-4">
+                    <div class="field">
+                        <label class="label is-size-3" for="eventname">Name of the Event</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Event Name" maxlength="80" id="eventname"
+                                name="eventname" value="{{event.event_name}}">
+                            <span class="icon is-small is-left">
+                                <span class="fas fa-pen"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3" for="starttime">Start Time</label>
+                        <div class="control">
+                            <input type="date" id="starttime" name="starttime" value="event.starttime">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3" for="endtime">End Time</label>
+                        <div class="control">
+                            <input type="date" id="endtime" name="endtime" value="event.endtime">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column box has-background-success-light mx-3 mt-4">
+                    <div class="field">
+                        <label class="label is-size-3" for="shortdescription">Short description</label>
+                        <div class="control">
+                            <textarea class="textarea" rows="5" maxlength="1500" id="shortdescription"
+                                name="shortdescription" value="{{event.short_desc}}">
+                            </textarea>
+                        </div>
+                        <p class="help">This description will be visible to the public</p>
+                    </div>
+                    <div class="field">
+                        <label class="label is-size-3" for="longdescription">Long description</label>
+                        <div class="control">
+                            <textarea class="textarea" rows="7" maxlength="5000" id="longdescription"
+                                name="longdescription" value={{event.long_desc}}>
+                            </textarea>
+                        </div>
+                        <p class="help">This description will only be visible to the entered members</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-success is-large">Update</button>
+                </div>
+                <div class="control">
+                    <button type="reset" class="button is-primary is-large">Reset</button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+
+    <footer class="footer has-background-success">
+        <div class="has-text-centered has-text-link-light">
+            This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
+        </div>
+    </footer>
+</body>
+
+</html>
