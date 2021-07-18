@@ -42,6 +42,7 @@
 
         <form action="/event/update" method="POST">
             {{ form.csrf_token }}
+            <input type="text" value="{{ event.id }}" hidden>
             <div class="columns">
                 <div class="column is-6 box has-background-success-light mx-3 mt-4">
                     <div class="field">
