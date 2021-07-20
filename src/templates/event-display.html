@@ -130,6 +130,27 @@
             {% endif %}
         </div>
         {% endif %}
+
+        {% else %}
+
+        {% if event_members %}
+        <div class="pb-6 my-2">
+            <form action="/event/update" method="POST">
+                {{ update_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button type="submit" class="button is-success is-medium mx-6 mt-2 is-pulled-right">Leave
+                    Meeting</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="pb-3 my-2 has-text-centered">
+            <form action="/event/update" method="POST">
+                {{ update_form.csrf_token }}
+                <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
+                <button class="button is-success is-large mt-6">Update Meeting</a>
+            </form>
+        </div>
+        {% endif %}
         {% endif %}
 
         <div id="password-modal" class="modal is-active">
