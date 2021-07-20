@@ -48,6 +48,7 @@
         <div class="title is-1 has-text-centered">{{event.event_name}}</div>
         <div class="subtitle my-6 has-text-centered">{{event.short_desc}}</div>
 
+        {% if event.passcode and user.username in event_members %}
         <div class="box has-background-success-light mx-3 my-3 has-text-centered">{{event.long_desc}}
         </div>
 
@@ -69,6 +70,29 @@
         </div>
         {% endif %}
 
+        {% else if not event.passcode %}
+        <div class="box has-background-success-light mx-3 my-3 has-text-centered">{{event.long_desc}}
+        </div>
+
+        <div class="px-4 py-5">
+            <span class="is-pulled-left is-size-4">{{event.starttime}}</span>
+            <span class="is-pulled-right is-size-4">{{event.endtime}}</span>
+        </div>
+
+        {% if event_members %}
+        <div class="box has-background-success-light mx-6 my-2 mb-3">
+            <div class="content">
+                <p>Users who have joined the event</p>
+                <ul>
+                    {% for person in event_members %}
+                    <li>{{person}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+
         {% if not (user.id == owner.id) %}
         {% if event_members %}
         <div class="pb-6 my-2">
@@ -80,10 +104,11 @@
                     Meeting</button>
             </form>
             {% elif user != "guest" %}
-            <form action="/event/join" method="POST">
+            <form id="joinform" action="/event/join" method="POST">
                 {{ join_form.csrf_token }}
                 <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
-                <button class="button is-success is-medium mx-6 mt-2 is-pulled-right">Join Meeting</button>
+                <button class="button is-success is-medium mx-6 mt-2 is-pulled-right" {% if event.passcode %}
+                type="button" onclick="showPasswordModal()" {% endif %}>Join Meeting</button>
             </form>
             {% endif %}
         </div>
@@ -96,17 +121,30 @@
                 <button class="button is-success is-large mt-6">Leave Meeting</button>
             </form>
             {% elif user != "guest" %}
-            <form action="/event/join" method="POST">
+            <form id="joinform" action="/event/join" method="POST">
                 {{ join_form.csrf_token }}
                 <input type="text" name="event_id" id="event_id" value="{{event.event_id}}" hidden>
-                <button class="button is-success is-large mt-6">Join Meeting</a>
+                <button class="button is-success is-large mt-6" {% if event.passcode %}
+                type="button" onclick="showPasswordModal()" {% endif %}>Join Meeting</a>
             </form>
             {% endif %}
         </div>
         {% endif %}
         {% endif %}
 
-
+        <div id="password-modal" class="modal is-active">
+            <div id="password-modal-bg" class="modal-background"></div>
+            <div class="modal-content box has-background-success-light">
+              <div>
+                  <p class="block is-size-4 mb-2">Enter the password:</p>
+                  <input id="password" class="input" type="text">
+                  <p id="errortext" class="" style="display: none;">The entered password is wrong</p>
+                  <button class="button is-success mt-4" onclick="checkPassword()">Submit</button>
+                  
+              </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
+          </div>
     </section>
 
     <footer class="footer has-background-success">
@@ -114,6 +152,30 @@
             This website is made by the members of cs-gang <br> For any enquiries, contact abc@domain.com
         </div>
     </footer>
+
+    <script>
+        let passwordModal = document.getElementById("password-modal");
+        let passwordModalBG = document.getElementById("password-modal-bg")
+        let passwordInput = document.getElementById("password")
+        let passwordErrorText = document.getElementById("errortext")
+        let joinForm = document.getElementById("joinform")
+
+        function showPasswordModal() {
+            passwordModal.classList.add("is-active")
+        }
+
+        function checkPassword() {
+            if (passwordInput.value == "{{ event.passcode }}") {
+                joinform.submit()
+            } else {
+                passwordErrorText.style = ""
+            }
+        }
+
+        function closeModal() {
+            passwordModal.classList.remove("is-active")
+        }
+    </script>
 </body>
 
 </html>
